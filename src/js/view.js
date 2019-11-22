@@ -1,3 +1,6 @@
-export const testFunction = test => {
-    console.log("I am from the view test function");
+export const addImageToDocument = birdPhotoURL => {
+    // console.log(birdPhotoURL);
+    var img = document.createElement("img");
+    img.src = birdPhotoURL;
+    document.body.appendChild(img);
 };

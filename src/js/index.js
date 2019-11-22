@@ -11,7 +11,6 @@ const controlGetDatabase = async () => {
     state.birdData = new Birds;
 
     try {
-        // 4) Search for recipes
         await state.birdData.getBirdList();
 
     } catch (err) {
@@ -20,27 +19,43 @@ const controlGetDatabase = async () => {
     }
 
     state.birdData.parseBirdList();
-    console.log(state.birdData.birds);
-    state.birdData.getBirdPhoto(state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
-
+    console.log("Completed 1st");
 };
 
 
 window.addEventListener('load', () => {
-    controlGetDatabase();
-    // controlSetUpFourNameQuiz();
+
+    async function setUpQuiz() {
+        try {
+            await controlGetDatabase();
+            await controlSetUpFourNameQuiz();
+            await view.addImageToDocument(state.birdData.img);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    let promise = setUpQuiz();
+
 
 });
 
 const controlSetUpFourNameQuiz = async () => {
 
     let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
-    console.log(birdArray);
 
-    // Loop get 4 birds in an array
-    let currentBird = state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)];
+    let currentBird = birdArray[randomIntFromInterval(0, 3)];
 
-    //Get photo and id of one to be the correct bird
-    let birdPhotoLink = state.birdData.getBirdPhoto(currentBird);
+    try {
+        await state.birdData.getBirdPhoto(currentBird);
+    } catch (err) {
+        console.log(err);
+        alert('Something wrong with the search...');
+    }
+    console.log("Completed 2nd");
 
+};
+
+
+function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
 };

@@ -33,12 +33,11 @@ export default class Birds {
             const proxy = 'https://cors-anywhere.herokuapp.com';
             const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
             const res = await axios(`${proxy}/${birdPhotoAPI}`);
-            console.log(res);
             this.img = res.data.query.pages[Object.keys(res.data.query.pages)[0]].thumbnail.source;
         } catch (error) {
             console.log('Could not get image');
         }
-        console.log(this.img);
+        // console.log(this.img);
     }
 
 
