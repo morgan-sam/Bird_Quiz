@@ -19,7 +19,6 @@ const controlGetDatabase = async () => {
     }
 
     state.birdData.parseBirdList();
-    console.log("Completed 1st");
 };
 
 
@@ -28,8 +27,10 @@ window.addEventListener('load', () => {
     async function setUpQuiz() {
         try {
             await controlGetDatabase();
-            await controlSetUpFourNameQuiz();
+            let birdObj = await controlSetUpFourNameQuiz();
+            console.log(birdObj);
             await view.addImageToDocument(state.birdData.img);
+
         } catch (error) {
             console.log(error);
         }
@@ -42,8 +43,14 @@ window.addEventListener('load', () => {
 const controlSetUpFourNameQuiz = async () => {
 
     let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
+    let chosenBird = randomIntFromInterval(0, 3);
 
-    let currentBird = birdArray[randomIntFromInterval(0, 3)];
+    let birdObj = Object.assign({}, birdArray);
+    Object.keys(birdObj).map(function(key, index) {
+        birdObj[key] = [birdObj[key], index === chosenBird ? true : false];
+    });
+
+    let currentBird = birdArray[chosenBird];
 
     try {
         await state.birdData.getBirdPhoto(currentBird);
@@ -51,8 +58,8 @@ const controlSetUpFourNameQuiz = async () => {
         console.log(err);
         alert('Something wrong with the search...');
     }
-    console.log("Completed 2nd");
 
+    return birdObj;
 };
 
 
