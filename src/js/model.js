@@ -37,7 +37,7 @@ export default class Birds {
         } catch (error) {
             console.log('Could not get image');
         }
-        // console.log(this.img);
+        return this.img;
     }
 
 

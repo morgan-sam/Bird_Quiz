@@ -8,7 +8,6 @@ const state = {};
 
 const controlGetDatabase = async () => {
 
-
     state.birdData = new Birds;
 
     try {
@@ -28,9 +27,8 @@ window.addEventListener('load', () => {
     async function setUpQuiz() {
         try {
             await controlGetDatabase();
-            let birdObj = await controlSetUpFourNameQuiz();
-            console.log(birdObj);
-            await view.addImageToDocument(state.birdData.img, birdObj);
+            await controlSetUpFourNameQuiz();
+
 
         } catch (error) {
             console.log(error);
@@ -38,8 +36,9 @@ window.addEventListener('load', () => {
     }
     let promise = setUpQuiz();
 
-
 });
+
+
 
 const controlSetUpFourNameQuiz = async () => {
 
@@ -52,14 +51,29 @@ const controlSetUpFourNameQuiz = async () => {
     });
 
     let currentBird = birdArray[chosenBird];
-
+    let birdPhoto;
     try {
-        await state.birdData.getBirdPhoto(currentBird);
+        birdPhoto = await state.birdData.getBirdPhoto(currentBird);
     } catch (err) {
         console.log(err);
         alert('Something wrong with the search...');
     }
 
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.addEventListener("click", function() {
+            checkIfAnswerCorrect(i)
+        });
+    });
+
+    function checkIfAnswerCorrect(i) {
+        if (birdObj[i][1]) {
+            alert('You are correct!');
+        } else {
+            alert('That was incorrect.')
+        }
+    };
+
+    view.fourNameQuizUI(birdPhoto, birdObj);
     return birdObj;
 };
 
