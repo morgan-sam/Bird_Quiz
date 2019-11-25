@@ -2,6 +2,7 @@
 
 import Birds from './model.js';
 import * as view from './view.js';
+import '../css/main.css';
 
 const state = {};
 
@@ -29,7 +30,7 @@ window.addEventListener('load', () => {
             await controlGetDatabase();
             let birdObj = await controlSetUpFourNameQuiz();
             console.log(birdObj);
-            await view.addImageToDocument(state.birdData.img);
+            await view.addImageToDocument(state.birdData.img, birdObj);
 
         } catch (error) {
             console.log(error);

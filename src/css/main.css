@@ -3,11 +3,12 @@
   margin: 0;
 }
 
+#answerInput {}
+
 button {
   padding: 1rem;
-  width: 20rem;
+  width: 14rem;
+  line-height: 0.35rem;
   height: 0.7rem;
   display: block;
-  text-align: center;
-  vertical-align: middle;
 }

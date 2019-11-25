@@ -7,7 +7,18 @@ module.exports = {
         filename: "./bundle.js" //relative to root of the application
     },
 
-   // watch:true,
+   // watch:true,    
+
+
+	
+    module:{
+        rules:[
+            {
+                test:/\.css$/,
+                use:['style-loader','css-loader']
+            }
+       ]
+    },
 
     plugins: [
         new HtmlWebpackPlugin({
