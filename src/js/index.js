@@ -6,9 +6,9 @@ import '../css/main.css';
 
 const state = {};
 
-const controlGetDatabase = async () => {
+state.birdData = new Birds;
 
-    state.birdData = new Birds;
+const controlGetDatabase = async () => {
 
     try {
         await state.birdData.getBirdList();
@@ -19,22 +19,26 @@ const controlGetDatabase = async () => {
     }
 
     state.birdData.parseBirdList();
+    window.localStorage.setItem('localBirdList', JSON.stringify(state.birdData.birds));
+    console.log(state.birdData);
 };
 
 
 window.addEventListener('load', () => {
     state.currentQuiz = new Object;
-
     async function setUpQuiz() {
+
+        console.log(state.birdData);
         try {
-            await controlGetDatabase();
+            state.birdData.birds = await JSON.parse(window.localStorage.getItem('localBirdList'));
+            // await controlGetDatabase();
             await controlSetUpFourNameQuiz();
 
         } catch (error) {
             console.log(error);
         }
     }
-    let promise = setUpQuiz();
+    setUpQuiz();
 
 });
 
