@@ -23,12 +23,12 @@ const controlGetDatabase = async () => {
 
 
 window.addEventListener('load', () => {
+    state.currentQuiz = new Object;
 
     async function setUpQuiz() {
         try {
             await controlGetDatabase();
             await controlSetUpFourNameQuiz();
-
 
         } catch (error) {
             console.log(error);
@@ -42,39 +42,52 @@ window.addEventListener('load', () => {
 
 const controlSetUpFourNameQuiz = async () => {
 
-    let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
-    let chosenBird = randomIntFromInterval(0, 3);
+    state.currentQuiz.score = 0;
 
-    let birdObj = Object.assign({}, birdArray);
-    Object.keys(birdObj).map(function(key, index) {
-        birdObj[key] = [birdObj[key], index === chosenBird ? true : false];
-    });
+    async function newQuestion() {
 
-    let currentBird = birdArray[chosenBird];
-    let birdPhoto;
-    try {
-        birdPhoto = await state.birdData.getBirdPhoto(currentBird);
-    } catch (err) {
-        console.log(err);
-        alert('Something wrong with the search...');
+        let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
+        let chosenBird = randomIntFromInterval(0, 3);
+
+        let birdObj = Object.assign({}, birdArray);
+        Object.keys(birdObj).map(function(key, index) {
+            birdObj[key] = [birdObj[key], index === chosenBird ? true : false];
+        });
+
+
+        let currentBird = birdArray[chosenBird];
+        let birdPhoto;
+        try {
+            birdPhoto = await state.birdData.getBirdPhoto(currentBird);
+        } catch (err) {
+            console.log(err);
+            newQuestion();
+            alert('Something wrong with the search...');
+        }
+        view.fourNameQuizUI(birdPhoto, birdObj, state.currentQuiz.score);
+
+        state.currentQuiz.birdObj = birdObj;
+        state.currentQuiz.birdPhoto = birdPhoto;
     }
 
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.addEventListener("click", function() {
-            checkIfAnswerCorrect(i)
-        });
+        button.addEventListener("click", () => checkIfAnswerCorrect(i));
     });
 
     function checkIfAnswerCorrect(i) {
-        if (birdObj[i][1]) {
+        if (state.currentQuiz.birdObj[i][1]) {
             alert('You are correct!');
+            state.currentQuiz.score++;
+            newQuestion();
+            console.log(state);
         } else {
             alert('That was incorrect.')
+            state.currentQuiz.score--;
         }
+        view.updateScore(state.currentQuiz.score);
     };
 
-    view.fourNameQuizUI(birdPhoto, birdObj);
-    return birdObj;
+    newQuestion(state.currentQuiz.score);
 };
 
 
