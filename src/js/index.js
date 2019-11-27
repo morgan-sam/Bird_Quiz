@@ -80,6 +80,7 @@ const controlSetUpFourNameQuiz = async () => {
         state.currentQuiz.birdObj = birdObj;        
         await view.fourNameQuizUI(birdPhoto, birdObj, state.currentQuiz.score);
         view.resetButtonColor();
+        view.enableAnswerButtons(true);
     }
 
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
@@ -89,6 +90,7 @@ const controlSetUpFourNameQuiz = async () => {
     function checkIfAnswerCorrect(i) {
         if (state.currentQuiz.birdObj[i][1]) {
             console.log('You are correct!');
+            view.enableAnswerButtons(false);
             document.getElementById(`answer-${i+1}`).className += " correctButton";
             state.currentQuiz.score++;
             newQuestion();

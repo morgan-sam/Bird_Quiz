@@ -23,3 +23,9 @@ export const resetButtonColor = () => {
         button.classList.remove('incorrectButton');
     });
 }
+
+export const enableAnswerButtons = (booState) => {
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.disabled = !booState;
+    });   
+}
