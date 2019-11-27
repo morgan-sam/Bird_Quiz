@@ -51,6 +51,7 @@ const controlSetUpFourNameQuiz = async () => {
     state.currentQuiz.score = 0;
 
     async function newQuestion() {
+        
 
         let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
         let chosenBird = randomIntFromInterval(0, 3);
@@ -70,10 +71,15 @@ const controlSetUpFourNameQuiz = async () => {
             newQuestion();
             alert('Something wrong with the search...');
         }
-        view.fourNameQuizUI(birdPhoto, birdObj, state.currentQuiz.score);
-
-        state.currentQuiz.birdObj = birdObj;
+//        console.log(birdPhoto);
+        if (birdPhoto){
         state.currentQuiz.birdPhoto = birdPhoto;
+        } else {
+            return newQuestion();
+        }
+        state.currentQuiz.birdObj = birdObj;        
+        await view.fourNameQuizUI(birdPhoto, birdObj, state.currentQuiz.score);
+        view.resetButtonColor();
     }
 
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
@@ -82,12 +88,14 @@ const controlSetUpFourNameQuiz = async () => {
 
     function checkIfAnswerCorrect(i) {
         if (state.currentQuiz.birdObj[i][1]) {
-            alert('You are correct!');
+            console.log('You are correct!');
+            document.getElementById(`answer-${i+1}`).className += " correctButton";
             state.currentQuiz.score++;
             newQuestion();
             console.log(state);
         } else {
-            alert('That was incorrect.')
+            console.log('That was incorrect.')
+            document.getElementById(`answer-${i+1}`).className += " incorrectButton";
             state.currentQuiz.score--;
         }
         view.updateScore(state.currentQuiz.score);

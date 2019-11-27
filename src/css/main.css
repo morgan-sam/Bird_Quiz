@@ -1,14 +1,17 @@
 * {
   padding: 0;
-  margin: 0;
-}
-
-#answerInput {}
+  margin: 0; }
 
 button {
   padding: 1rem;
-  width: 14rem;
-  line-height: 0.35rem;
+  width: 20rem;
   height: 0.7rem;
   display: block;
-}
+  text-align: center;
+  vertical-align: middle; }
+
+.correctButton {
+  background-color: lightgreen; }
+
+.incorrectButton {
+  background-color: darksalmon; }

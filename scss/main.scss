@@ -10,4 +10,12 @@ button {
   display: block;
   text-align: center;
   vertical-align: middle;
+} 
+
+.correctButton {
+    background-color: lightgreen;
+}
+
+.incorrectButton {
+    background-color: darksalmon;    
 }

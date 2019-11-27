@@ -37,6 +37,7 @@ export default class Birds {
             img = res.data.query.pages[Object.keys(res.data.query.pages)[0]].thumbnail.source;
         } catch (error) {
             console.log('Could not get image');
+            return false;
         }
         return img;
     }
