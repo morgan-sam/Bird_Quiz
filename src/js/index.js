@@ -51,7 +51,7 @@ const controlSetUpFourNameQuiz = async () => {
     state.currentQuiz.score = 0;
 
     async function newQuestion() {
-        
+
 
         let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
         let chosenBird = randomIntFromInterval(0, 3);
@@ -71,16 +71,14 @@ const controlSetUpFourNameQuiz = async () => {
             newQuestion();
             alert('Something wrong with the search...');
         }
-//        console.log(birdPhoto);
-        if (birdPhoto){
-        state.currentQuiz.birdPhoto = birdPhoto;
+        //        console.log(birdPhoto);
+        if (birdPhoto) {
+            state.currentQuiz.birdPhoto = birdPhoto;
         } else {
             return newQuestion();
         }
-        state.currentQuiz.birdObj = birdObj;        
+        state.currentQuiz.birdObj = birdObj;
         await view.fourNameQuizUI(birdPhoto, birdObj, state.currentQuiz.score);
-        view.resetButtonColor();
-        view.enableAnswerButtons(true);
     }
 
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {

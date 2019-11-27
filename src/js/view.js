@@ -1,10 +1,15 @@
 export const fourNameQuizUI = (birdPhotoURL, birdObj, score) => {
-    document.getElementById("birdImage").src = birdPhotoURL;
-    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.innerHTML = birdObj[i][0];
-    });
-    
+
+
     updateScore(score);
+    document.getElementById("birdImage").src = birdPhotoURL;
+    document.getElementById("birdImage").onload = function() {
+        resetButtonColor();
+        [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+            button.innerHTML = birdObj[i][0];
+        });
+        enableAnswerButtons(true);
+    }
 };
 
 export const updateScore = (score) => {
@@ -27,5 +32,5 @@ export const resetButtonColor = () => {
 export const enableAnswerButtons = (booState) => {
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
         button.disabled = !booState;
-    });   
+    });
 }
