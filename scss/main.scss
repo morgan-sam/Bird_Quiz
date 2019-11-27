@@ -10,29 +10,38 @@ button {
   display: block;
   text-align: center;
   vertical-align: middle;
-} 
+  margin: 5px;
+}
+
+h2 {
+  margin: 20px;
+}
+
+h4 {
+  margin: 30px;
+}
 
 .correctButton {
-    background-color: lightgreen;
+  background-color: lightgreen;
 }
 
 .incorrectButton {
-    background-color: darksalmon;    
+  background-color: darksalmon;
 }
 
-#fourAnswerOneImgQuiz { 
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%); 
-        
-    text-align: center;
-    display: block; 
+#fourAnswerOneImgQuiz {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  display: block;
 }
 
-#answerInput { 
+#answerInput {
+  margin: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-    flex-direction: column;
+  flex-direction: column;
 }

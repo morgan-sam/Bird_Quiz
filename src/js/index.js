@@ -86,6 +86,7 @@ const controlSetUpFourNameQuiz = async () => {
     });
 
     function checkIfAnswerCorrect(i) {
+        document.getElementById(`answer-${i+1}`).disabled = true;
         if (state.currentQuiz.birdObj[i][1]) {
             console.log('You are correct!');
             view.enableAnswerButtons(false);

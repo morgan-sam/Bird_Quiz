@@ -1,8 +1,9 @@
 export const fourNameQuizUI = (birdPhotoURL, birdObj, score) => {
 
+    let img = document.getElementById("birdImage");
 
-    updateScore(score);
     document.getElementById("birdImage").src = birdPhotoURL;
+    document.getElementById("birdImage").height = '400';
     document.getElementById("birdImage").onload = function() {
         resetButtonColor();
         [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
@@ -10,6 +11,7 @@ export const fourNameQuizUI = (birdPhotoURL, birdObj, score) => {
         });
         enableAnswerButtons(true);
     }
+    updateScore(score);
 };
 
 export const updateScore = (score) => {

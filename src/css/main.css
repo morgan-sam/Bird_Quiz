@@ -8,7 +8,14 @@ button {
   height: 0.7rem;
   display: block;
   text-align: center;
-  vertical-align: middle; }
+  vertical-align: middle;
+  margin: 5px; }
+
+h2 {
+  margin: 20px; }
+
+h4 {
+  margin: 30px; }
 
 .correctButton {
   background-color: lightgreen; }
@@ -25,6 +32,7 @@ button {
   display: block; }
 
 #answerInput {
+  margin: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
