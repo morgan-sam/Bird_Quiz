@@ -23,6 +23,8 @@ const controlGetDatabase = async () => {
     console.log(state.birdData);
 };
 
+document.getElementById('resetDatabase').addEventListener("click", () => controlGetDatabase());
+
 
 window.addEventListener('load', () => {
     state.currentQuiz = new Object;

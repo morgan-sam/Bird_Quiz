@@ -28,16 +28,17 @@ export default class Birds {
 
 
     async getBirdPhoto(birdName, width = 500) {
+        let img;
         try {
             const parsedBirdName = birdName.replace(' ', '_');
             const proxy = 'https://cors-anywhere.herokuapp.com';
             const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
             const res = await axios(`${proxy}/${birdPhotoAPI}`);
-            this.img = res.data.query.pages[Object.keys(res.data.query.pages)[0]].thumbnail.source;
+            img = res.data.query.pages[Object.keys(res.data.query.pages)[0]].thumbnail.source;
         } catch (error) {
             console.log('Could not get image');
         }
-        return this.img;
+        return img;
     }
 
 
