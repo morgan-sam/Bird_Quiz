@@ -4,9 +4,12 @@ import Birds from './model.js';
 import * as view from './view.js';
 import '../css/main.css';
 
+import transparentLoadingGif from '../img/transparentLoading.gif';
+
 const state = {};
 
 state.birdData = new Birds;
+
 
 const controlGetDatabase = async () => {
 
@@ -52,6 +55,7 @@ const controlSetUpFourNameQuiz = async () => {
 
     async function newQuestion() {
 
+        view.loadingGifOverlay(true);
 
         let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
         let chosenBird = randomIntFromInterval(0, 3);

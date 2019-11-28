@@ -2,24 +2,26 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Bird Quiz</title>
+    <meta charset="UTF-8">
+    <title>Bird Quiz</title>
 </head>
 
-
 <body>
-  <div id='fourAnswerOneImgQuiz'>
-    <h2 id='birdTitle'>Which bird is this?</h2>
-    <img id="birdImage" height="400"><br>
-    <div id='answerInput'>
-      <button id="answer-1" class='answerBtn'></button>
-      <button id="answer-2" class='answerBtn'></button>
-      <button id="answer-3" class='answerBtn'></button>
-      <button id="answer-4" class='answerBtn'></button>
+    <div id='fourAnswerOneImgQuiz'>
+        <h2 id='birdTitle'>Which bird is this?</h2>
+        <div id="Frame">
+            <img id="birdImage" height="400">
+            <img id='loadingOverlay' src='./img/transparentLoading.gif'>
+        </div><br>
+        <div id='answerInput'>
+            <button id="answer-1" class='answerBtn'></button>
+            <button id="answer-2" class='answerBtn'></button>
+            <button id="answer-3" class='answerBtn'></button>
+            <button id="answer-4" class='answerBtn'></button>
+        </div>
+        <h4>Score: <span id='score'></span></h4>
     </div>
-    <h4>Score: <span id='score'></span></h4>
-  </div>
-  <button id="resetDatabase">Reset Database</button>
+    <button id="resetDatabase">Reset Database</button>
 </body>
 
 </html>

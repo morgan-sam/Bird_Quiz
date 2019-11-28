@@ -37,3 +37,21 @@ h4 {
   align-items: center;
   justify-content: center;
   flex-direction: column; }
+
+#Frame {
+  position: relative;
+  top: 0;
+  left: 0; }
+
+#birdImage {
+  position: relative;
+  top: 0;
+  left: 0; }
+
+#loadingOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100px;
+  display: none; }
