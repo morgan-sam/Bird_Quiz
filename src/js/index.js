@@ -89,9 +89,8 @@ const controlSetUpFourNameQuiz = async () => {
                 return newQuestion();
             } else {
                 //If not stop program
-                view.clearQuizUI();
                 alert('Could not connect to Wikipedia');
-                return null;
+                return quitQuiz();
             }
         }
 
@@ -103,13 +102,10 @@ const controlSetUpFourNameQuiz = async () => {
         button.addEventListener("click", checkButtonCorrect, false);
     });
 
-    document.getElementById('quitQuiz').addEventListener("click", () => {
-        [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-            button.removeEventListener("click", checkButtonCorrect, false);
-        });
-        view.clearQuizUI();
-        return null;
-    });
+    document.getElementById('quitQuiz').addEventListener("click", function _listener() {
+        quitQuiz();
+        document.getElementById('quitQuiz').removeEventListener("click", _listener, true);
+    }, true);
 
     function checkButtonCorrect(evt) {
         let i = (evt.target.id.replace('answer-', '')) - 1;
@@ -125,6 +121,14 @@ const controlSetUpFourNameQuiz = async () => {
         }
         view.updateScore(state.currentQuiz.score);
     };
+
+    function quitQuiz() {
+        [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+            button.removeEventListener("click", checkButtonCorrect, false);
+        });
+        view.clearQuizUI();
+        return null;
+    }
 
     newQuestion(state.currentQuiz.score);
 };

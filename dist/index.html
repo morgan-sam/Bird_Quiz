@@ -7,11 +7,41 @@
 </head>
 
 <body>
-  <div id='fourAnswerOneImgQuiz'>
+
+  <div id='mainMenu' class="menu active">
+    <h1 id='birdTitle'>Wikipedia API Bird Quiz</h1><br>
+    <div id="mainMenuButtons">
+      <button value='quizSelectMenu' class="navBtn">Start</button>
+      <button value='aboutPage' class="navBtn">About</button>
+      <button id="resetDatabase">Reset Database</button>
+    </div>
+  </div>
+
+
+  <div id="quizSelectMenu" class="menu">
+    <h2 id='quizSelectTitle'>Select a game:</h2>
+    <div id="quizSelectButtons">
+      <button id="fourAnsOneImgBtn">1 Image 4 Answers</button>
+      <button id="oneAnsFourImgBtn">4 Images 1 Answer</button>
+      <button value='mainMenu' class="navBtn">Back to Main Menu</button>
+    </div>
+  </div>
+
+  <div id='aboutPage' class='menu'>
+    <h3>This app was developed with HTML, CSS (SASS) & Javascript</h3>
+    <h3>All content used is provided by The Wikimedia Foundation, Inc</h3>
+    <h3>Created by Sam Morgan, 2019</h3>
+    <div id="aboutPageButtons">
+      <button value='mainMenu' class="navBtn">Back to Main Menu</button>
+    </div>
+  </div>
+
+
+  <div id='fourAnswerOneImgQuiz' class="quiz">
     <h2 id='birdTitle'>Which bird is this?</h2>
     <div id="Frame">
       <img id="birdImage" height="400">
-      <img id='loadingOverlay'>
+      <img id='loadingOverlay' src='./img/transparentLoading.gif'>
     </div><br>
     <div id='answerInput'>
       <button id="answer-1" class='answerBtn'></button>
@@ -20,9 +50,10 @@
       <button id="answer-4" class='answerBtn'></button>
     </div>
     <h4>Score: <span id='score'></span></h4>
+    <div id="quizNavBtns">
+      <button id="quitQuiz" class='quitBtn'>Quit to Main Menu</button>
+    </div>
   </div>
-  <button id="resetDatabase">Reset Database</button>
-  <script type="text/javascript" src="./bundle.js?521e5b01b4c37ebec062"></script>
-</body>
+<script type="text/javascript" src="./bundle.js?1fb6c576f4af8851164f"></script></body>
 
 </html>
