@@ -55,8 +55,19 @@ window.addEventListener('load', () => {
 
 const controlSetUpFourNameQuiz = async () => {
 
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.addEventListener("click", checkButtonCorrect, false);
+    });
+
+    document.getElementById('quitQuiz').addEventListener("click", function _listener() {
+        quitQuiz();
+        document.getElementById('quitQuiz').removeEventListener("click", _listener, true);
+    }, true);
+
     state.currentQuiz.score = 0;
-    state.currentQuiz.buttons = [];
+    state.currentQuiz.questionNumber = 1;
+    view.makeOneMenuVisible(null);
+    view.quizLoadingScreen(true);
 
     async function newQuestion() {
 
@@ -95,17 +106,21 @@ const controlSetUpFourNameQuiz = async () => {
         }
 
         state.currentQuiz.birdObj = birdObj;
-        await view.fourNameQuizUI(birdPhoto, birdObj, state.currentQuiz.score);
+
+
+        //Checks if Image Loaded on first question to load UI so no blank buttons/image appear
+        if (state.currentQuiz.questionNumber === 1) {
+            let questionReady;
+            questionReady = await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score);
+            if (questionReady) {
+                await view.fourNameQuizUI();
+                await view.quizLoadingScreen(false);
+            }
+        } else {
+            //Buttons/image already loaded so no need to load UI
+            await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score);
+        }
     }
-
-    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.addEventListener("click", checkButtonCorrect, false);
-    });
-
-    document.getElementById('quitQuiz').addEventListener("click", function _listener() {
-        quitQuiz();
-        document.getElementById('quitQuiz').removeEventListener("click", _listener, true);
-    }, true);
 
     function checkButtonCorrect(evt) {
         let i = (evt.target.id.replace('answer-', '')) - 1;
@@ -114,6 +129,7 @@ const controlSetUpFourNameQuiz = async () => {
             document.getElementById(`answer-${i+1}`).className += " correctButton";
             view.enableAnswerButtons(false);
             state.currentQuiz.score++;
+            state.currentQuiz.questionNumber++;
             newQuestion();
         } else {
             document.getElementById(`answer-${i+1}`).className += " incorrectButton";

@@ -1,21 +1,24 @@
-export const fourNameQuizUI = (birdPhotoURL, birdObj, score) => {
-
-    makeOneMenuVisible(null);
+export const fourNameQuizUI = () => {
     document.getElementById("fourAnswerOneImgQuiz").classList.add('active');
+};
+
+export const fourNameNewQuestionUI = (birdPhotoURL, birdObj, score) => {
 
     let img = document.getElementById("birdImage");
 
     document.getElementById("birdImage").src = birdPhotoURL;
     document.getElementById("birdImage").height = '400';
-    document.getElementById("birdImage").onload = function() {
+    let imgLoaded = document.getElementById("birdImage").onload = function() {
         resetButtonColor();
         [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
             button.innerHTML = birdObj[i][0];
-            loadingGifOverlay(false);
         });
+        loadingGifOverlay(false);
         enableAnswerButtons(true);
-    }
-    updateScore(score);
+        updateScore(score);
+        return true;
+    }();
+    return imgLoaded;
 };
 
 export const updateScore = (score) => {
@@ -58,4 +61,9 @@ export const clearQuizUI = () => {
         quiz.classList.remove('active');
     });
     makeOneMenuVisible('mainMenu');
-}
+};
+
+export const quizLoadingScreen = (booState) => {
+    let text = document.getElementById("quizLoadingScreen");
+    booState ? text.style.display = 'block' : text.style.display = 'none';
+};
