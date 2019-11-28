@@ -42,6 +42,16 @@ export default class Birds {
         return img;
     }
 
-
-
+    async pingWikipedia() {
+        try {
+            const proxy = 'https://cors-anywhere.herokuapp.com';
+            const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&titles=Bird&prop=pageimages&format=json`;
+            const res = await axios(`${proxy}/${birdPhotoAPI}`);
+            console.log("Wikipedia Pinged");
+        } catch (error) {
+            console.log('Wikipedia NOT Pinged');
+            return false;
+        }
+        return true;
+    }
 }

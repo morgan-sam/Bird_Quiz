@@ -72,15 +72,24 @@ const controlSetUpFourNameQuiz = async () => {
             birdPhoto = await state.birdData.getBirdPhoto(currentBird);
         } catch (err) {
             console.log(err);
-            newQuestion();
-            alert('Something wrong with the search...');
         }
-        //        console.log(birdPhoto);
+
         if (birdPhoto) {
             state.currentQuiz.birdPhoto = birdPhoto;
         } else {
-            return newQuestion();
+            //If program could not get photo check if connection to Wikipedia available
+            let connection = await state.birdData.pingWikipedia();
+            if (connection) {
+                //If so reset question
+                return newQuestion();
+            } else {
+                //If not stop program
+                view.loadingGifOverlay(false);
+                alert('Could not connect to Wikipedia');
+                return null;
+            }
         }
+
         state.currentQuiz.birdObj = birdObj;
         await view.fourNameQuizUI(birdPhoto, birdObj, state.currentQuiz.score);
     }
@@ -92,14 +101,11 @@ const controlSetUpFourNameQuiz = async () => {
     function checkIfAnswerCorrect(i) {
         document.getElementById(`answer-${i+1}`).disabled = true;
         if (state.currentQuiz.birdObj[i][1]) {
-            console.log('You are correct!');
-            view.enableAnswerButtons(false);
             document.getElementById(`answer-${i+1}`).className += " correctButton";
+            view.enableAnswerButtons(false);
             state.currentQuiz.score++;
             newQuestion();
-            console.log(state);
         } else {
-            console.log('That was incorrect.')
             document.getElementById(`answer-${i+1}`).className += " incorrectButton";
             state.currentQuiz.score--;
         }
