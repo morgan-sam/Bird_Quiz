@@ -12,10 +12,6 @@ button {
   margin: 5px;
 }
 
-h2 {
-  // margin: 20px;
-}
-
 h4 {
   margin: 30px;
 }
@@ -39,19 +35,31 @@ h4 {
   > div {
     display: inline-block;
   }
+
+  > h3 {
+    padding: 0.4rem;
+  }
 }
 
-.active {
-  display: block;
-}
-
-#fourAnswerOneImgQuiz {
-  text-align: center;
-  display: none;
+.quiz {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
+  display: none;
+
+  > h2 {
+    padding: 2rem;
+  }
+
+  .quitBtn {
+    display: inline-block;
+  }
+}
+
+.active {
+  display: block;
 }
 
 #answerInput {

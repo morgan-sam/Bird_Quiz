@@ -19,7 +19,7 @@ document.getElementById('fourAnsOneImgBtn').addEventListener("click", () => cont
 });
 
 const controlGetDatabase = async () => {
-    console.log("HELLO");
+
     try {
         await state.birdData.getBirdList();
 
@@ -37,19 +37,17 @@ const controlGetDatabase = async () => {
 
 window.addEventListener('load', () => {
     state.currentQuiz = new Object;
-    async function setUpQuiz() {
+    async function loadLocalDatabase() {
 
         console.log(state.birdData);
         try {
             state.birdData.birds = await JSON.parse(window.localStorage.getItem('localBirdList'));
-            // await controlGetDatabase();
-            // await controlSetUpFourNameQuiz();
 
         } catch (error) {
             console.log(error);
         }
     }
-    setUpQuiz();
+    loadLocalDatabase();
 
 });
 
@@ -58,6 +56,7 @@ window.addEventListener('load', () => {
 const controlSetUpFourNameQuiz = async () => {
 
     state.currentQuiz.score = 0;
+    state.currentQuiz.buttons = [];
 
     async function newQuestion() {
 
@@ -90,7 +89,7 @@ const controlSetUpFourNameQuiz = async () => {
                 return newQuestion();
             } else {
                 //If not stop program
-                view.loadingGifOverlay(false);
+                view.clearQuizUI();
                 alert('Could not connect to Wikipedia');
                 return null;
             }
@@ -101,10 +100,19 @@ const controlSetUpFourNameQuiz = async () => {
     }
 
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.addEventListener("click", () => checkButtonCorrect(i));
+        button.addEventListener("click", checkButtonCorrect, false);
     });
 
-    function checkButtonCorrect(i) {
+    document.getElementById('quitQuiz').addEventListener("click", () => {
+        [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+            button.removeEventListener("click", checkButtonCorrect, false);
+        });
+        view.clearQuizUI();
+        return null;
+    });
+
+    function checkButtonCorrect(evt) {
+        let i = (evt.target.id.replace('answer-', '')) - 1;
         document.getElementById(`answer-${i+1}`).disabled = true;
         if (state.currentQuiz.birdObj[i][1]) {
             document.getElementById(`answer-${i+1}`).className += " correctButton";
@@ -120,7 +128,6 @@ const controlSetUpFourNameQuiz = async () => {
 
     newQuestion(state.currentQuiz.score);
 };
-
 
 function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);

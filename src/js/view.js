@@ -1,7 +1,7 @@
 export const fourNameQuizUI = (birdPhotoURL, birdObj, score) => {
 
     makeOneMenuVisible(null);
-    document.getElementById("fourAnswerOneImgQuiz").style.display = 'block';
+    document.getElementById("fourAnswerOneImgQuiz").classList.add('active');
 
     let img = document.getElementById("birdImage");
 
@@ -52,3 +52,10 @@ export const makeOneMenuVisible = (selection) => {
     });
     if (selection) document.getElementById(selection).classList.add('active');
 };
+
+export const clearQuizUI = () => {
+    document.querySelectorAll('.quiz').forEach(function(quiz) {
+        quiz.classList.remove('active');
+    });
+    makeOneMenuVisible('mainMenu');
+}

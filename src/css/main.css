@@ -28,17 +28,23 @@ h4 {
   display: none; }
   .menu > div {
     display: inline-block; }
+  .menu > h3 {
+    padding: 0.4rem; }
 
-.active {
-  display: block; }
-
-#fourAnswerOneImgQuiz {
-  text-align: center;
-  display: none;
+.quiz {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%); }
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: none; }
+  .quiz > h2 {
+    padding: 2rem; }
+  .quiz .quitBtn {
+    display: inline-block; }
+
+.active {
+  display: block; }
 
 #answerInput {
   margin: 10px;
