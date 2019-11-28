@@ -11,8 +11,15 @@ const state = {};
 state.birdData = new Birds;
 
 
-const controlGetDatabase = async () => {
+document.getElementById('resetDatabase').addEventListener("click", () => controlGetDatabase());
+document.getElementById('fourAnsOneImgBtn').addEventListener("click", () => controlSetUpFourNameQuiz());
 
+[...document.querySelectorAll('.navBtn')].forEach(function(button) {
+    button.addEventListener("click", () => view.makeOneMenuVisible(button.value));
+});
+
+const controlGetDatabase = async () => {
+    console.log("HELLO");
     try {
         await state.birdData.getBirdList();
 
@@ -26,7 +33,6 @@ const controlGetDatabase = async () => {
     console.log(state.birdData);
 };
 
-document.getElementById('resetDatabase').addEventListener("click", () => controlGetDatabase());
 
 
 window.addEventListener('load', () => {
@@ -37,7 +43,7 @@ window.addEventListener('load', () => {
         try {
             state.birdData.birds = await JSON.parse(window.localStorage.getItem('localBirdList'));
             // await controlGetDatabase();
-            await controlSetUpFourNameQuiz();
+            // await controlSetUpFourNameQuiz();
 
         } catch (error) {
             console.log(error);
@@ -95,10 +101,10 @@ const controlSetUpFourNameQuiz = async () => {
     }
 
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.addEventListener("click", () => checkIfAnswerCorrect(i));
+        button.addEventListener("click", () => checkButtonCorrect(i));
     });
 
-    function checkIfAnswerCorrect(i) {
+    function checkButtonCorrect(i) {
         document.getElementById(`answer-${i+1}`).disabled = true;
         if (state.currentQuiz.birdObj[i][1]) {
             document.getElementById(`answer-${i+1}`).className += " correctButton";

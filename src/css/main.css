@@ -8,11 +8,7 @@ button {
   height: 0.7rem;
   display: block;
   text-align: center;
-  vertical-align: middle;
   margin: 5px; }
-
-h2 {
-  margin: 20px; }
 
 h4 {
   margin: 30px; }
@@ -23,13 +19,26 @@ h4 {
 .incorrectButton {
   background-color: darksalmon; }
 
-#fourAnswerOneImgQuiz {
+.menu {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  display: none; }
+  .menu > div {
+    display: inline-block; }
+
+.active {
   display: block; }
+
+#fourAnswerOneImgQuiz {
+  text-align: center;
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); }
 
 #answerInput {
   margin: 10px;
