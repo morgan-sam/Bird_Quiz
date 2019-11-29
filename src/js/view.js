@@ -1,8 +1,4 @@
-export const fourNameQuizUI = () => {
-    document.getElementById("fourAnswerOneImgQuiz").classList.add('active');
-};
-
-export const fourNameNewQuestionUI = (birdPhotoURL, birdObj, score) => {
+export const fourNameNewQuestionUI = (birdPhotoURL, birdObj, score, questionNumber) => {
 
     let img = document.getElementById("birdImage");
 
@@ -13,6 +9,7 @@ export const fourNameNewQuestionUI = (birdPhotoURL, birdObj, score) => {
         [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
             button.innerHTML = birdObj[i][0];
         });
+        document.getElementById("questionNumber").innerHTML = questionNumber;
         loadingGifOverlay(false);
         enableAnswerButtons(true);
         updateScore(score);
@@ -49,21 +46,12 @@ export const loadingGifOverlay = (booState) => {
     booState ? overlay.style.display = 'block' : overlay.style.display = 'none';
 };
 
-export const makeOneMenuVisible = (selection) => {
-    document.querySelectorAll('.menu').forEach(function(menu) {
-        menu.classList.remove('active');
-    });
-    if (selection) document.getElementById(selection).classList.add('active');
-};
-
-export const clearQuizUI = () => {
+export const setToScreen = (screen) => {
     document.querySelectorAll('.quiz').forEach(function(quiz) {
         quiz.classList.remove('active');
     });
-    makeOneMenuVisible('mainMenu');
-};
-
-export const quizLoadingScreen = (booState) => {
-    let text = document.getElementById("quizLoadingScreen");
-    booState ? text.style.display = 'block' : text.style.display = 'none';
-};
+    document.querySelectorAll('.menu').forEach(function(menu) {
+        menu.classList.remove('active');
+    });
+    if (screen) document.getElementById(screen).classList.add('active');
+}

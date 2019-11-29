@@ -15,7 +15,7 @@ document.getElementById('resetDatabase').addEventListener("click", () => control
 document.getElementById('fourAnsOneImgBtn').addEventListener("click", () => controlSetUpFourNameQuiz());
 
 [...document.querySelectorAll('.navBtn')].forEach(function(button) {
-    button.addEventListener("click", () => view.makeOneMenuVisible(button.value));
+    button.addEventListener("click", () => view.setToScreen(button.value));
 });
 
 const controlGetDatabase = async () => {
@@ -58,16 +58,23 @@ const controlSetUpFourNameQuiz = async () => {
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
         button.addEventListener("click", checkButtonCorrect, false);
     });
-
-    document.getElementById('quitQuiz').addEventListener("click", function _listener() {
-        quitQuiz();
-        document.getElementById('quitQuiz').removeEventListener("click", _listener, true);
-    }, true);
-
+    [...document.querySelectorAll('.quitBtn')].forEach(function(button) {
+        button.addEventListener("click", function _listener() {
+            quitQuiz();
+            button.removeEventListener("click", _listener, true);
+        }, true);
+    });
+    /*
+        document.getElementById('quitQuiz').addEventListener("click", function _listener() {
+            quitQuiz();
+            document.getElementById('quitQuiz').removeEventListener("click", _listener, true);
+        }, true);
+    */
     state.currentQuiz.score = 0;
     state.currentQuiz.questionNumber = 1;
-    view.makeOneMenuVisible(null);
-    view.quizLoadingScreen(true);
+    view.setToScreen('quizLoadingScreen');
+
+    newQuestion(state.currentQuiz.score);
 
     async function newQuestion() {
 
@@ -111,14 +118,13 @@ const controlSetUpFourNameQuiz = async () => {
         //Checks if Image Loaded on first question to load UI so no blank buttons/image appear
         if (state.currentQuiz.questionNumber === 1) {
             let questionReady;
-            questionReady = await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score);
+            questionReady = await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score, state.currentQuiz.questionNumber);
             if (questionReady) {
-                await view.fourNameQuizUI();
-                await view.quizLoadingScreen(false);
+                await view.setToScreen('fourAnswerOneImgQuiz');
             }
         } else {
             //Buttons/image already loaded so no need to load UI
-            await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score);
+            await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score, state.currentQuiz.questionNumber);
         }
     }
 
@@ -128,25 +134,36 @@ const controlSetUpFourNameQuiz = async () => {
         if (state.currentQuiz.birdObj[i][1]) {
             document.getElementById(`answer-${i+1}`).className += " correctButton";
             view.enableAnswerButtons(false);
-            state.currentQuiz.score++;
+            state.currentQuiz.score += 2;
             state.currentQuiz.questionNumber++;
-            newQuestion();
+            if (state.currentQuiz.questionNumber > 10) {
+                console.log('game over!');
+                console.log(`Your score is ${state.currentQuiz.score}`);
+                console.log('return to main menu');
+                return quizComplete();
+            } else {
+                newQuestion();
+            }
         } else {
             document.getElementById(`answer-${i+1}`).className += " incorrectButton";
             state.currentQuiz.score--;
         }
         view.updateScore(state.currentQuiz.score);
+
     };
+
+    function quizComplete() {
+        view.setToScreen('quizCompleteScreen');
+    }
 
     function quitQuiz() {
         [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
             button.removeEventListener("click", checkButtonCorrect, false);
         });
-        view.clearQuizUI();
+        view.setToScreen('mainMenu');
         return null;
     }
 
-    newQuestion(state.currentQuiz.score);
 };
 
 function randomIntFromInterval(min, max) { // min and max included

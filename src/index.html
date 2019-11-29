@@ -38,6 +38,7 @@
 
 
   <div id='fourAnswerOneImgQuiz' class="quiz">
+    <h2>Question <span id="questionNumber">0</span>/10</h2>
     <h2 id='birdTitle'>Which bird is this?</h2>
     <div id="Frame">
       <img id="birdImage" height="400">
@@ -51,12 +52,24 @@
     </div>
     <h4>Score: <span id='score'></span></h4>
     <div id="quizNavBtns">
-      <button id="quitQuiz" class='quitBtn'>Quit to Main Menu</button>
+      <button id="exclusion" class='ExBtn'>Add image to exclusion list</button>
+      <button class='quitBtn'>Quit to Main Menu</button>
     </div>
   </div>
+
+  <div id="quizCompleteScreen" class="quiz">
+    <h2>You finished with a score of <span id="score"></span></h2>
+    <h2>You have a completion rate of <span id="scorePercentage"></span>%</h2>
+    <h2>Your personal best is <span id="personalBest"></span></h2><br>
+    <div id="quizNavBtns">
+      <button class='quitBtn'>Quit to Main Menu</button>
+    </div>
+  </div>
+
+
 </body>
 
-<div id="quizLoadingScreen">
+<div id="quizLoadingScreen" class="quiz">
   <h2 id='quizLoadingText'>Now Loading</h2>
 </div>
 

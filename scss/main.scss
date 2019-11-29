@@ -53,13 +53,12 @@ h4 {
     padding: 2rem;
   }
 
-  .quitBtn {
-    display: inline-block;
+  #quizNavBtns {
+    button {
+      display: inline-block;
+      width: 200px;
+    }
   }
-}
-
-.active {
-  display: block;
 }
 
 #answerInput {
@@ -96,5 +95,8 @@ h4 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: none;
+}
+
+.active {
+  display: block;
 }
