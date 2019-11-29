@@ -38,26 +38,41 @@
 
 
   <div id='fourAnswerOneImgQuiz' class="quiz">
+    <h2>Question <span id="questionNumber">0</span>/10</h2>
     <h2 id='birdTitle'>Which bird is this?</h2>
     <div id="Frame">
       <img id="birdImage" height="400">
       <img id='loadingOverlay' src='./img/transparentLoading.gif'>
     </div><br>
     <div id='answerInput'>
-      <button id="answer-1" class='answerBtn'></button>
-      <button id="answer-2" class='answerBtn'></button>
-      <button id="answer-3" class='answerBtn'></button>
-      <button id="answer-4" class='answerBtn'></button>
+      <!-- <button id="answer-1" class='answerBtn' style="background: url('./img/transparentLoading.gif'); background-size: 100% 100%;"></button> -->
+      <button id="answer-1" class='answerBtn'><img id="answer-1-bg" class='answerBtnBg'></button>
+      <button id="answer-2" class='answerBtn'><img id="answer-2-bg" class='answerBtnBg'></button>
+      <button id="answer-3" class='answerBtn'><img id="answer-3-bg" class='answerBtnBg'></button>
+      <button id="answer-4" class='answerBtn'><img id="answer-4-bg" class='answerBtnBg'></button>
     </div>
     <h4>Score: <span id='score'></span></h4>
     <div id="quizNavBtns">
-      <button id="quitQuiz" class='quitBtn'>Quit to Main Menu</button>
+      <button id="exclusion" class='ExBtn'>Add image to exclusion list</button>
+      <button class='quitBtn'>Quit to Main Menu</button>
     </div>
   </div>
-<script type="text/javascript" src="./bundle.js?405470242209378cf723"></script></body>
 
-<div id="quizLoadingScreen">
-  <h2 id='quizLoadingText'>Now Loading</h2>
-</div>
+  <div id="quizCompleteScreen" class="quiz">
+    <h2>You finished with a score of <span id="scoreValue"></span></h2>
+    <h2>You had a completion rate of <span id="scorePercentage"></span>%</h2>
+    <h2>Your personal best is <span id="personalBest"></span>%</h2><br>
+    <div id="quizNavBtns">
+      <button class='quitBtn'>Quit to Main Menu</button>
+    </div>
+  </div>
+
+  <div id="quizLoadingScreen" class="quiz">
+    <h2 id='quizLoadingText'>Now Loading</h2>
+  </div>
+
+
+<script type="text/javascript" src="./bundle.js?21d0fd733b133e416056"></script></body>
+
 
 </html>

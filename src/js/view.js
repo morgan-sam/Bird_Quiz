@@ -54,10 +54,14 @@ export const setToScreen = (screen) => {
         menu.classList.remove('active');
     });
     if (screen) document.getElementById(screen).classList.add('active');
-}
+};
 
 export const updateGameCompleteScreen = (score, percentage, personalBest) => {
     document.getElementById("scoreValue").innerHTML = score;
     document.getElementById("scorePercentage").innerHTML = percentage;
     document.getElementById("personalBest").innerHTML = personalBest;
-}
+};
+
+export const setToQuizTwo = () => {
+    document.getElementById('fourAnswerOneImgQuiz').classList.add('quizTwo');
+};

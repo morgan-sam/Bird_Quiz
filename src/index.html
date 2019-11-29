@@ -45,10 +45,11 @@
       <img id='loadingOverlay' src='./img/transparentLoading.gif'>
     </div><br>
     <div id='answerInput'>
-      <button id="answer-1" class='answerBtn'></button>
-      <button id="answer-2" class='answerBtn'></button>
-      <button id="answer-3" class='answerBtn'></button>
-      <button id="answer-4" class='answerBtn'></button>
+      <!-- <button id="answer-1" class='answerBtn' style="background: url('./img/transparentLoading.gif'); background-size: 100% 100%;"></button> -->
+      <button id="answer-1" class='answerBtn'><img id="answer-1-bg" class='answerBtnBg'></button>
+      <button id="answer-2" class='answerBtn'><img id="answer-2-bg" class='answerBtnBg'></button>
+      <button id="answer-3" class='answerBtn'><img id="answer-3-bg" class='answerBtnBg'></button>
+      <button id="answer-4" class='answerBtn'><img id="answer-4-bg" class='answerBtnBg'></button>
     </div>
     <h4>Score: <span id='score'></span></h4>
     <div id="quizNavBtns">
@@ -66,11 +67,12 @@
     </div>
   </div>
 
+  <div id="quizLoadingScreen" class="quiz">
+    <h2 id='quizLoadingText'>Now Loading</h2>
+  </div>
+
 
 </body>
 
-<div id="quizLoadingScreen" class="quiz">
-  <h2 id='quizLoadingText'>Now Loading</h2>
-</div>
 
 </html>
