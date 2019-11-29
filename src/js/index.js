@@ -30,6 +30,11 @@ const controlGetDatabase = async () => {
 
     state.birdData.parseBirdList();
     window.localStorage.setItem('localBirdList', JSON.stringify(state.birdData.birds));
+    state.highscores = {
+        quizOne: 0,
+        quizTwo: 0,
+        quizThree: 0
+    }
     console.log(state.birdData);
 };
 
@@ -42,6 +47,7 @@ window.addEventListener('load', () => {
         console.log(state.birdData);
         try {
             state.birdData.birds = await JSON.parse(window.localStorage.getItem('localBirdList'));
+            state.highscores = await JSON.parse(window.localStorage.getItem('highscores'));
 
         } catch (error) {
             console.log(error);
@@ -64,12 +70,7 @@ const controlSetUpFourNameQuiz = async () => {
             button.removeEventListener("click", _listener, true);
         }, true);
     });
-    /*
-        document.getElementById('quitQuiz').addEventListener("click", function _listener() {
-            quitQuiz();
-            document.getElementById('quitQuiz').removeEventListener("click", _listener, true);
-        }, true);
-    */
+
     state.currentQuiz.score = 0;
     state.currentQuiz.questionNumber = 1;
     view.setToScreen('quizLoadingScreen');
@@ -137,22 +138,31 @@ const controlSetUpFourNameQuiz = async () => {
             state.currentQuiz.score += 2;
             state.currentQuiz.questionNumber++;
             if (state.currentQuiz.questionNumber > 10) {
-                console.log('game over!');
-                console.log(`Your score is ${state.currentQuiz.score}`);
-                console.log('return to main menu');
-                return quizComplete();
+                setTimeout(function() {
+                    return quizComplete();
+                }, 1000);
+                return null;
             } else {
                 newQuestion();
             }
         } else {
+            //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
             document.getElementById(`answer-${i+1}`).className += " incorrectButton";
-            state.currentQuiz.score--;
+            state.currentQuiz.score -= document.querySelectorAll('.incorrectButton').length;
         }
         view.updateScore(state.currentQuiz.score);
 
     };
 
     function quizComplete() {
+        state.currentQuiz.scorePercentage = 100 * (state.currentQuiz.score + 40) / 60;
+        if (state.currentQuiz.scorePercentage > state.highscores.quizOne) {
+            state.highscores.quizOne = state.currentQuiz.scorePercentage;
+            window.localStorage.setItem('highscores', JSON.stringify(state.highscores));
+        }
+        let roundedPercentage = Math.round(state.currentQuiz.scorePercentage * 100) / 100;
+        let roundedHighscore = Math.round(state.highscores.quizOne * 100) / 100;
+        view.updateGameCompleteScreen(state.currentQuiz.score, roundedPercentage, roundedHighscore);
         view.setToScreen('quizCompleteScreen');
     }
 

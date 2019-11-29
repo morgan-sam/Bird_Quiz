@@ -55,3 +55,9 @@ export const setToScreen = (screen) => {
     });
     if (screen) document.getElementById(screen).classList.add('active');
 }
+
+export const updateGameCompleteScreen = (score, percentage, personalBest) => {
+    document.getElementById("scoreValue").innerHTML = score;
+    document.getElementById("scorePercentage").innerHTML = percentage;
+    document.getElementById("personalBest").innerHTML = personalBest;
+}
