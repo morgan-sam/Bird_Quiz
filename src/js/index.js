@@ -181,19 +181,12 @@ const controlSetUpFourImageQuiz = async () => {
     view.setToScreen('fourAnswerOneImgQuiz');
     view.setToQuizTwo();
 
-
-    let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
-    let chosenBird = randomIntFromInterval(0, 3);
-
-    let birdObj = Object.assign({}, birdArray);
-    Object.keys(birdObj).map(function(key, index) {
-        birdObj[key] = [birdObj[key], index === chosenBird ? true : false];
-    });
-
+    let birdsObjArr = getFourBirdArr();
+    let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
 
     let birdPhotoArray = [];
     for (let i = 0; i < 4; i++) {
-        let currentBird = birdArray[i];
+        let currentBird = birdsObjArr[i].bird;
         let birdPhoto;
         try {
             birdPhoto = await state.birdData.getBirdPhoto(currentBird);
@@ -207,7 +200,6 @@ const controlSetUpFourImageQuiz = async () => {
     }
     await console.log(birdPhotoArray);
 
-
     for (let i = 0; i < 4; i++) {
         await [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
             button.style.backgroundImage = `url(${birdPhotoArray[i]})`;
@@ -219,9 +211,24 @@ const controlSetUpFourImageQuiz = async () => {
         });
     }
 
-    view.updateQuizTwoQuestion(`Which one is the ${birdArray[chosenBird]}?`);
-
+    view.updateQuizTwoQuestion(`Which one is the ${chosenBird}?`);
+    getFourBirdArr();
 }
+
+function getFourBirdArr() {
+    let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
+    let chosenBird = randomIntFromInterval(0, 3);
+    let birdObjArr = [];
+
+    birdArray.forEach(function(el, i) {
+        birdObjArr[i] = {
+            bird: el,
+            chosen: i === chosenBird ? true : false
+        }
+    });
+
+    return birdObjArr;
+};
 
 function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
