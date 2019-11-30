@@ -5,7 +5,6 @@ import * as view from './view.js';
 import '../css/main.css';
 
 import transparentLoadingGif from '../img/transparentLoading.gif';
-import rainbow from '../img/rainbow.png';
 
 const state = {};
 
@@ -220,12 +219,8 @@ const controlSetUpFourImageQuiz = async () => {
         });
     }
 
-    /*
-        await console.log(birdPhotos);
-        await [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-            button.style.background = birdPhotos[i];
-        });
-        */
+    view.updateQuizTwoQuestion(`Which one is the ${birdArray[chosenBird]}?`);
+
 }
 
 function randomIntFromInterval(min, max) { // min and max included

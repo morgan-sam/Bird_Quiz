@@ -65,3 +65,7 @@ export const updateGameCompleteScreen = (score, percentage, personalBest) => {
 export const setToQuizTwo = () => {
     document.getElementById('fourAnswerOneImgQuiz').classList.add('quizTwo');
 };
+
+export const updateQuizTwoQuestion = (questionText) => {
+    document.getElementById("birdQuestion").innerHTML = questionText;
+};

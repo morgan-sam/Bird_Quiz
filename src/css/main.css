@@ -79,19 +79,29 @@ h4 {
 .active {
   display: block; }
 
+.quizTwo h2 {
+  padding: 1.4rem; }
+
+.quizTwo > #Frame {
+  display: none; }
+
 .quizTwo > #answerInput {
   display: grid;
   grid-row: auto auto;
-  height: 1000px;
-  width: 1000px;
-  grid-template-columns: 500px 500px; }
+  height: 40rem;
+  width: 40rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  justify-items: center; }
   .quizTwo > #answerInput .answerBtn {
     display: flex;
     background-color: transparent;
     overflow: hidden;
     border: 4px solid #ccc;
-    height: 400px;
-    width: 400px;
+    height: 20rem;
+    width: 20rem;
     margin: 0;
     padding: 0;
     background-position: center;
