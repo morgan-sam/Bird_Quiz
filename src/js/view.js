@@ -1,4 +1,4 @@
-export const fourNameNewQuestionUI = (birdPhotoURL, birdObj, score, questionNumber) => {
+export const fourNameNewQuestionUI = (birdPhotoURL, birdObjArr, score, questionNumber) => {
 
     let img = document.getElementById("birdImage");
 
@@ -7,7 +7,7 @@ export const fourNameNewQuestionUI = (birdPhotoURL, birdObj, score, questionNumb
     let imgLoaded = document.getElementById("birdImage").onload = function() {
         resetButtonColor();
         [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-            button.innerHTML = birdObj[i][0];
+            button.innerHTML = birdObjArr[i].bird;
         });
         document.getElementById("questionNumber").innerHTML = questionNumber;
         loadingGifOverlay(false);

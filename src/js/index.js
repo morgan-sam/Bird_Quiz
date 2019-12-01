@@ -82,19 +82,12 @@ const controlSetUpFourNameQuiz = async () => {
 
         view.loadingGifOverlay(true);
 
-        let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
-        let chosenBird = randomIntFromInterval(0, 3);
+        let birdsObjArr = getFourBirdArr();
+        let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
 
-        let birdObj = Object.assign({}, birdArray);
-        Object.keys(birdObj).map(function(key, index) {
-            birdObj[key] = [birdObj[key], index === chosenBird ? true : false];
-        });
-
-
-        let currentBird = birdArray[chosenBird];
         let birdPhoto;
         try {
-            birdPhoto = await state.birdData.getBirdPhoto(currentBird);
+            birdPhoto = await state.birdData.getBirdPhoto(chosenBird);
         } catch (err) {
             console.log(err);
         }
@@ -114,26 +107,25 @@ const controlSetUpFourNameQuiz = async () => {
             }
         }
 
-        state.currentQuiz.birdObj = birdObj;
-
+        state.currentQuiz.birdObjArr = birdsObjArr;
 
         //Checks if Image Loaded on first question to load UI so no blank buttons/image appear
         if (state.currentQuiz.questionNumber === 1) {
             let questionReady;
-            questionReady = await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score, state.currentQuiz.questionNumber);
+            questionReady = await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
             if (questionReady) {
                 await view.setToScreen('fourAnswerOneImgQuiz');
             }
         } else {
             //Buttons/image already loaded so no need to load UI
-            await view.fourNameNewQuestionUI(birdPhoto, birdObj, state.currentQuiz.score, state.currentQuiz.questionNumber);
+            await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
         }
     }
 
     function checkButtonCorrect(evt) {
         let i = (evt.target.id.replace('answer-', '')) - 1;
         document.getElementById(`answer-${i+1}`).disabled = true;
-        if (state.currentQuiz.birdObj[i][1]) {
+        if (state.currentQuiz.birdObjArr[i].chosen) {
             document.getElementById(`answer-${i+1}`).className += " correctButton";
             view.enableAnswerButtons(false);
             state.currentQuiz.score += 2;
