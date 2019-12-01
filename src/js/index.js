@@ -92,18 +92,8 @@ const controlSetUpFourNameQuiz = async () => {
         if (birdPhoto) {
             state.currentQuiz.birdPhoto = birdPhoto;
         } else {
-            //If program could not get photo check if connection to Wikipedia available
-            let connection = await state.birdData.pingWikipedia();
-            if (connection) {
-                //If so reset question
-                return newQuestion();
-            } else {
-                //If not stop program
-                alert('Could not connect to Wikipedia');
-                return quitQuiz();
-            }
+            return testConnection(newQuestion, quitQuiz);
         }
-
 
         //Checks if Image Loaded on first question to load UI so no blank buttons/image appear
         if (state.currentQuiz.questionNumber === 1) {
@@ -175,9 +165,9 @@ const controlSetUpFourImageQuiz = async () => {
     let birdPhotoArray = [];
     for (let i = 0; i < birdsObjArr.length; i++) {
         birdPhotoArray[i] = await loadBirdPhoto(birdsObjArr[i].bird);
-        //next line return will be changed to new question function
-        if (birdPhotoArray[i] === false) return controlSetUpFourImageQuiz();
     };
+    //next line return will be changed to new question function
+    if (birdPhotoArray.includes(false)) return testConnection(controlSetUpFourImageQuiz, view.setToScreen);
 
     for (let i = 0; i < 4; i++) {
         await [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
@@ -217,6 +207,19 @@ async function loadBirdPhoto(bird) {
     }
     return birdPhoto;
 };
+
+async function testConnection(successFn, failureFn) {
+    //If program could not get photo check if connection to Wikipedia available
+    let connection = await state.birdData.pingWikipedia();
+    if (connection) {
+        //If so reset question
+        return successFn();
+    } else {
+        //If not stop program
+        alert('Could not connect to Wikipedia');
+        return failureFn();
+    }
+}
 
 function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
