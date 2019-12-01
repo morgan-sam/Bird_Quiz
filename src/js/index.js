@@ -83,14 +83,11 @@ const controlSetUpFourNameQuiz = async () => {
         view.loadingGifOverlay(true);
 
         let birdsObjArr = getFourBirdArr();
+        state.currentQuiz.birdObjArr = birdsObjArr;
+
         let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
 
-        let birdPhoto;
-        try {
-            birdPhoto = await state.birdData.getBirdPhoto(chosenBird);
-        } catch (err) {
-            console.log(err);
-        }
+        let birdPhoto = await loadBirdPhoto(chosenBird);
 
         if (birdPhoto) {
             state.currentQuiz.birdPhoto = birdPhoto;
@@ -107,7 +104,6 @@ const controlSetUpFourNameQuiz = async () => {
             }
         }
 
-        state.currentQuiz.birdObjArr = birdsObjArr;
 
         //Checks if Image Loaded on first question to load UI so no blank buttons/image appear
         if (state.currentQuiz.questionNumber === 1) {
@@ -177,20 +173,11 @@ const controlSetUpFourImageQuiz = async () => {
     let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
 
     let birdPhotoArray = [];
-    for (let i = 0; i < 4; i++) {
-        let currentBird = birdsObjArr[i].bird;
-        let birdPhoto;
-        try {
-            birdPhoto = await state.birdData.getBirdPhoto(currentBird);
-        } catch (err) {
-            console.log(err);
-        }
-
-        if (birdPhoto) {
-            birdPhotoArray[i] = birdPhoto;
-        }
-    }
-    await console.log(birdPhotoArray);
+    for (let i = 0; i < birdsObjArr.length; i++) {
+        birdPhotoArray[i] = await loadBirdPhoto(birdsObjArr[i].bird);
+        //next line return will be changed to new question function
+        if (birdPhotoArray[i] === false) return controlSetUpFourImageQuiz();
+    };
 
     for (let i = 0; i < 4; i++) {
         await [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
@@ -204,7 +191,6 @@ const controlSetUpFourImageQuiz = async () => {
     }
 
     view.updateQuizTwoQuestion(`Which one is the ${chosenBird}?`);
-    getFourBirdArr();
 }
 
 function getFourBirdArr() {
@@ -220,6 +206,16 @@ function getFourBirdArr() {
     });
 
     return birdObjArr;
+};
+
+async function loadBirdPhoto(bird) {
+    let birdPhoto;
+    try {
+        birdPhoto = await state.birdData.getBirdPhoto(bird);
+    } catch (error) {
+        birdPhoto = false;
+    }
+    return birdPhoto;
 };
 
 function randomIntFromInterval(min, max) { // min and max included
