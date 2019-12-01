@@ -76,7 +76,7 @@ const controlSetUpFourNameQuiz = async () => {
     state.currentQuiz.questionNumber = 1;
     view.setToScreen('quizLoadingScreen');
 
-    newQuestion(state.currentQuiz.score);
+    newQuestion();
 
     async function newQuestion() {
 
@@ -88,19 +88,15 @@ const controlSetUpFourNameQuiz = async () => {
         let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
 
         let birdPhoto = await loadBirdPhoto(chosenBird);
+        if (!birdPhoto) return testConnection(newQuestion, quitQuiz);
 
-        if (birdPhoto) {
-            state.currentQuiz.birdPhoto = birdPhoto;
-        } else {
-            return testConnection(newQuestion, quitQuiz);
-        }
 
         //Checks if Image Loaded on first question to load UI so no blank buttons/image appear
         if (state.currentQuiz.questionNumber === 1) {
             let questionReady;
             questionReady = await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
             if (questionReady) {
-                await view.setToScreen('fourAnswerOneImgQuiz');
+                await view.setToScreen('quizScreen');
             }
         } else {
             //Buttons/image already loaded so no need to load UI
@@ -156,7 +152,6 @@ const controlSetUpFourNameQuiz = async () => {
 
 
 const controlSetUpFourImageQuiz = async () => {
-    view.setToScreen('fourAnswerOneImgQuiz');
     view.setToQuizTwo();
 
     let birdsObjArr = getFourBirdArr();
@@ -169,18 +164,7 @@ const controlSetUpFourImageQuiz = async () => {
     //next line return will be changed to new question function
     if (birdPhotoArray.includes(false)) return testConnection(controlSetUpFourImageQuiz, view.setToScreen);
 
-    for (let i = 0; i < 4; i++) {
-        await [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-            button.style.backgroundImage = `url(${birdPhotoArray[i]})`;
-        });
-        await [...document.querySelectorAll('.answerBtnBg')].forEach(function(buttonBg, i) {
-            buttonBg.style.backgroundImage = `url(${birdPhotoArray[i]})`;
-            buttonBg.style.filter = 'blur(3px)';
-            buttonBg.style.zIndex = '-1';
-        });
-    }
-
-    view.updateQuizTwoQuestion(`Which one is the ${chosenBird}?`);
+    await view.fourImgNewQuestionUI(birdPhotoArray, chosenBird, state.currentQuiz.score, state.currentQuiz.questionNumber);
 }
 
 function getFourBirdArr() {

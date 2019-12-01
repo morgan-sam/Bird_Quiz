@@ -18,6 +18,21 @@ export const fourNameNewQuestionUI = (birdPhotoURL, birdObjArr, score, questionN
     return imgLoaded;
 };
 
+export const fourImgNewQuestionUI = (birdPhotoArray, chosenBird, score, questionNumber) => {
+
+    for (let i = 0; i < 4; i++) {
+        [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+            button.style.backgroundImage = `url(${birdPhotoArray[i]})`;
+        });
+        [...document.querySelectorAll('.answerBtnBg')].forEach(function(buttonBg, i) {
+            buttonBg.style.backgroundImage = `url(${birdPhotoArray[i]})`;
+            buttonBg.style.filter = 'blur(3px)';
+            buttonBg.style.zIndex = '-1';
+        });
+    };
+    document.getElementById("birdQuestion").innerHTML = `Which one is the ${chosenBird}?`;
+};
+
 export const updateScore = (score) => {
     document.getElementById("score").innerHTML = score;
 };
@@ -63,9 +78,6 @@ export const updateGameCompleteScreen = (score, percentage, personalBest) => {
 };
 
 export const setToQuizTwo = () => {
-    document.getElementById('fourAnswerOneImgQuiz').classList.add('quizTwo');
-};
-
-export const updateQuizTwoQuestion = (questionText) => {
-    document.getElementById("birdQuestion").innerHTML = questionText;
+    setToScreen('quizScreen');
+    document.getElementById('quizScreen').classList.add('quizTwo');
 };
