@@ -12,8 +12,8 @@ state.birdData = new Birds;
 
 
 document.getElementById('resetDatabase').addEventListener("click", () => controlGetDatabase());
-document.getElementById('fourAnsOneImgBtn').addEventListener("click", () => controlSetUpFourNameQuiz());
-document.getElementById('oneAnsFourImgBtn').addEventListener("click", () => controlSetUpFourImageQuiz());
+document.getElementById('fourAnsOneImgBtn').addEventListener("click", () => startQuiz(1));
+document.getElementById('oneAnsFourImgBtn').addEventListener("click", () => startQuiz(2));
 
 [...document.querySelectorAll('.navBtn')].forEach(function(button) {
     button.addEventListener("click", () => view.setToScreen(button.value));
@@ -60,7 +60,7 @@ window.addEventListener('load', () => {
 
 
 
-const controlSetUpFourNameQuiz = async () => {
+const startQuiz = async (quizNumber) => {
 
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
         button.addEventListener("click", checkButtonCorrect, false);
@@ -76,9 +76,8 @@ const controlSetUpFourNameQuiz = async () => {
     state.currentQuiz.questionNumber = 1;
     view.setToScreen('quizLoadingScreen');
 
-    newQuestion();
 
-    async function newQuestion() {
+    const fourAnswerQuizQuestion = async () => {
 
         view.loadingGifOverlay(true);
 
@@ -102,6 +101,66 @@ const controlSetUpFourNameQuiz = async () => {
             //Buttons/image already loaded so no need to load UI
             await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
         }
+
+    }
+
+    const fourImageQuizQuestion = async () => {
+        view.setToQuizTwo();
+
+        let birdsObjArr = getFourBirdArr();
+        let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
+
+        let birdPhotoArray = [];
+        for (let i = 0; i < birdsObjArr.length; i++) {
+            birdPhotoArray[i] = await loadBirdPhoto(birdsObjArr[i].bird);
+        };
+        //next line return will be changed to new question function
+        if (birdPhotoArray.includes(false)) return testConnection(fourImageQuizQuestion, view.setToScreen);
+
+        await view.fourImgNewQuestionUI(birdPhotoArray, chosenBird, state.currentQuiz.score, state.currentQuiz.questionNumber);
+    }
+
+
+    if (quizNumber === 1) state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
+    if (quizNumber === 2) state.currentQuiz.quizFunction = fourImageQuizQuestion;
+    state.currentQuiz.quizFunction();
+
+    function getFourBirdArr() {
+        let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
+        let chosenBird = randomIntFromInterval(0, 3);
+        let birdObjArr = [];
+
+        birdArray.forEach(function(el, i) {
+            birdObjArr[i] = {
+                bird: el,
+                chosen: i === chosenBird ? true : false
+            }
+        });
+
+        return birdObjArr;
+    };
+
+    async function loadBirdPhoto(bird) {
+        let birdPhoto;
+        try {
+            birdPhoto = await state.birdData.getBirdPhoto(bird);
+        } catch (error) {
+            birdPhoto = false;
+        }
+        return birdPhoto;
+    };
+
+    async function testConnection(successFn, failureFn) {
+        //If program could not get photo check if connection to Wikipedia available
+        let connection = await state.birdData.pingWikipedia();
+        if (connection) {
+            //If so reset question
+            return successFn();
+        } else {
+            //If not stop program
+            alert('Could not connect to Wikipedia');
+            return failureFn();
+        }
     }
 
     function checkButtonCorrect(evt) {
@@ -117,7 +176,7 @@ const controlSetUpFourNameQuiz = async () => {
                     return quizComplete();
                 }, 1000);
             } else {
-                newQuestion();
+                state.currentQuiz.quizFunction();
             }
         } else {
             //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
@@ -147,63 +206,10 @@ const controlSetUpFourNameQuiz = async () => {
         view.setToScreen('mainMenu');
         return null;
     }
-
 };
 
 
-const controlSetUpFourImageQuiz = async () => {
-    view.setToQuizTwo();
 
-    let birdsObjArr = getFourBirdArr();
-    let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
-
-    let birdPhotoArray = [];
-    for (let i = 0; i < birdsObjArr.length; i++) {
-        birdPhotoArray[i] = await loadBirdPhoto(birdsObjArr[i].bird);
-    };
-    //next line return will be changed to new question function
-    if (birdPhotoArray.includes(false)) return testConnection(controlSetUpFourImageQuiz, view.setToScreen);
-
-    await view.fourImgNewQuestionUI(birdPhotoArray, chosenBird, state.currentQuiz.score, state.currentQuiz.questionNumber);
-}
-
-function getFourBirdArr() {
-    let birdArray = [...Array(4).keys()].map(el => state.birdData.birds[Math.floor(Math.random() * state.birdData.birds.length)]);
-    let chosenBird = randomIntFromInterval(0, 3);
-    let birdObjArr = [];
-
-    birdArray.forEach(function(el, i) {
-        birdObjArr[i] = {
-            bird: el,
-            chosen: i === chosenBird ? true : false
-        }
-    });
-
-    return birdObjArr;
-};
-
-async function loadBirdPhoto(bird) {
-    let birdPhoto;
-    try {
-        birdPhoto = await state.birdData.getBirdPhoto(bird);
-    } catch (error) {
-        birdPhoto = false;
-    }
-    return birdPhoto;
-};
-
-async function testConnection(successFn, failureFn) {
-    //If program could not get photo check if connection to Wikipedia available
-    let connection = await state.birdData.pingWikipedia();
-    if (connection) {
-        //If so reset question
-        return successFn();
-    } else {
-        //If not stop program
-        alert('Could not connect to Wikipedia');
-        return failureFn();
-    }
-}
 
 function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
