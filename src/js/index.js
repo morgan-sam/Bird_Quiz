@@ -78,7 +78,6 @@ const startQuiz = async (quizNumber) => {
 
 
     const fourAnswerQuizQuestion = async () => {
-
         view.loadingGifOverlay(true);
 
         let birdsObjArr = getFourBirdArr();
@@ -87,37 +86,27 @@ const startQuiz = async (quizNumber) => {
         let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
 
         let birdPhoto = await loadBirdPhoto(chosenBird);
-        if (!birdPhoto) return testConnection(newQuestion, quitQuiz);
+        if (!birdPhoto) return testConnection(fourAnswerQuizQuestion, quitQuiz);
 
-
-        //Checks if Image Loaded on first question to load UI so no blank buttons/image appear
-        if (state.currentQuiz.questionNumber === 1) {
-            let questionReady;
-            questionReady = await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
-            if (questionReady) {
-                await view.setToScreen('quizScreen');
-            }
-        } else {
-            //Buttons/image already loaded so no need to load UI
-            await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
-        }
-
+        await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
+        if (state.currentQuiz.questionNumber === 1) await view.setToScreen('quizScreen');
     }
 
     const fourImageQuizQuestion = async () => {
         view.setToQuizTwo();
 
         let birdsObjArr = getFourBirdArr();
+        state.currentQuiz.birdObjArr = birdsObjArr;
         let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
 
         let birdPhotoArray = [];
         for (let i = 0; i < birdsObjArr.length; i++) {
             birdPhotoArray[i] = await loadBirdPhoto(birdsObjArr[i].bird);
         };
-        //next line return will be changed to new question function
-        if (birdPhotoArray.includes(false)) return testConnection(fourImageQuizQuestion, view.setToScreen);
+        if (birdPhotoArray.includes(false)) return testConnection(fourImageQuizQuestion, quitQuiz);
 
         await view.fourImgNewQuestionUI(birdPhotoArray, chosenBird, state.currentQuiz.score, state.currentQuiz.questionNumber);
+        if (state.currentQuiz.questionNumber === 1) await view.setToScreen('quizScreen');
     }
 
 
@@ -166,6 +155,7 @@ const startQuiz = async (quizNumber) => {
     function checkButtonCorrect(evt) {
         let i = (evt.target.id.replace('answer-', '')) - 1;
         document.getElementById(`answer-${i+1}`).disabled = true;
+        // document.getElementById(`answer-${i+1}`).style.opacity = 0.5;
         if (state.currentQuiz.birdObjArr[i].chosen) {
             document.getElementById(`answer-${i+1}`).className += " correctButton";
             view.enableAnswerButtons(false);

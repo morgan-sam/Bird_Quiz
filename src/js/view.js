@@ -31,6 +31,9 @@ export const fourImgNewQuestionUI = (birdPhotoArray, chosenBird, score, question
         });
     };
     document.getElementById("birdQuestion").innerHTML = `Which one is the ${chosenBird}?`;
+    document.getElementById("questionNumber").innerHTML = questionNumber;
+    enableAnswerButtons(true);
+    updateScore(score);
 };
 
 export const updateScore = (score) => {
@@ -78,6 +81,6 @@ export const updateGameCompleteScreen = (score, percentage, personalBest) => {
 };
 
 export const setToQuizTwo = () => {
-    setToScreen('quizScreen');
     document.getElementById('quizScreen').classList.add('quizTwo');
+    updateScore(score);
 };
