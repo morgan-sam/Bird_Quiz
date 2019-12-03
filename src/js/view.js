@@ -34,9 +34,12 @@ export const fourImgNewQuestionUI = (birdPhotoArray, chosenBird, score, question
     document.getElementById("questionNumber").innerHTML = questionNumber;
     enableAnswerButtons(true);
     updateScore(score);
+    unblurAnswerButtons();
+    removeAnswerButtonBorders();
 };
 
 export const updateScore = (score) => {
+    console.log(score);
     document.getElementById("score").innerHTML = score;
 };
 
@@ -65,6 +68,12 @@ export const unblurAnswerButtons = () => {
     });
 };
 
+export const removeAnswerButtonBorders = () => {
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.style.border = 'none';
+    });
+};
+
 export const loadingGifOverlay = (booState) => {
     let overlay = document.getElementById("loadingOverlay");
     booState ? overlay.style.display = 'block' : overlay.style.display = 'none';
@@ -88,5 +97,4 @@ export const updateGameCompleteScreen = (score, percentage, personalBest) => {
 
 export const setToQuizTwo = () => {
     document.getElementById('quizScreen').classList.add('quizTwo');
-    updateScore(score);
 };

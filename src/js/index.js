@@ -106,7 +106,7 @@ const startQuiz = async (quizNumber) => {
         if (birdPhotoArray.includes(false)) return testConnection(fourImageQuizQuestion, quitQuiz);
 
         await view.fourImgNewQuestionUI(birdPhotoArray, chosenBird, state.currentQuiz.score, state.currentQuiz.questionNumber);
-        await view.unblurAnswerButtons();
+
         if (state.currentQuiz.questionNumber === 1) await view.setToScreen('quizScreen');
     }
 
@@ -175,7 +175,7 @@ const startQuiz = async (quizNumber) => {
             document.getElementById(`answer-${i+1}`).className += " incorrectButton";
             if (quizNumber === 2) document.getElementById(`answer-${i+1}`).style.opacity = 0.5;
             if (quizNumber === 2) document.getElementById(`answer-${i+1}`).style.border = '5px solid red';
-            state.currentQuiz.score -= document.querySelectorAll('.incorrectButton').length;
+            state.currentQuiz.score -= parseInt(document.querySelectorAll('.incorrectButton').length);
         }
         view.updateScore(state.currentQuiz.score);
 
