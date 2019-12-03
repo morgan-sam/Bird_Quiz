@@ -6,8 +6,8 @@ export const fourNameNewQuestionUI = (birdPhotoURL, birdObjArr, score, questionN
     document.getElementById("birdImage").height = '400';
     let imgLoaded = document.getElementById("birdImage").onload = function() {
         resetButtonColor();
-        [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-            button.innerHTML = birdObjArr[i].bird;
+        [...document.querySelectorAll('.answerBtnText')].forEach(function(span, i) {
+            span.innerHTML = birdObjArr[i].bird;
         });
         document.getElementById("questionNumber").innerHTML = questionNumber;
         loadingGifOverlay(false);
@@ -41,8 +41,8 @@ export const updateScore = (score) => {
 };
 
 export const clearButtons = () => {
-    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.innerHTML = '';
+    [...document.querySelectorAll('.answerBtnText')].forEach(function(buttonText, i) {
+        buttonText.innerHTML = '';
     });
 };
 
@@ -56,6 +56,12 @@ export const resetButtonColor = () => {
 export const enableAnswerButtons = (booState) => {
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
         button.disabled = !booState;
+    });
+};
+
+export const unblurAnswerButtons = () => {
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.style.opacity = 1;
     });
 };
 
