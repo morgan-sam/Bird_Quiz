@@ -1,17 +1,15 @@
 export const fourNameNewQuestionUI = (birdPhotoURL, birdObjArr, score, questionNumber) => {
-
     let img = document.getElementById("birdImage");
-
     document.getElementById("birdImage").src = birdPhotoURL;
     document.getElementById("birdImage").height = '400';
     let imgLoaded = document.getElementById("birdImage").onload = function() {
-        resetButtonColor();
         [...document.querySelectorAll('.answerBtnText')].forEach(function(span, i) {
             span.innerHTML = birdObjArr[i].bird;
         });
-        document.getElementById("questionNumber").innerHTML = questionNumber;
+        updateQuestionNumber(questionNumber);
         loadingGifOverlay(false);
-        enableAnswerButtons(true);
+        resetButtons();
+        removeButtonImages();
         updateScore(score);
         return true;
     }();
@@ -31,16 +29,25 @@ export const fourImgNewQuestionUI = (birdPhotoArray, chosenBird, score, question
         });
     };
     document.getElementById("birdQuestion").innerHTML = `Which one is the ${chosenBird}?`;
-    document.getElementById("questionNumber").innerHTML = questionNumber;
-    enableAnswerButtons(true);
+    updateQuestionNumber(questionNumber);
     updateScore(score);
-    unblurAnswerButtons();
-    removeAnswerButtonBorders();
+    resetButtons();
 };
 
 export const updateScore = (score) => {
-    console.log(score);
     document.getElementById("score").innerHTML = score;
+};
+
+export const updateQuestionNumber = (questionNumber) => {
+    document.getElementById("questionNumber").innerHTML = questionNumber;
+};
+
+export const resetButtons = () => {
+    resetButtonColor();
+    unblurAnswerButtons();
+    removeAnswerButtonBorders();
+    resetButtonColor();
+    enableAnswerButtons(true);
 };
 
 export const clearButtons = () => {
@@ -53,6 +60,15 @@ export const resetButtonColor = () => {
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
         button.classList.remove('correctButton');
         button.classList.remove('incorrectButton');
+    });
+};
+
+export const removeButtonImages = () => {
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.style.backgroundImage = 'none';
+    });
+    [...document.querySelectorAll('.answerBtnBg')].forEach(function(buttonBg, i) {
+        buttonBg.style.backgroundImage = 'none';
     });
 };
 
@@ -95,6 +111,9 @@ export const updateGameCompleteScreen = (score, percentage, personalBest) => {
     document.getElementById("personalBest").innerHTML = personalBest;
 };
 
-export const setToQuizTwo = () => {
-    document.getElementById('quizScreen').classList.add('quizTwo');
+export const setQuizScreen = (quizClass) => {
+    const quizScreen = document.getElementById('quizScreen');
+    //removes all quizOne quizTwo etc classes but leaves quiz and active alone
+    quizScreen.className = quizScreen.className.replace(/(quiz[a-zA-Z]+)/g, '');
+    quizScreen.classList.add(quizClass);
 };

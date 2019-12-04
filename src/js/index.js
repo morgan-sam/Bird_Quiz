@@ -78,6 +78,8 @@ const startQuiz = async (quizNumber) => {
 
 
     const fourAnswerQuizQuestion = async () => {
+
+        view.setQuizScreen('quizOne');
         view.loadingGifOverlay(true);
 
         let birdsObjArr = getFourBirdArr();
@@ -93,7 +95,7 @@ const startQuiz = async (quizNumber) => {
     }
 
     const fourImageQuizQuestion = async () => {
-        view.setToQuizTwo();
+        view.setQuizScreen('quizTwo');
 
         let birdsObjArr = getFourBirdArr();
         state.currentQuiz.birdObjArr = birdsObjArr;
