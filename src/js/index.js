@@ -78,43 +78,29 @@ const startQuiz = async (quizNumber) => {
 
 
     const fourAnswerQuizQuestion = async () => {
-
         view.setQuizScreen('quizOne');
         view.loadingGifOverlay(true);
-
         let birdsObjArr = getFourBirdArr();
-        state.currentQuiz.birdObjArr = birdsObjArr;
-
         let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
-
-        let birdPhoto = await loadBirdPhoto(chosenBird);
-        if (!birdPhoto) return testConnection(fourAnswerQuizQuestion, quitQuiz);
-
-        await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
+        const birdPhoto = await state.birdData.getBirdPhoto(chosenBird);
+        if (!birdPhoto) return testConnection(fourAnswerQuizQuestion);
+        if (birdPhoto) await view.fourNameNewQuestionUI(birdPhoto, birdsObjArr, state.currentQuiz.score, state.currentQuiz.questionNumber);
         if (state.currentQuiz.questionNumber === 1) await view.setToScreen('quizScreen');
     }
 
     const fourImageQuizQuestion = async () => {
         view.setQuizScreen('quizTwo');
-
         let birdsObjArr = getFourBirdArr();
-        state.currentQuiz.birdObjArr = birdsObjArr;
         let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
-
-        let birdPhotoArray = [];
-        for (let i = 0; i < birdsObjArr.length; i++) {
-            birdPhotoArray[i] = await loadBirdPhoto(birdsObjArr[i].bird);
-        };
-        if (birdPhotoArray.includes(false)) return testConnection(fourImageQuizQuestion, quitQuiz);
-
-        await view.fourImgNewQuestionUI(birdPhotoArray, chosenBird, state.currentQuiz.score, state.currentQuiz.questionNumber);
-
+        const birdPhotoArray = await getBirdPhotos(birdsObjArr, fourImageQuizQuestion);
+        if (birdPhotoArray) await view.fourImgNewQuestionUI(birdPhotoArray, chosenBird, state.currentQuiz.score, state.currentQuiz.questionNumber);
         if (state.currentQuiz.questionNumber === 1) await view.setToScreen('quizScreen');
     }
 
 
     if (quizNumber === 1) state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
     if (quizNumber === 2) state.currentQuiz.quizFunction = fourImageQuizQuestion;
+    console.log(state.currentQuiz.quizFunction.name);
     state.currentQuiz.quizFunction();
 
     function getFourBirdArr() {
@@ -128,21 +114,18 @@ const startQuiz = async (quizNumber) => {
                 chosen: i === chosenBird ? true : false
             }
         });
-
+        state.currentQuiz.birdObjArr = birdObjArr;
         return birdObjArr;
     };
 
-    async function loadBirdPhoto(bird) {
-        let birdPhoto;
-        try {
-            birdPhoto = await state.birdData.getBirdPhoto(bird);
-        } catch (error) {
-            birdPhoto = false;
-        }
-        return birdPhoto;
+    async function getBirdPhotos(birds, successFn) {
+        const birdPhotoRequests = await birds.map(async (el) => await state.birdData.getBirdPhoto(el.bird));
+        const birdPhotoArray = await Promise.all(birdPhotoRequests);
+        if (birdPhotoArray.includes(false)) return testConnection(successFn);
+        return birdPhotoArray;
     };
 
-    async function testConnection(successFn, failureFn) {
+    async function testConnection(successFn, failureFn = quitQuiz) {
         //If program could not get photo check if connection to Wikipedia available
         let connection = await state.birdData.pingWikipedia();
         if (connection) {
@@ -160,27 +143,35 @@ const startQuiz = async (quizNumber) => {
         selectedButton.disabled = true;
         const i = (selectedButton.id.replace('answer-', '')) - 1;
         if (state.currentQuiz.birdObjArr[i].chosen) {
-            document.getElementById(`answer-${i+1}`).className += " correctButton";
-            if (quizNumber === 2) document.getElementById(`answer-${i+1}`).style.border = '5px solid green';
-            view.enableAnswerButtons(false);
-            state.currentQuiz.score += 2;
-            state.currentQuiz.questionNumber++;
-            if (state.currentQuiz.questionNumber > 10) {
-                return setTimeout(function() {
-                    return quizComplete();
-                }, 1000);
-            } else {
-                state.currentQuiz.quizFunction();
-            }
+            correctAnswer(selectedButton);
         } else {
-            //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
-            document.getElementById(`answer-${i+1}`).className += " incorrectButton";
-            if (quizNumber === 2) document.getElementById(`answer-${i+1}`).style.opacity = 0.5;
-            if (quizNumber === 2) document.getElementById(`answer-${i+1}`).style.border = '5px solid red';
-            state.currentQuiz.score -= parseInt(document.querySelectorAll('.incorrectButton').length);
+            incorrectAnswer(selectedButton);
         }
         view.updateScore(state.currentQuiz.score);
+    };
 
+    function correctAnswer(button) {
+        view.enableAnswerButtons(false);
+        view.setButtonToCorrect(button, quizNumber);
+        state.currentQuiz.score += 2;
+        state.currentQuiz.questionNumber++;
+        checkIfQuizComplete();
+    };
+
+    function incorrectAnswer(button) {
+        //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
+        view.setButtonToWrong(button, quizNumber);
+        state.currentQuiz.score -= parseInt(document.querySelectorAll('.incorrectButton').length);
+    };
+
+    function checkIfQuizComplete() {
+        if (state.currentQuiz.questionNumber > 10) {
+            return setTimeout(function() {
+                return quizComplete();
+            }, 1000);
+        } else {
+            state.currentQuiz.quizFunction();
+        }
     };
 
     function quizComplete() {

@@ -42,6 +42,17 @@ export const updateQuestionNumber = (questionNumber) => {
     document.getElementById("questionNumber").innerHTML = questionNumber;
 };
 
+export const setButtonToCorrect = (button, quizNumber) => {
+    button.className += " correctButton";
+    if (quizNumber === 2) button.style.border = '5px solid green';
+};
+
+export const setButtonToWrong = (button, quizNumber) => {
+    button.className += " incorrectButton";
+    if (quizNumber === 2) button.style.opacity = 0.5;
+    if (quizNumber === 2) button.style.border = '5px solid red';
+};
+
 export const resetButtons = () => {
     resetButtonColor();
     unblurAnswerButtons();
