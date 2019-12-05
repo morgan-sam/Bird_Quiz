@@ -1,7 +1,31 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   border: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background: url("/img/bird_flying.png") no-repeat;
+  height: 100%;
+  width: 100%;
+  background-size: 100vw 100vh;
+  overflow: hidden;
+}
+
+#quizScreen {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(251, 247, 245, 1) 10%,
+    rgba(251, 247, 245, 1) 90%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  width: 60rem;
+  height: 100%;
 }
 
 button {
@@ -10,7 +34,17 @@ button {
   height: 0.7rem;
   display: block;
   text-align: center;
-  margin: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 2px #ccc solid;
+  line-height: 0.2rem;
+}
+
+button:hover:enabled {
+  background-color: #add8e6;
+  /* Green */
+  color: white;
+  transition: 0.4s;
 }
 
 h4 {
@@ -40,6 +74,14 @@ h4 {
   > h3 {
     padding: 0.4rem;
   }
+
+  > h2 {
+    padding: 1rem;
+  }
+
+  button {
+    margin: 1.2rem;
+  }
 }
 
 .quiz {
@@ -55,6 +97,8 @@ h4 {
   }
 
   #quizNavBtns {
+    position: relative;
+    top: 1rem;
     button {
       display: inline-block;
       width: 200px;
@@ -107,6 +151,10 @@ h4 {
     padding: 1.4rem;
   }
 
+  > #quizNavBtnsScore {
+    position: relative;
+    top: 1rem;
+  }
   > #Frame {
     display: block;
   }
@@ -120,14 +168,14 @@ h4 {
       width: 20rem;
       margin: 0.5rem;
       padding: 1rem;
-      background-color: 'white';
+      background-color: "white";
 
       .answerBtnText {
         display: block;
       }
 
       .answerBtnBg {
-        background-color: 'white';
+        background-color: "white";
         background-size: cover;
         display: block;
         position: relative;
@@ -145,15 +193,20 @@ h4 {
     padding: 1.4rem;
   }
 
+  > #quizNavBtnsScore {
+    position: relative;
+    top: 3rem;
+  }
   > #Frame {
     display: none;
   }
 
   > #answerInput {
     display: grid;
+    margin: 0 auto;
     grid-row: auto auto;
-    height: 40rem;
-    width: 40rem;
+    height: 37rem;
+    width: 37rem;
     // grid-template-columns: 500px 500px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;

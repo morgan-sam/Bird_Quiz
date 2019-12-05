@@ -1,7 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 * {
   padding: 0;
   margin: 0;
-  border: 0; }
+  border: 0;
+  font-family: "Montserrat", sans-serif; }
+
+body {
+  background: url("/img/bird_flying.png") no-repeat;
+  height: 100%;
+  width: 100%;
+  background-size: 100vw 100vh;
+  overflow: hidden; }
+
+#quizScreen {
+  background: black;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #fbf7f5 10%, #fbf7f5 90%, rgba(0, 0, 0, 0) 100%);
+  width: 60rem;
+  height: 100%; }
 
 button {
   padding: 1rem;
@@ -9,7 +24,16 @@ button {
   height: 0.7rem;
   display: block;
   text-align: center;
-  margin: 5px; }
+  margin: 10px;
+  border-radius: 5px;
+  border: 2px #ccc solid;
+  line-height: 0.2rem; }
+
+button:hover:enabled {
+  background-color: #add8e6;
+  /* Green */
+  color: white;
+  transition: 0.4s; }
 
 h4 {
   margin: 30px; }
@@ -31,6 +55,10 @@ h4 {
     display: inline-block; }
   .menu > h3 {
     padding: 0.4rem; }
+  .menu > h2 {
+    padding: 1rem; }
+  .menu button {
+    margin: 1.2rem; }
 
 .quiz {
   position: absolute;
@@ -41,9 +69,12 @@ h4 {
   display: none; }
   .quiz > h2 {
     padding: 2rem; }
-  .quiz #quizNavBtns button {
-    display: inline-block;
-    width: 200px; }
+  .quiz #quizNavBtns {
+    position: relative;
+    top: 1rem; }
+    .quiz #quizNavBtns button {
+      display: inline-block;
+      width: 200px; }
 
 #answerInput {
   margin: 10px;
@@ -82,6 +113,10 @@ h4 {
 .quizOne h2 {
   padding: 1.4rem; }
 
+.quizOne > #quizNavBtnsScore {
+  position: relative;
+  top: 1rem; }
+
 .quizOne > #Frame {
   display: block; }
 
@@ -93,11 +128,11 @@ h4 {
   width: 20rem;
   margin: 0.5rem;
   padding: 1rem;
-  background-color: 'white'; }
+  background-color: "white"; }
   .quizOne > #answerInput .answerBtn .answerBtnText {
     display: block; }
   .quizOne > #answerInput .answerBtn .answerBtnBg {
-    background-color: 'white';
+    background-color: "white";
     background-size: cover;
     display: block;
     position: relative;
@@ -109,14 +144,19 @@ h4 {
 .quizTwo h2 {
   padding: 1.4rem; }
 
+.quizTwo > #quizNavBtnsScore {
+  position: relative;
+  top: 3rem; }
+
 .quizTwo > #Frame {
   display: none; }
 
 .quizTwo > #answerInput {
   display: grid;
+  margin: 0 auto;
   grid-row: auto auto;
-  height: 40rem;
-  width: 40rem;
+  height: 37rem;
+  width: 37rem;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   align-items: center;

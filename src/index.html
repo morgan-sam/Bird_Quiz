@@ -1,89 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bird Quiz</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Bird Quiz</title>
-</head>
-
-<body>
-
-  <div id='mainMenu' class="menu active">
-    <h1 id='birdTitle'>Wikipedia API Bird Quiz</h1><br>
-    <div id="mainMenuButtons">
-      <button value='quizSelectMenu' class="navBtn">Start</button>
-      <button value='aboutPage' class="navBtn">About</button>
-      <button id="resetDatabase">Reset Database</button>
+  <body>
+    <div id="mainMenu" class="menu active">
+      <h1 id="birdTitle">Wikipedia API Bird Quiz</h1>
+      <br />
+      <div id="mainMenuButtons">
+        <button value="quizSelectMenu" class="navBtn">Start</button>
+        <button value="aboutPage" class="navBtn">About</button>
+        <button id="resetDatabase">Reset Database</button>
+      </div>
     </div>
-  </div>
 
-
-  <div id="quizSelectMenu" class="menu">
-    <h2 id='quizSelectTitle'>Select a game:</h2>
-    <div id="quizSelectButtons">
-      <button id="fourAnsOneImgBtn">1 Image 4 Answers</button>
-      <button id="oneAnsFourImgBtn">4 Images 1 Answer</button>
-      <button value='mainMenu' class="navBtn">Back to Main Menu</button>
+    <div id="quizSelectMenu" class="menu">
+      <h2 id="quizSelectTitle">Select a game:</h2>
+      <div id="quizSelectButtons">
+        <button id="fourAnsOneImgBtn">1 Image 4 Answers</button>
+        <button id="oneAnsFourImgBtn">4 Images 1 Answer</button>
+        <button value="mainMenu" class="navBtn">Back to Main Menu</button>
+      </div>
     </div>
-  </div>
 
-  <div id='aboutPage' class='menu'>
-    <h3>This app was developed with HTML, CSS (SASS) & Javascript</h3>
-    <h3>All content used is provided by The Wikimedia Foundation, Inc</h3>
-    <h3>Created by Sam Morgan, 2019</h3>
-    <div id="aboutPageButtons">
-      <button value='mainMenu' class="navBtn">Back to Main Menu</button>
+    <div id="aboutPage" class="menu">
+      <h3>This app was developed with HTML, CSS (SASS) & Javascript</h3>
+      <h3>All content used is provided by The Wikimedia Foundation, Inc</h3>
+      <h3>Created by Sam Morgan, 2019</h3>
+      <div id="aboutPageButtons">
+        <button value="mainMenu" class="navBtn">Back to Main Menu</button>
+      </div>
     </div>
-  </div>
 
-
-  <div id='quizScreen' class="quiz">
-    <h2>Question <span id="questionNumber">0</span>/10</h2>
-    <h2 id='birdQuestion'>Which bird is this?</h2>
-    <div id="Frame">
-      <img id="birdImage" height="400">
-      <img id='loadingOverlay' src='./img/transparentLoading.gif'>
-    </div><br>
-    <div id='answerInput' class='inputWrapper'>
-      <button id="answer-1" class='answerBtn'>
-        <span id="answer-1-text" class='answerBtnText'></span>
-        <img id="answer-1-bg" class='answerBtnBg'>
-      </button>
-      <button id="answer-2" class='answerBtn'>
-        <span id="answer-2-text" class='answerBtnText'></span>
-        <img id="answer-2-bg" class='answerBtnBg'>
-      </button>
-      <button id="answer-3" class='answerBtn'>
-        <span id="answer-3-text" class='answerBtnText'></span>
-        <img id="answer-3-bg" class='answerBtnBg'>
-      </button>
-      <button id="answer-4" class='answerBtn'>
-        <span id="answer-4-text" class='answerBtnText'></span>
-        <img id="answer-4-bg" class='answerBtnBg'>
-      </button>
+    <div id="quizScreen" class="quiz">
+      <h2>Question <span id="questionNumber">0</span> / 10</h2>
+      <h2 id="birdQuestion">Which bird is this?</h2>
+      <div id="Frame">
+        <img id="birdImage" height="400" />
+        <img id="loadingOverlay" src="./img/transparentLoading.gif" />
+      </div>
+      <br />
+      <div id="answerInput" class="inputWrapper">
+        <button id="answer-1" class="answerBtn">
+          <span id="answer-1-text" class="answerBtnText"></span>
+          <img id="answer-1-bg" class="answerBtnBg" />
+        </button>
+        <button id="answer-2" class="answerBtn">
+          <span id="answer-2-text" class="answerBtnText"></span>
+          <img id="answer-2-bg" class="answerBtnBg" />
+        </button>
+        <button id="answer-3" class="answerBtn">
+          <span id="answer-3-text" class="answerBtnText"></span>
+          <img id="answer-3-bg" class="answerBtnBg" />
+        </button>
+        <button id="answer-4" class="answerBtn">
+          <span id="answer-4-text" class="answerBtnText"></span>
+          <img id="answer-4-bg" class="answerBtnBg" />
+        </button>
+      </div>
+      <div id="quizNavBtnsScore">
+        <h4>Score: <span id="score"></span></h4>
+        <button id="exclusion" class="ExBtn">Report Image</button>
+        <button class="quitBtn">Quit to Main Menu</button>
+      </div>
     </div>
-    <h4>Score: <span id='score'></span></h4>
-    <div id="quizNavBtns">
-      <button id="exclusion" class='ExBtn'>Add image to exclusion list</button>
-      <button class='quitBtn'>Quit to Main Menu</button>
+
+    <div id="quizCompleteScreen" class="quiz">
+      <h2>You finished with a score of <span id="scoreValue"></span></h2>
+      <h2>You had a completion rate of <span id="scorePercentage"></span>%</h2>
+      <h2>Your personal best is <span id="personalBest"></span>%</h2>
+      <br />
+      <div id="quizNavBtns">
+        <button class="quitBtn">Quit to Main Menu</button>
+      </div>
     </div>
-  </div>
 
-  <div id="quizCompleteScreen" class="quiz">
-    <h2>You finished with a score of <span id="scoreValue"></span></h2>
-    <h2>You had a completion rate of <span id="scorePercentage"></span>%</h2>
-    <h2>Your personal best is <span id="personalBest"></span>%</h2><br>
-    <div id="quizNavBtns">
-      <button class='quitBtn'>Quit to Main Menu</button>
+    <div id="quizLoadingScreen" class="quiz">
+      <h2 id="quizLoadingText">Now Loading</h2>
     </div>
-  </div>
-
-  <div id="quizLoadingScreen" class="quiz">
-    <h2 id='quizLoadingText'>Now Loading</h2>
-  </div>
-
-
-</body>
-
-
+  </body>
 </html>
