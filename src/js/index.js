@@ -81,7 +81,8 @@ const startQuiz = async quizNumber => {
 
   state.currentQuiz.score = 0;
   state.currentQuiz.questionNumber = 1;
-  view.setToScreen("quizLoadingScreen");
+  // view.setToScreen("quizLoadingScreen");
+  quizComplete();
 
   const fourAnswerQuizQuestion = async () => {
     view.setQuizScreen("quizOne");
@@ -120,10 +121,10 @@ const startQuiz = async quizNumber => {
       await view.setToScreen("quizScreen");
   };
 
-  if (quizNumber === 1) state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
-  if (quizNumber === 2) state.currentQuiz.quizFunction = fourImageQuizQuestion;
-  console.log(state.currentQuiz.quizFunction.name);
-  state.currentQuiz.quizFunction();
+  // if (quizNumber === 1) state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
+  // if (quizNumber === 2) state.currentQuiz.quizFunction = fourImageQuizQuestion;
+  // console.log(state.currentQuiz.quizFunction.name);
+  // state.currentQuiz.quizFunction();
 
   function getFourBirdArr() {
     let birdArray = [...Array(4).keys()].map(

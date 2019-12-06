@@ -146,6 +146,12 @@ h4 {
   transform: translate(-50%, -50%);
 }
 
+#quizCompleteScreen {
+  > #quizNavBtns {
+    display: inline-block;
+  }
+}
+
 .active {
   display: block;
 }
