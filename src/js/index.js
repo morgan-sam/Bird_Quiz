@@ -27,8 +27,8 @@ document
 const controlGetDatabase = async () => {
     try {
         await state.birdData.getBirdList();
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        console.log(error);
         alert('Something wrong with the search...');
     }
 
@@ -84,9 +84,7 @@ const startQuiz = async quizNumber => {
 
     const fourAnswerQuizQuestion = async () => {
         view.setQuizScreen('quizOne');
-        view.loadingGifOverlay(true);
-        let birdsObjArr = getFourBirdArr();
-        let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
+        const [birdsObjArr, chosenBird] = loadQuestionVariables();
         try {
             const birdPhoto = await state.birdData.getBirdPhoto(chosenBird);
             await view.fourNameNewQuestionUI(
@@ -106,8 +104,7 @@ const startQuiz = async quizNumber => {
 
     const fourImageQuizQuestion = async () => {
         view.setQuizScreen('quizTwo');
-        let birdsObjArr = getFourBirdArr();
-        let chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
+        const [birdsObjArr, chosenBird] = loadQuestionVariables();
         try {
             const birdPhotoArray = await getBirdPhotos(
                 birdsObjArr,
@@ -128,12 +125,23 @@ const startQuiz = async quizNumber => {
         }
     };
 
-    if (quizNumber === 1)
-        state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
-    if (quizNumber === 2)
-        state.currentQuiz.quizFunction = fourImageQuizQuestion;
-    console.log(state.currentQuiz.quizFunction.name);
+    switch (quizNumber) {
+        case 1:
+            state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
+            break;
+        case 2:
+            state.currentQuiz.quizFunction = fourImageQuizQuestion;
+            break;
+        default:
+            break;
+    }
     state.currentQuiz.quizFunction();
+
+    function loadQuestionVariables() {
+        const birdsObjArr = getFourBirdArr();
+        const chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
+        return [birdsObjArr, chosenBird];
+    }
 
     function getFourBirdArr() {
         let birdArray = [...Array(4).keys()].map(
