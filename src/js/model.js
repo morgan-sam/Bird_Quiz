@@ -1,16 +1,18 @@
 import axios from 'axios';
 
-
 export default class Birds {
-
-
     async getBirdList() {
         try {
             const proxy = 'https://cors-anywhere.herokuapp.com';
-            const birdListAPI = 'https://en.wikipedia.org/w/api.php?action=parse&page=List_of_birds_by_common_name&format=json';
+            const birdListAPI =
+                'https://en.wikipedia.org/w/api.php?action=parse&page=List_of_birds_by_common_name&format=json';
             const res = await axios(`${proxy}/${birdListAPI}`);
-            this.links = Object.keys(res.data.parse.links).map(val => res.data.parse.links[val]['*']).sort();
-            this.sections = Object.keys(res.data.parse.sections).map(val => res.data.parse.sections[val].line).sort();
+            this.links = Object.keys(res.data.parse.links)
+                .map(val => res.data.parse.links[val]['*'])
+                .sort();
+            this.sections = Object.keys(res.data.parse.sections)
+                .map(val => res.data.parse.sections[val].line)
+                .sort();
         } catch (error) {
             console.log(error);
             alert('Something went wrong');
@@ -18,14 +20,14 @@ export default class Birds {
     }
 
     parseBirdList() {
-
         //Remove brackets from sections
-        this.parsedSections = this.sections.map(el => el.replace(/ *\([^)]*\) */g, ""));
+        this.parsedSections = this.sections.map(el =>
+            el.replace(/ *\([^)]*\) */g, ''),
+        );
 
         //Create bird list without section links
-        this.birds = this.links.filter((el) => !this.parsedSections.includes(el));
+        this.birds = this.links.filter(el => !this.parsedSections.includes(el));
     }
-
 
     async getBirdPhoto(birdName, width = 500) {
         let img;
@@ -34,24 +36,26 @@ export default class Birds {
             const proxy = 'https://cors-anywhere.herokuapp.com';
             const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
             const res = await axios(`${proxy}/${birdPhotoAPI}`);
-            img = res.data.query.pages[Object.keys(res.data.query.pages)[0]].thumbnail.source;
+            img =
+                res.data.query.pages[Object.keys(res.data.query.pages)[0]]
+                    .thumbnail.source;
+            return img;
         } catch (error) {
             console.log('Could not get image');
-            return false;
+            return pingWikipedia();
         }
-        return img;
     }
 
-    async pingWikipedia() {
+    async pingWikipedia(successFn, failureFn) {
         try {
             const proxy = 'https://cors-anywhere.herokuapp.com';
             const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&titles=Bird&prop=pageimages&format=json`;
             const res = await axios(`${proxy}/${birdPhotoAPI}`);
-            console.log("Wikipedia Pinged");
+            console.log('Wikipedia Pinged');
+            return successFn();
         } catch (error) {
             console.log('Wikipedia NOT Pinged');
-            return false;
+            return failureFn();
         }
-        return true;
     }
 }
