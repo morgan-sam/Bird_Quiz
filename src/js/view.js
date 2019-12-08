@@ -30,28 +30,32 @@ export const fourImgNewQuestionUI = (
     score,
     questionNumber,
 ) => {
-    for (let i = 0; i < 4; i++) {
-        [...document.querySelectorAll('.answerBtn')].forEach(function(
-            button,
-            i,
-        ) {
-            button.style.backgroundImage = `url(${birdPhotoArray[i]})`;
-        });
-        [...document.querySelectorAll('.answerBtnBg')].forEach(function(
-            buttonBg,
-            i,
-        ) {
-            buttonBg.style.backgroundImage = `url(${birdPhotoArray[i]})`;
-            buttonBg.style.filter = 'blur(3px)';
-            buttonBg.style.zIndex = '-1';
-        });
-    }
+    addPhotosToButtons(birdPhotoArray);
     document.getElementById(
         'birdQuestion',
     ).innerHTML = `Which one is the ${chosenBird}?`;
     updateQuestionNumber(questionNumber);
     updateScore(score);
     resetButtons();
+};
+
+export const addPhotosToButtons = buttonPhotos => {
+    for (let i = 0; i < buttonPhotos.length; i++) {
+        [...document.querySelectorAll('.answerBtn')].forEach(function(
+            button,
+            i,
+        ) {
+            button.style.backgroundImage = `url(${buttonPhotos[i]})`;
+        });
+        [...document.querySelectorAll('.answerBtnBg')].forEach(function(
+            buttonBg,
+            i,
+        ) {
+            buttonBg.style.backgroundImage = `url(${buttonPhotos[i]})`;
+            buttonBg.style.filter = 'blur(3px)';
+            buttonBg.style.zIndex = '-1';
+        });
+    }
 };
 
 export const updateScore = score => {

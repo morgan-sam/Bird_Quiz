@@ -27,23 +27,37 @@ export default class Birds {
 
         //Create bird list without section links
         this.birds = this.links.filter(el => !this.parsedSections.includes(el));
+
+        this.banlist = [];
     }
 
     async getBirdPhoto(birdName, width = 500) {
         let img;
+        const parsedBirdName = birdName.replace(' ', '_');
+        const proxy = 'https://cors-anywhere.herokuapp.com';
+        const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
+
         try {
-            const parsedBirdName = birdName.replace(' ', '_');
-            const proxy = 'https://cors-anywhere.herokuapp.com';
-            const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
             const res = await axios(`${proxy}/${birdPhotoAPI}`);
             img =
                 res.data.query.pages[Object.keys(res.data.query.pages)[0]]
                     .thumbnail.source;
             return img;
-        } catch (error) {
-            console.log('Could not get image');
-            return pingWikipedia();
+        } catch {
+            this.moveBirdToBanList(birdName);
+            throw error;
         }
+    }
+
+    moveBirdToBanList(removedBird) {
+        this.birds = this.birds.filter(el => el !== removedBird);
+        this.banlist[this.banlist.length] = removedBird;
+        window.localStorage.setItem(
+            'localBirdList',
+            JSON.stringify(this.birds),
+        );
+        window.localStorage.setItem('banlist', JSON.stringify(this.banlist));
+        console.log(`${removedBird} moved from bird list to ban list.`);
     }
 
     async pingWikipedia(successFn, failureFn) {

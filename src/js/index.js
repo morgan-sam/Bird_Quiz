@@ -56,6 +56,9 @@ window.addEventListener('load', () => {
             state.highscores = await JSON.parse(
                 window.localStorage.getItem('highscores'),
             );
+            state.birdData.banlist = await JSON.parse(
+                window.localStorage.getItem('banlist'),
+            );
         } catch (error) {
             console.log(error);
         }
@@ -64,25 +67,45 @@ window.addEventListener('load', () => {
 });
 
 const startQuiz = async quizNumber => {
-    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.addEventListener('click', checkButtonCorrect, false);
-    });
-    [...document.querySelectorAll('.quitBtn')].forEach(function(button) {
-        button.addEventListener(
-            'click',
-            function _listener() {
-                quitQuiz();
-                button.removeEventListener('click', _listener, true);
-            },
-            true,
-        );
-    });
+    function buttonInitialization() {
+        [...document.querySelectorAll('.answerBtn')].forEach(function(
+            button,
+            i,
+        ) {
+            button.addEventListener('click', checkButtonCorrect, false);
+        });
+        [...document.querySelectorAll('.quitBtn')].forEach(function(button) {
+            button.addEventListener(
+                'click',
+                function _listener() {
+                    quitQuiz();
+                    button.removeEventListener('click', _listener, true);
+                },
+                true,
+            );
+        });
+    }
 
-    state.currentQuiz.score = 0;
-    state.currentQuiz.questionNumber = 1;
-    view.setToScreen('quizLoadingScreen');
+    function initQuiz(quizNumber) {
+        buttonInitialization();
+        state.currentQuiz.score = 0;
+        state.currentQuiz.questionNumber = 1;
+        view.setToScreen('quizLoadingScreen');
+        switch (quizNumber) {
+            case 1:
+                state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
+                break;
+            case 2:
+                state.currentQuiz.quizFunction = fourImageQuizQuestion;
+                break;
+            default:
+                break;
+        }
+        return state.currentQuiz.quizFunction();
+    }
 
     const fourAnswerQuizQuestion = async () => {
+        console.log(state.birdData.banlist);
         view.setQuizScreen('quizOne');
         const [birdsObjArr, chosenBird] = loadQuestionVariables();
         try {
@@ -125,18 +148,6 @@ const startQuiz = async quizNumber => {
         }
     };
 
-    switch (quizNumber) {
-        case 1:
-            state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
-            break;
-        case 2:
-            state.currentQuiz.quizFunction = fourImageQuizQuestion;
-            break;
-        default:
-            break;
-    }
-    state.currentQuiz.quizFunction();
-
     function loadQuestionVariables() {
         const birdsObjArr = getFourBirdArr();
         const chosenBird = birdsObjArr.find(el => el.chosen === true).bird;
@@ -168,7 +179,6 @@ const startQuiz = async quizNumber => {
             async el => await state.birdData.getBirdPhoto(el.bird),
         );
         const birdPhotoArray = await Promise.all(birdPhotoRequests);
-        if (birdPhotoArray.includes(false)) return testConnection(successFn);
         return birdPhotoArray;
     }
 
@@ -218,6 +228,19 @@ const startQuiz = async quizNumber => {
     }
 
     function quizComplete() {
+        const [
+            roundedPercentage,
+            roundedHighscore,
+        ] = calculateAndStoreHighscores();
+        view.updateGameCompleteScreen(
+            state.currentQuiz.score,
+            roundedPercentage,
+            roundedHighscore,
+        );
+        view.setToScreen('quizCompleteScreen');
+    }
+
+    function calculateAndStoreHighscores() {
         state.currentQuiz.scorePercentage =
             (100 * (state.currentQuiz.score + 40)) / 60;
         if (state.currentQuiz.scorePercentage > state.highscores.quizOne) {
@@ -230,12 +253,7 @@ const startQuiz = async quizNumber => {
         let roundedPercentage =
             Math.round(state.currentQuiz.scorePercentage * 100) / 100;
         let roundedHighscore = Math.round(state.highscores.quizOne * 100) / 100;
-        view.updateGameCompleteScreen(
-            state.currentQuiz.score,
-            roundedPercentage,
-            roundedHighscore,
-        );
-        view.setToScreen('quizCompleteScreen');
+        return [roundedPercentage, roundedHighscore];
     }
 
     function quitQuiz() {
@@ -248,6 +266,8 @@ const startQuiz = async quizNumber => {
         view.setToScreen('mainMenu');
         return null;
     }
+
+    initQuiz(quizNumber);
 };
 
 function randomIntFromInterval(min, max) {
