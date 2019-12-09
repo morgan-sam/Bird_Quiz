@@ -67,7 +67,7 @@ window.addEventListener('load', () => {
 });
 
 const startQuiz = async quizNumber => {
-    function buttonInitialization() {
+    function quizButtonInit() {
         [...document.querySelectorAll('.answerBtn')].forEach(function(
             button,
             i,
@@ -87,7 +87,7 @@ const startQuiz = async quizNumber => {
     }
 
     function initQuiz(quizNumber) {
-        buttonInitialization();
+        quizButtonInit();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
         view.setToScreen('quizLoadingScreen');
@@ -105,11 +105,13 @@ const startQuiz = async quizNumber => {
     }
 
     const fourAnswerQuizQuestion = async () => {
-        console.log(state.birdData.banlist);
         view.setQuizScreen('quizOne');
         const [birdsObjArr, chosenBird] = loadQuestionVariables();
         try {
-            const birdPhoto = await state.birdData.getBirdPhoto(chosenBird);
+            const birdPhoto = await state.birdData.getBirdPhoto(
+                chosenBird,
+                quitQuiz,
+            );
             await view.fourNameNewQuestionUI(
                 birdPhoto,
                 birdsObjArr,
@@ -129,10 +131,7 @@ const startQuiz = async quizNumber => {
         view.setQuizScreen('quizTwo');
         const [birdsObjArr, chosenBird] = loadQuestionVariables();
         try {
-            const birdPhotoArray = await getBirdPhotos(
-                birdsObjArr,
-                fourImageQuizQuestion,
-            );
+            const birdPhotoArray = await getBirdPhotos(birdsObjArr);
             await view.fourImgNewQuestionUI(
                 birdPhotoArray,
                 chosenBird,
@@ -174,9 +173,9 @@ const startQuiz = async quizNumber => {
         return birdObjArr;
     }
 
-    async function getBirdPhotos(birds, successFn) {
+    async function getBirdPhotos(birds) {
         const birdPhotoRequests = await birds.map(
-            async el => await state.birdData.getBirdPhoto(el.bird),
+            async el => await state.birdData.getBirdPhoto(el.bird, quitQuiz),
         );
         const birdPhotoArray = await Promise.all(birdPhotoRequests);
         return birdPhotoArray;
@@ -205,8 +204,8 @@ const startQuiz = async quizNumber => {
     }
 
     function incorrectAnswer(button) {
-        //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
         view.setButtonToWrong(button, quizNumber);
+        //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
         state.currentQuiz.score -= parseInt(
             document.querySelectorAll('.incorrectButton').length,
         );

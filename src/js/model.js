@@ -1,12 +1,13 @@
 import axios from 'axios';
 
+const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
+
 export default class Birds {
     async getBirdList() {
         try {
-            const proxy = 'https://cors-anywhere.herokuapp.com';
             const birdListAPI =
                 'https://en.wikipedia.org/w/api.php?action=parse&page=List_of_birds_by_common_name&format=json';
-            const res = await axios(`${proxy}/${birdListAPI}`);
+            const res = await axios(`${PROXY_URL}/${birdListAPI}`);
             this.links = Object.keys(res.data.parse.links)
                 .map(val => res.data.parse.links[val]['*'])
                 .sort();
@@ -31,20 +32,23 @@ export default class Birds {
         this.banlist = [];
     }
 
-    async getBirdPhoto(birdName, width = 500) {
+    async getBirdPhoto(birdName, failureFn, width = 500) {
         let img;
         const parsedBirdName = birdName.replace(' ', '_');
-        const proxy = 'https://cors-anywhere.herokuapp.com';
         const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
 
         try {
-            const res = await axios(`${proxy}/${birdPhotoAPI}`);
+            const res = await axios(`${PROXY_URL}/${birdPhotoAPI}`);
             img =
                 res.data.query.pages[Object.keys(res.data.query.pages)[0]]
                     .thumbnail.source;
             return img;
         } catch {
-            this.moveBirdToBanList(birdName);
+            //Only adds to ban list if there is connection to Wikipedia (i.e. no bird img on page)
+            this.pingWikipedia(
+                () => this.moveBirdToBanList(birdName),
+                failureFn,
+            );
             throw error;
         }
     }
@@ -62,9 +66,8 @@ export default class Birds {
 
     async pingWikipedia(successFn, failureFn) {
         try {
-            const proxy = 'https://cors-anywhere.herokuapp.com';
             const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&titles=Bird&prop=pageimages&format=json`;
-            const res = await axios(`${proxy}/${birdPhotoAPI}`);
+            const res = await axios(`${PROXY_URL}/${birdPhotoAPI}`);
             console.log('Wikipedia Pinged');
             return successFn();
         } catch (error) {
