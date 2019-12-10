@@ -23,9 +23,6 @@ document
 
 [...document.querySelectorAll('.navBtn')].forEach(function(button) {
     button.addEventListener('click', () => view.setToScreen(button.value));
-    document
-        .getElementById('banReturnBtn')
-        .addEventListener('click', () => view.setToScreen('quizScreen'), false);
 });
 
 const controlGetDatabase = async () => {
@@ -91,6 +88,9 @@ const startQuiz = async quizNumber => {
         document
             .getElementById('banImageBtn')
             .addEventListener('click', manualAddToBanList, false);
+        document
+            .getElementById('banReturnBtn')
+            .addEventListener('click', cancelBan, false);
         document
             .getElementById('confirmBanBtn')
             .addEventListener('click', confirmBan, false);
@@ -323,6 +323,9 @@ const startQuiz = async quizNumber => {
         document
             .getElementById('banImageBtn')
             .removeEventListener('click', manualAddToBanList, false);
+        document
+            .getElementById('banReturnBtn')
+            .removeEventListener('click', cancelBan, false);
         document
             .getElementById('confirmBanBtn')
             .removeEventListener('click', confirmBan, false);
