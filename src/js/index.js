@@ -20,8 +20,12 @@ document
 document
     .getElementById('oneAnsFourImgBtn')
     .addEventListener('click', () => startQuiz(2));
+
 [...document.querySelectorAll('.navBtn')].forEach(function(button) {
     button.addEventListener('click', () => view.setToScreen(button.value));
+    document
+        .getElementById('banReturnBtn')
+        .addEventListener('click', () => view.setToScreen('quizScreen'), false);
 });
 
 const controlGetDatabase = async () => {
@@ -72,7 +76,7 @@ const startQuiz = async quizNumber => {
             button,
             i,
         ) {
-            button.addEventListener('click', checkButtonCorrect, false);
+            button.addEventListener('click', buttonSelected, false);
         });
         [...document.querySelectorAll('.quitBtn')].forEach(function(button) {
             button.addEventListener(
@@ -84,12 +88,23 @@ const startQuiz = async quizNumber => {
                 true,
             );
         });
+        document
+            .getElementById('banImageBtn')
+            .addEventListener('click', manualAddToBanList, false);
+        document
+            .getElementById('confirmBanBtn')
+            .addEventListener('click', confirmBan, false);
+        document
+            .getElementById('cancelBanBtn')
+            .addEventListener('click', cancelBan, false);
     }
 
     function initQuiz(quizNumber) {
         quizButtonInit();
         state.currentQuiz.score = 0;
+        state.currentQuiz.quizNumber = quizNumber;
         state.currentQuiz.questionNumber = 1;
+        state.currentQuiz.answerButtonFunction = checkAnswerCorrect;
         view.setToScreen('quizLoadingScreen');
         switch (quizNumber) {
             case 1:
@@ -112,6 +127,7 @@ const startQuiz = async quizNumber => {
                 chosenBird,
                 quitQuiz,
             );
+            state.currentQuiz.photos = [birdPhoto];
             await view.fourNameNewQuestionUI(
                 birdPhoto,
                 birdsObjArr,
@@ -132,6 +148,7 @@ const startQuiz = async quizNumber => {
         const [birdsObjArr, chosenBird] = loadQuestionVariables();
         try {
             const birdPhotoArray = await getBirdPhotos(birdsObjArr);
+            state.currentQuiz.photos = birdPhotoArray;
             await view.fourImgNewQuestionUI(
                 birdPhotoArray,
                 chosenBird,
@@ -146,6 +163,43 @@ const startQuiz = async quizNumber => {
             );
         }
     };
+
+    function manualAddToBanList() {
+        switch (state.currentQuiz.quizNumber) {
+            case 1:
+                banImgSelected(null, 0);
+                break;
+            case 2:
+                state.currentQuiz.answerButtonFunction = banImgSelected;
+                view.setBanSelectionScreen(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    function banImgSelected(selectedButton, i) {
+        view.setToScreen('quizBanScreenConfirmation');
+        view.setBanImage(state.currentQuiz.photos[i]);
+        state.currentQuiz.birdToBan = state.currentQuiz.birdObjArr[i].bird;
+    }
+
+    function confirmBan() {
+        state.birdData.moveBirdToBanList(state.currentQuiz.birdToBan);
+        resetFromBanToQuiz();
+        view.setToScreen('quizLoadingScreen');
+        state.currentQuiz.quizFunction();
+    }
+
+    function cancelBan() {
+        resetFromBanToQuiz();
+        view.setToScreen('quizScreen');
+    }
+
+    function resetFromBanToQuiz() {
+        state.currentQuiz.answerButtonFunction = checkAnswerCorrect;
+        state.currentQuiz.birdToBan = null;
+    }
 
     function loadQuestionVariables() {
         const birdsObjArr = getFourBirdArr();
@@ -181,12 +235,16 @@ const startQuiz = async quizNumber => {
         return birdPhotoArray;
     }
 
-    function checkButtonCorrect(evt) {
+    function buttonSelected(evt) {
         const selectedButton = document
             .getElementById(evt.target.id)
             .closest('button');
-        selectedButton.disabled = true;
         const i = selectedButton.id.replace('answer-', '') - 1;
+        state.currentQuiz.answerButtonFunction(selectedButton, i);
+    }
+
+    function checkAnswerCorrect(selectedButton, i) {
+        selectedButton.disabled = true;
         if (state.currentQuiz.birdObjArr[i].chosen) {
             correctAnswer(selectedButton);
         } else {
@@ -260,8 +318,17 @@ const startQuiz = async quizNumber => {
             button,
             i,
         ) {
-            button.removeEventListener('click', checkButtonCorrect, false);
+            button.removeEventListener('click', buttonSelected, false);
         });
+        document
+            .getElementById('banImageBtn')
+            .removeEventListener('click', manualAddToBanList, false);
+        document
+            .getElementById('confirmBanBtn')
+            .removeEventListener('click', confirmBan, false);
+        document
+            .getElementById('cancelBanBtn')
+            .removeEventListener('click', cancelBan, false);
         view.setToScreen('mainMenu');
         return null;
     }

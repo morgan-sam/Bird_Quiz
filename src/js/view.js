@@ -145,6 +145,7 @@ export const setToScreen = screen => {
     document.querySelectorAll('.menu').forEach(function(menu) {
         menu.classList.remove('active');
     });
+    setBanSelectionScreen(false);
     if (screen) document.getElementById(screen).classList.add('active');
 };
 
@@ -160,4 +161,15 @@ export const setQuizScreen = quizClass => {
     //removes all quizOne quizTwo etc classes but leaves quiz and active alone
     quizScreen.className = quizScreen.className.replace(/(quiz[a-zA-Z]+)/g, '');
     quizScreen.classList.add(quizClass);
+};
+
+export const setBanImage = banImage => {
+    document.getElementById('banImage').src = banImage;
+    document.getElementById('banImage').height = '500';
+};
+
+export const setBanSelectionScreen = boo => {
+    if (boo)
+        document.getElementById('quizScreen').classList.add('banSelection');
+    else document.getElementById('quizScreen').classList.remove('banSelection');
 };
