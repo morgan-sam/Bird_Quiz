@@ -66,6 +66,21 @@ export const updateQuestionNumber = questionNumber => {
     document.getElementById('questionNumber').innerHTML = questionNumber;
 };
 
+//Have setAnswerButtonsState() Fn where array of every button is passed rather than individual buttons
+
+export const setAnswerButtonsState = (clickedButtons, quizNumber) => {
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        if (clickedButtons[i]) {
+            button.className += ' incorrectButton';
+            button.disabled = true;
+            if (quizNumber === 2) button.style.opacity = 0.5;
+            if (quizNumber === 2) button.style.border = '5px solid red';
+        }
+    });
+};
+
+//
+
 export const setButtonToCorrect = (button, quizNumber) => {
     button.className += ' correctButton';
     if (quizNumber === 2) button.style.border = '5px solid green';
