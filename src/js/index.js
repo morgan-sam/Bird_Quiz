@@ -104,7 +104,7 @@ const startQuiz = async quizNumber => {
         state.currentQuiz.score = 0;
         state.currentQuiz.quizNumber = quizNumber;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.answerButtonFunction = checkAnswerCorrect;
+        state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setToScreen('quizLoadingScreen');
         switch (quizNumber) {
             case 1:
@@ -167,7 +167,7 @@ const startQuiz = async quizNumber => {
     function manualAddToBanList() {
         switch (state.currentQuiz.quizNumber) {
             case 1:
-                banImgSelected(null, 0);
+                banImgSelected(0);
                 break;
             case 2:
                 state.currentQuiz.answerButtonFunction = banImgSelected;
@@ -179,7 +179,7 @@ const startQuiz = async quizNumber => {
         }
     }
 
-    function banImgSelected(selectedButton, i) {
+    function banImgSelected(i) {
         view.setToScreen('quizBanScreenConfirmation');
         view.setBanImage(state.currentQuiz.photos[i]);
         state.currentQuiz.birdToBan = state.currentQuiz.birdObjArr[i].bird;
@@ -197,14 +197,20 @@ const startQuiz = async quizNumber => {
         view.setToScreen('quizScreen');
     }
 
+    function currentButtonStates() {
+        const buttonStates = state.currentQuiz.birdObjArr.map(el => {
+            if (el.clicked && el.chosen) return 'correct';
+            else if (el.clicked && !el.chosen) return 'incorrect';
+            else return 'unselected';
+        });
+        return buttonStates;
+    }
+
     function resetFromBanToQuiz() {
-        state.currentQuiz.answerButtonFunction = checkAnswerCorrect;
+        state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         state.currentQuiz.birdToBan = null;
-        const buttonStateArr = state.currentQuiz.birdObjArr.map(
-            el => el.clicked,
-        );
         view.setAnswerButtonsState(
-            buttonStateArr,
+            currentButtonStates(),
             state.currentQuiz.quizNumber,
         );
     }
@@ -249,33 +255,36 @@ const startQuiz = async quizNumber => {
             .getElementById(evt.target.id)
             .closest('button');
         const i = selectedButton.id.replace('answer-', '') - 1;
-        state.currentQuiz.answerButtonFunction(selectedButton, i);
+        state.currentQuiz.answerButtonFunction(i);
     }
 
-    function checkAnswerCorrect(selectedButton, i) {
-        selectedButton.disabled = true;
+    function quizAnswerClicked(i) {
         state.currentQuiz.birdObjArr[i].clicked = true;
-        if (state.currentQuiz.birdObjArr[i].chosen) {
-            correctAnswer(selectedButton);
-        } else {
-            incorrectAnswer(selectedButton);
-        }
+        view.setAnswerButtonsState(
+            currentButtonStates(),
+            state.currentQuiz.quizNumber,
+        );
+        checkAnswerCorrect(i);
+    }
+
+    function checkAnswerCorrect(i) {
+        state.currentQuiz.birdObjArr[i].chosen
+            ? correctAnswer()
+            : incorrectAnswer();
         view.updateScore(state.currentQuiz.score);
     }
 
-    function correctAnswer(button) {
+    function correctAnswer() {
         view.enableAnswerButtons(false);
-        view.setButtonToCorrect(button, quizNumber);
         state.currentQuiz.score += 2;
         state.currentQuiz.questionNumber++;
         checkIfQuizComplete();
     }
 
-    function incorrectAnswer(button) {
+    function incorrectAnswer() {
         const wrongAnswers = state.currentQuiz.birdObjArr.filter(
             el => el.clicked === true,
         ).length;
-        view.setButtonToWrong(button, quizNumber);
         //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
         state.currentQuiz.score -= wrongAnswers;
     }
