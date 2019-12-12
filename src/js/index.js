@@ -9,11 +9,15 @@ import birdsFlying from '../img/bird_flying.png';
 
 const state = {};
 
-state.birdData = new Birds();
-
-document
-    .getElementById('resetDatabase')
-    .addEventListener('click', () => controlGetDatabase());
+document.getElementById('resetDatabase').addEventListener('click', () => {
+    if (
+        confirm(
+            'Are you sure you want to reset the database? This will delete the entire ban list as well as all highscores.',
+        )
+    ) {
+        controlGetDatabase();
+    }
+});
 document
     .getElementById('fourAnsOneImgBtn')
     .addEventListener('click', () => startQuiz(1));
@@ -26,48 +30,46 @@ document
 });
 
 const controlGetDatabase = async () => {
+    state.birdQuiz = new Birds();
     try {
-        await state.birdData.getBirdList();
+        await state.birdQuiz.getBirdList();
+        window.localStorage.setItem(
+            'localBirdQuizDatabase',
+            JSON.stringify(state.birdQuiz),
+        );
+        console.log('Database retrieved:');
+        console.log(state.birdQuiz);
     } catch (error) {
         console.log(error);
         alert('Something wrong with the search...');
     }
+};
 
-    state.birdData.parseBirdList();
-    window.localStorage.setItem(
-        'localBirdList',
-        JSON.stringify(state.birdData.birds),
-    );
-    state.highscores = {
-        quizOne: 0,
-        quizTwo: 0,
-        quizThree: 0,
-    };
-    console.log(state.birdData);
+const loadLocalDatabase = async () => {
+    try {
+        state.birdQuiz = await JSON.parse(
+            window.localStorage.getItem('localBirdQuizDatabase'),
+        );
+        state.birdQuiz.__proto__ = new Birds().__proto__;
+        console.log('Local database loaded:');
+        console.log(state.birdQuiz);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 window.addEventListener('load', () => {
-    state.currentQuiz = new Object();
-    async function loadLocalDatabase() {
-        console.log(state.birdData);
-        try {
-            state.birdData.birds = await JSON.parse(
-                window.localStorage.getItem('localBirdList'),
-            );
-            state.highscores = await JSON.parse(
-                window.localStorage.getItem('highscores'),
-            );
-            state.birdData.banlist = await JSON.parse(
-                window.localStorage.getItem('banlist'),
-            );
-        } catch (error) {
-            console.log(error);
-        }
+    if (localStorage.localBirdQuizDatabase) {
+        loadLocalDatabase();
+    } else {
+        alert('No local database found. Fetching database...');
+        controlGetDatabase();
     }
-    loadLocalDatabase();
 });
 
 const startQuiz = async quizNumber => {
+    state.currentQuiz = new Object();
+
     function quizButtonInit() {
         [...document.querySelectorAll('.answerBtn')].forEach(function(
             button,
@@ -123,7 +125,7 @@ const startQuiz = async quizNumber => {
         view.setQuizScreen('quizOne');
         const [birdsObjArr, chosenBird] = loadQuestionVariables();
         try {
-            const birdPhoto = await state.birdData.getBirdPhoto(
+            const birdPhoto = await state.birdQuiz.getBirdPhoto(
                 chosenBird,
                 quitQuiz,
             );
@@ -136,7 +138,7 @@ const startQuiz = async quizNumber => {
             );
             checkQuizFirstTimeLoaded();
         } catch {
-            return state.birdData.pingWikipedia(
+            return state.birdQuiz.pingWikipedia(
                 fourAnswerQuizQuestion,
                 quitQuiz,
             );
@@ -157,7 +159,7 @@ const startQuiz = async quizNumber => {
             );
             checkQuizFirstTimeLoaded();
         } catch {
-            return state.birdData.pingWikipedia(
+            return state.birdQuiz.pingWikipedia(
                 fourImageQuizQuestion,
                 quitQuiz,
             );
@@ -186,7 +188,7 @@ const startQuiz = async quizNumber => {
     }
 
     function confirmBan() {
-        state.birdData.moveBirdToBanList(state.currentQuiz.birdToBan);
+        state.birdQuiz.moveBirdToBanList(state.currentQuiz.birdToBan);
         resetFromBanToQuiz();
         view.setToScreen('quizLoadingScreen');
         state.currentQuiz.quizFunction();
@@ -224,8 +226,8 @@ const startQuiz = async quizNumber => {
     function getFourBirdArr() {
         let birdArray = [...Array(4).keys()].map(
             el =>
-                state.birdData.birds[
-                    Math.floor(Math.random() * state.birdData.birds.length)
+                state.birdQuiz.birds[
+                    Math.floor(Math.random() * state.birdQuiz.birds.length)
                 ],
         );
         let chosenBird = randomIntFromInterval(0, 3);
@@ -244,7 +246,7 @@ const startQuiz = async quizNumber => {
 
     async function getBirdPhotos(birds) {
         const birdPhotoRequests = await birds.map(
-            async el => await state.birdData.getBirdPhoto(el.bird, quitQuiz),
+            async el => await state.birdQuiz.getBirdPhoto(el.bird, quitQuiz),
         );
         const birdPhotoArray = await Promise.all(birdPhotoRequests);
         return birdPhotoArray;

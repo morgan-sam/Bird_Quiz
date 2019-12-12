@@ -8,28 +8,37 @@ export default class Birds {
             const birdListAPI =
                 'https://en.wikipedia.org/w/api.php?action=parse&page=List_of_birds_by_common_name&format=json';
             const res = await axios(`${PROXY_URL}/${birdListAPI}`);
-            this.links = Object.keys(res.data.parse.links)
+            const links = Object.keys(res.data.parse.links)
                 .map(val => res.data.parse.links[val]['*'])
                 .sort();
-            this.sections = Object.keys(res.data.parse.sections)
+            const sections = Object.keys(res.data.parse.sections)
                 .map(val => res.data.parse.sections[val].line)
                 .sort();
+            const birds = this.parseBirdList(links, sections);
+            this.initializeDatabase(birds);
         } catch (error) {
             console.log(error);
             alert('Something went wrong');
         }
     }
 
-    parseBirdList() {
+    parseBirdList(links, sections) {
         //Remove brackets from sections
-        this.parsedSections = this.sections.map(el =>
+        const parsedSections = sections.map(el =>
             el.replace(/ *\([^)]*\) */g, ''),
         );
-
         //Create bird list without section links
-        this.birds = this.links.filter(el => !this.parsedSections.includes(el));
+        return links.filter(el => !parsedSections.includes(el));
+    }
 
+    initializeDatabase(birdlist) {
+        this.birds = birdlist;
         this.banlist = [];
+        this.highscores = {
+            quizOne: 0,
+            quizTwo: 0,
+            quizThree: 0,
+        };
     }
 
     async getBirdPhoto(birdName, failureFn, width = 500) {
