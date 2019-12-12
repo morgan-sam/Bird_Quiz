@@ -30,6 +30,7 @@ document
 });
 
 const controlGetDatabase = async () => {
+    view.setLoadingScreen('Fetching Database...');
     state.birdQuiz = new Birds();
     try {
         await state.birdQuiz.getBirdList();
@@ -39,6 +40,7 @@ const controlGetDatabase = async () => {
         );
         console.log('Database retrieved:');
         console.log(state.birdQuiz);
+        state.birdQuiz.onload = view.setToScreen('mainMenu');
     } catch (error) {
         console.log(error);
         alert('Something wrong with the search...');
@@ -62,7 +64,7 @@ window.addEventListener('load', () => {
     if (localStorage.localBirdQuizDatabase) {
         loadLocalDatabase();
     } else {
-        alert('No local database found. Fetching database...');
+        alert('No local database found. Contacting API.');
         controlGetDatabase();
     }
 });
@@ -107,7 +109,7 @@ const startQuiz = async quizNumber => {
         state.currentQuiz.quizNumber = quizNumber;
         state.currentQuiz.questionNumber = 1;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
-        view.setToScreen('quizLoadingScreen');
+        view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {
             case 1:
                 state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
@@ -136,7 +138,7 @@ const startQuiz = async quizNumber => {
                 state.currentQuiz.score,
                 state.currentQuiz.questionNumber,
             );
-            checkQuizFirstTimeLoaded();
+            await view.setToScreen('quizScreen');
         } catch {
             return state.birdQuiz.pingWikipedia(
                 fourAnswerQuizQuestion,
@@ -157,7 +159,7 @@ const startQuiz = async quizNumber => {
                 state.currentQuiz.score,
                 state.currentQuiz.questionNumber,
             );
-            checkQuizFirstTimeLoaded();
+            await view.setToScreen('quizScreen');
         } catch {
             return state.birdQuiz.pingWikipedia(
                 fourImageQuizQuestion,
@@ -190,7 +192,7 @@ const startQuiz = async quizNumber => {
     function confirmBan() {
         state.birdQuiz.moveBirdToBanList(state.currentQuiz.birdToBan);
         resetFromBanToQuiz();
-        view.setToScreen('quizLoadingScreen');
+        view.setLoadingScreen('Generating New Question...');
         state.currentQuiz.quizFunction();
     }
 
@@ -299,11 +301,6 @@ const startQuiz = async quizNumber => {
         } else {
             state.currentQuiz.quizFunction();
         }
-    }
-
-    async function checkQuizFirstTimeLoaded() {
-        if (state.currentQuiz.questionNumber === 1)
-            await view.setToScreen('quizScreen');
     }
 
     function quizComplete() {

@@ -1,3 +1,8 @@
+export const setLoadingScreen = loadingScreenText => {
+    document.getElementById('quizLoadingText').innerHTML = loadingScreenText;
+    setToScreen('quizLoadingScreen');
+};
+
 export const fourNameNewQuestionUI = (
     birdPhotoURL,
     birdObjArr,
