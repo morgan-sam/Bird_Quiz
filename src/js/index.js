@@ -110,7 +110,7 @@ const startQuiz = async quizNumber => {
         quizButtonInit();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.totalQuestions = 1;
+        state.currentQuiz.totalQuestions = 5;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {
@@ -322,15 +322,16 @@ const startQuiz = async quizNumber => {
     }
 
     function checkIfQuizComplete() {
-        if (
-            state.currentQuiz.questionNumber > state.currentQuiz.totalQuestions
-        ) {
-            return setTimeout(function() {
+        return setTimeout(function() {
+            if (
+                state.currentQuiz.questionNumber >
+                state.currentQuiz.totalQuestions
+            ) {
                 return quizComplete();
-            }, 1000);
-        } else {
-            state.currentQuiz.quizFunction();
-        }
+            } else {
+                return state.currentQuiz.quizFunction();
+            }
+        }, 1000);
     }
 
     function quizComplete() {
