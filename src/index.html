@@ -22,11 +22,12 @@
             </div>
         </div>
 
-        <div id="quizSelectMenu" class="menu">
+        <div id="quizSelectMenu" class="menu fade-in">
             <h2 id="quizSelectTitle">Select a game:</h2>
             <div id="quizSelectButtons">
                 <button id="fourAnsOneImgBtn">1 Image 4 Answers</button>
                 <button id="oneAnsFourImgBtn">4 Images 1 Answer</button>
+                <button id="mixedCountdownQuizBtn">Mixed Countdown Quiz</button>
                 <button value="mainMenu" class="navBtn">
                     Back to Main Menu
                 </button>
@@ -48,7 +49,10 @@
 
         <div id="quizScreen" class="quiz">
             <div id="quizQuestionAndNumber">
-                <h2>Question <span id="questionNumber">0</span> / 10</h2>
+                <h2>
+                    Question <span id="questionNumber">0</span> /
+                    <span id="numberOfQuestions">10</span>
+                </h2>
                 <h2 id="birdQuestion">Which bird is this?</h2>
             </div>
             <div id="Frame">

@@ -24,6 +24,9 @@ document
 document
     .getElementById('oneAnsFourImgBtn')
     .addEventListener('click', () => startQuiz(2));
+document
+    .getElementById('mixedCountdownQuizBtn')
+    .addEventListener('click', () => startQuiz(3));
 
 [...document.querySelectorAll('.navBtn')].forEach(function(button) {
     button.addEventListener('click', () => view.setToScreen(button.value));
@@ -106,16 +109,22 @@ const startQuiz = async quizNumber => {
     function initQuiz(quizNumber) {
         quizButtonInit();
         state.currentQuiz.score = 0;
-        state.currentQuiz.quizNumber = quizNumber;
         state.currentQuiz.questionNumber = 1;
+        state.currentQuiz.totalQuestions = 1;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {
             case 1:
                 state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
+                state.currentQuiz.quizNumber = 1;
                 break;
             case 2:
                 state.currentQuiz.quizFunction = fourImageQuizQuestion;
+                state.currentQuiz.quizNumber = 2;
+                break;
+            case 3:
+                state.currentQuiz.quizFunction = mixedCountdownQuiz;
+                state.currentQuiz.quizNumber = randomIntFromInterval(3, 4);
                 break;
             default:
                 break;
@@ -137,6 +146,7 @@ const startQuiz = async quizNumber => {
                 birdsObjArr,
                 state.currentQuiz.score,
                 state.currentQuiz.questionNumber,
+                state.currentQuiz.totalQuestions,
             );
             await view.setToScreen('quizScreen');
         } catch {
@@ -158,6 +168,7 @@ const startQuiz = async quizNumber => {
                 chosenBird,
                 state.currentQuiz.score,
                 state.currentQuiz.questionNumber,
+                state.currentQuiz.totalQuestions,
             );
             await view.setToScreen('quizScreen');
         } catch {
@@ -168,12 +179,29 @@ const startQuiz = async quizNumber => {
         }
     };
 
+    const mixedCountdownQuiz = async () => {
+        view.setLoadingScreen('Generating New Question...');
+        const rand = randomIntFromInterval(1, 2);
+        switch (rand) {
+            case 1:
+                state.currentQuiz.quizNumber = 3;
+                await fourAnswerQuizQuestion();
+                break;
+            case 2:
+                state.currentQuiz.quizNumber = 4;
+                await fourImageQuizQuestion();
+                break;
+        }
+    };
+
     function manualAddToBanList() {
         switch (state.currentQuiz.quizNumber) {
             case 1:
+            case 3:
                 banImgSelected(0);
                 break;
             case 2:
+            case 4:
                 state.currentQuiz.answerButtonFunction = banImgSelected;
                 view.setBanSelectionScreen(true);
                 view.resetButtons();
@@ -294,7 +322,9 @@ const startQuiz = async quizNumber => {
     }
 
     function checkIfQuizComplete() {
-        if (state.currentQuiz.questionNumber > 10) {
+        if (
+            state.currentQuiz.questionNumber > state.currentQuiz.totalQuestions
+        ) {
             return setTimeout(function() {
                 return quizComplete();
             }, 1000);
@@ -304,32 +334,54 @@ const startQuiz = async quizNumber => {
     }
 
     function quizComplete() {
-        const [
-            roundedPercentage,
-            roundedHighscore,
-        ] = calculateAndStoreHighscores();
+        const roundedPercentageScore = calculateHighscore();
+        const highscore = checkIfHighscoreBeaten(roundedPercentageScore);
+
         view.updateGameCompleteScreen(
             state.currentQuiz.score,
-            roundedPercentage,
-            roundedHighscore,
+            roundedPercentageScore,
+            highscore,
         );
         view.setToScreen('quizCompleteScreen');
     }
 
-    function calculateAndStoreHighscores() {
-        state.currentQuiz.scorePercentage =
-            (100 * (state.currentQuiz.score + 40)) / 60;
-        if (state.currentQuiz.scorePercentage > state.highscores.quizOne) {
-            state.highscores.quizOne = state.currentQuiz.scorePercentage;
-            window.localStorage.setItem(
-                'highscores',
-                JSON.stringify(state.highscores),
-            );
-        }
-        let roundedPercentage =
+    function calculateHighscore() {
+        const questions = state.currentQuiz.totalQuestions;
+        const score = state.currentQuiz.score;
+        state.currentQuiz.scorePercentage = (100 * (score + 4)) / 6 / questions;
+        let roundedPercentageScore =
             Math.round(state.currentQuiz.scorePercentage * 100) / 100;
-        let roundedHighscore = Math.round(state.highscores.quizOne * 100) / 100;
-        return [roundedPercentage, roundedHighscore];
+        return roundedPercentageScore;
+    }
+
+    function checkIfHighscoreBeaten(score) {
+        let highscore;
+        switch (state.currentQuiz.quizNumber) {
+            case 1:
+                if (score > state.birdQuiz.highscores.quizOne) {
+                    state.birdQuiz.highscores.quizOne = score;
+                }
+                highscore = state.birdQuiz.highscores.quizOne;
+                break;
+            case 2:
+                if (score > state.birdQuiz.highscores.quizTwo) {
+                    state.birdQuiz.highscores.quizTwo = score;
+                }
+                highscore = state.birdQuiz.highscores.quizTwo;
+                break;
+            case 3:
+            case 4:
+                if (score > state.birdQuiz.highscores.quizThree) {
+                    state.birdQuiz.highscores.quizThree = score;
+                }
+                highscore = state.birdQuiz.highscores.quizThree;
+                break;
+        }
+        window.localStorage.setItem(
+            'localBirdQuizDatabase',
+            JSON.stringify(state.birdQuiz),
+        );
+        return highscore;
     }
 
     function quitQuiz() {

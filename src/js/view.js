@@ -8,6 +8,7 @@ export const fourNameNewQuestionUI = (
     birdObjArr,
     score,
     questionNumber,
+    numberOfQuestions,
 ) => {
     let img = document.getElementById('birdImage');
     document.getElementById('birdImage').src = birdPhotoURL;
@@ -19,7 +20,7 @@ export const fourNameNewQuestionUI = (
         ) {
             span.innerHTML = birdObjArr[i].bird;
         });
-        updateQuestionNumber(questionNumber);
+        updateQuestionNumber(questionNumber, numberOfQuestions);
         loadingGifOverlay(false);
         resetButtons();
         removeButtonImages();
@@ -34,12 +35,13 @@ export const fourImgNewQuestionUI = (
     chosenBird,
     score,
     questionNumber,
+    numberOfQuestions,
 ) => {
     addPhotosToButtons(birdPhotoArray);
     document.getElementById(
         'birdQuestion',
     ).innerHTML = `Which one is the ${chosenBird}?`;
-    updateQuestionNumber(questionNumber);
+    updateQuestionNumber(questionNumber, numberOfQuestions);
     updateScore(score);
     resetButtons();
 };
@@ -67,11 +69,10 @@ export const updateScore = score => {
     document.getElementById('score').innerHTML = score;
 };
 
-export const updateQuestionNumber = questionNumber => {
+export const updateQuestionNumber = (questionNumber, numberOfQuestions) => {
     document.getElementById('questionNumber').innerHTML = questionNumber;
+    document.getElementById('numberOfQuestions').innerHTML = numberOfQuestions;
 };
-
-//Have setAnswerButtonsState() Fn where array of every button is passed rather than individual buttons
 
 export const setAnswerButtonsState = (buttonStates, quizNumber) => {
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
@@ -79,13 +80,16 @@ export const setAnswerButtonsState = (buttonStates, quizNumber) => {
             case 'incorrect':
                 button.className += ' incorrectButton';
                 button.disabled = true;
-                if (quizNumber === 2) button.style.opacity = 0.5;
-                if (quizNumber === 2) button.style.border = '5px solid red';
+                if ([2, 4].includes(quizNumber)) {
+                    button.style.border = '5px solid red';
+                    button.style.opacity = 0.5;
+                }
                 break;
             case 'correct':
                 button.className += ' correctButton';
                 button.disabled = true;
-                if (quizNumber === 2) button.style.border = '5px solid green';
+                if ([2, 4].includes(quizNumber))
+                    button.style.border = '5px solid green';
                 break;
             case 'unselected':
                 break;

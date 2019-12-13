@@ -7,6 +7,24 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    // animation: fadeInAnimation ease 2s;
+    // animation-iteration-count: 1;
+    // animation-fill-mode: forwards;
+
+    opacity: 3s;
+    transition: all 12s ease-in-out;
+}
+
 body {
     background: url('/img/bird_flying.png') no-repeat;
     height: 100%;
