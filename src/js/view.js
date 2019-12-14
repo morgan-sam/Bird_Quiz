@@ -10,6 +10,7 @@ export const fourNameNewQuestionUI = (
     questionNumber,
     numberOfQuestions,
 ) => {
+    setQuestionText(`Which bird is this?`);
     let img = document.getElementById('birdImage');
     document.getElementById('birdImage').src = birdPhotoURL;
     document.getElementById('birdImage').height = '400';
@@ -25,6 +26,7 @@ export const fourNameNewQuestionUI = (
         resetButtons();
         removeButtonImages();
         updateScore(score);
+        setTimerState(false);
         return true;
     })());
     return imgLoaded;
@@ -38,12 +40,38 @@ export const fourImgNewQuestionUI = (
     numberOfQuestions,
 ) => {
     addPhotosToButtons(birdPhotoArray);
-    document.getElementById(
-        'birdQuestion',
-    ).innerHTML = `Which one is the ${chosenBird}?`;
+    setQuestionText(`Which one is the ${chosenBird}?`);
     updateQuestionNumber(questionNumber, numberOfQuestions);
     updateScore(score);
+    setTimerState(false);
     resetButtons();
+};
+
+export const setTimerState = boo => {
+    const timer = document.getElementById('countdownTimer');
+    const navBtnsScore = document.getElementById('quizNavBtnsScore');
+    if (boo) {
+        navBtnsScore.style.display = 'grid';
+        timer.style.display = 'block';
+    } else {
+        navBtnsScore.style.display = 'inline-block';
+        timer.style.display = 'none';
+    }
+};
+
+export const setCountdownState = (cycle, mod, mainColor, backgroundColor) => {
+    const timer = document.getElementById('countdownTimer');
+    timer.style.display = 'block';
+    timer.style.backgroundImage = `linear-gradient(
+                ${cycle}deg,
+                ${mod ? mainColor : backgroundColor} 50%,
+                transparent 50%
+            ),
+            linear-gradient(${270}deg, ${mainColor} 50%, transparent 50%)`;
+};
+
+export const setQuestionText = text => {
+    document.getElementById('birdQuestion').innerHTML = text;
 };
 
 export const addPhotosToButtons = buttonPhotos => {

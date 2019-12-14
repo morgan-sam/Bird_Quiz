@@ -110,7 +110,7 @@ const startQuiz = async quizNumber => {
         quizButtonInit();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.totalQuestions = 5;
+        state.currentQuiz.totalQuestions = 1;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {
@@ -124,7 +124,7 @@ const startQuiz = async quizNumber => {
                 break;
             case 3:
                 state.currentQuiz.quizFunction = mixedCountdownQuiz;
-                state.currentQuiz.quizNumber = randomIntFromInterval(3, 4);
+                state.currentQuiz.quizNumber = randomIntBetweenTwoValues(3, 4);
                 break;
             default:
                 break;
@@ -181,7 +181,7 @@ const startQuiz = async quizNumber => {
 
     const mixedCountdownQuiz = async () => {
         view.setLoadingScreen('Generating New Question...');
-        const rand = randomIntFromInterval(1, 2);
+        const rand = randomIntBetweenTwoValues(1, 2);
         switch (rand) {
             case 1:
                 state.currentQuiz.quizNumber = 3;
@@ -192,6 +192,22 @@ const startQuiz = async quizNumber => {
                 await fourImageQuizQuestion();
                 break;
         }
+        view.setTimerState(true);
+        const counter = 1000;
+        const mainColor = 'darksalmon';
+        const backgroundColor = 'white';
+        let i = counter;
+        createInterval(function() {
+            i--;
+            const mod = Math.floor(i / (counter / 2) + 1) % 2; //0 first half 1 2nd half
+            const cycle = 90 * (mod * 2 - 1) - (360 / counter) * i;
+            view.setCountdownState(cycle, mod, mainColor, backgroundColor);
+            if (i === 0) {
+                clearIntervals();
+                state.currentQuiz.score -= 2;
+                return endQuestion();
+            }
+        });
     };
 
     function manualAddToBanList() {
@@ -260,7 +276,7 @@ const startQuiz = async quizNumber => {
                     Math.floor(Math.random() * state.birdQuiz.birds.length)
                 ],
         );
-        let chosenBird = randomIntFromInterval(0, 3);
+        let chosenBird = randomIntBetweenTwoValues(0, 3);
         let birdObjArr = [];
 
         birdArray.forEach(function(el, i) {
@@ -307,8 +323,13 @@ const startQuiz = async quizNumber => {
     }
 
     function correctAnswer() {
-        view.enableAnswerButtons(false);
         state.currentQuiz.score += 2;
+        endQuestion();
+    }
+
+    function endQuestion() {
+        clearIntervals();
+        view.enableAnswerButtons(false);
         state.currentQuiz.questionNumber++;
         checkIfQuizComplete();
     }
@@ -331,7 +352,7 @@ const startQuiz = async quizNumber => {
             } else {
                 return state.currentQuiz.quizFunction();
             }
-        }, 1000);
+        }, 2000);
     }
 
     function quizComplete() {
@@ -386,6 +407,13 @@ const startQuiz = async quizNumber => {
     }
 
     function quitQuiz() {
+        clearIntervals();
+        removeBtnEventListeners();
+        view.setToScreen('mainMenu');
+        return null;
+    }
+
+    function removeBtnEventListeners() {
         [...document.querySelectorAll('.answerBtn')].forEach(function(
             button,
             i,
@@ -404,14 +432,36 @@ const startQuiz = async quizNumber => {
         document
             .getElementById('cancelBanBtn')
             .removeEventListener('click', cancelBan, false);
-        view.setToScreen('mainMenu');
-        return null;
     }
 
     initQuiz(quizNumber);
 };
 
-function randomIntFromInterval(min, max) {
+class IntervalObj {
+    constructor(intervalID, active) {
+        this.intervalID = intervalID;
+        this.active = active;
+    }
+}
+
+state.intervals = [];
+
+function createInterval(funcToPass) {
+    const foundInt = state.intervals.some(el => el.active === true);
+    if (!foundInt)
+        state.intervals.push(
+            new IntervalObj(setInterval(funcToPass, 10), true),
+        );
+}
+
+function clearIntervals() {
+    for (var i = 0; i < state.intervals.length; i++) {
+        clearInterval(state.intervals[i].intervalID);
+        state.intervals[i].active = false;
+    }
+}
+
+function randomIntBetweenTwoValues(min, max) {
     // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
 }

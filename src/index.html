@@ -53,13 +53,12 @@
                     Question <span id="questionNumber">0</span> /
                     <span id="numberOfQuestions">10</span>
                 </h2>
-                <h2 id="birdQuestion">Which bird is this?</h2>
+                <h2 id="birdQuestion"></h2>
             </div>
             <div id="Frame">
                 <img id="birdImage" height="400" />
                 <img id="loadingOverlay" src="./img/transparentLoading.gif" />
             </div>
-            <br />
             <div id="banQuestion">
                 <h2>Select an image to add to ban list:</h2>
             </div>
@@ -82,9 +81,12 @@
                 </button>
             </div>
             <div id="quizNavBtnsScore">
-                <h4>Score: <span id="score"></span></h4>
+                <div id="countdownTimer"></div>
+                <h4 id="scoreText">Score: <span id="score"></span></h4>
                 <button id="banImageBtn">Report Image</button>
-                <button class="quitBtn">Quit to Main Menu</button>
+                <button id="inGameQuitBtn" class="quitBtn">
+                    Quit to Main Menu
+                </button>
             </div>
             <div id="banNavBtns">
                 <button id="banReturnBtn">Cancel and Return to Quiz</button>
