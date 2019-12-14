@@ -197,17 +197,21 @@ const startQuiz = async quizNumber => {
         const mainColor = 'darksalmon';
         const backgroundColor = 'white';
         let i = counter;
-        createInterval(function() {
-            i--;
-            const mod = Math.floor(i / (counter / 2) + 1) % 2; //0 first half 1 2nd half
-            const cycle = 90 * (mod * 2 - 1) - (360 / counter) * i;
-            view.setCountdownState(cycle, mod, mainColor, backgroundColor);
-            if (i === 0) {
-                clearIntervals();
-                state.currentQuiz.score -= 2;
-                return endQuestion();
-            }
-        });
+        createInterval(
+            function() {
+                i--;
+                const mod = Math.floor(i / (counter / 2) + 1) % 2; //0 first half 1 2nd half
+                const cycle = 90 * (mod * 2 - 1) - (360 / counter) * i;
+                view.setCountdownState(cycle, mod, mainColor, backgroundColor);
+                if (i === 0) {
+                    clearIntervals('countdown');
+                    state.currentQuiz.score -= 2;
+                    return endQuestion();
+                }
+            },
+            'countdown',
+            10,
+        );
     };
 
     function manualAddToBanList() {
@@ -234,6 +238,7 @@ const startQuiz = async quizNumber => {
     }
 
     function confirmBan() {
+        clearAllIntervals();
         state.birdQuiz.moveBirdToBanList(state.currentQuiz.birdToBan);
         resetFromBanToQuiz();
         view.setLoadingScreen('Generating New Question...');
@@ -328,7 +333,7 @@ const startQuiz = async quizNumber => {
     }
 
     function endQuestion() {
-        clearIntervals();
+        clearIntervals('countdown');
         view.enableAnswerButtons(false);
         state.currentQuiz.questionNumber++;
         checkIfQuizComplete();
@@ -343,16 +348,21 @@ const startQuiz = async quizNumber => {
     }
 
     function checkIfQuizComplete() {
-        return setTimeout(function() {
-            if (
-                state.currentQuiz.questionNumber >
-                state.currentQuiz.totalQuestions
-            ) {
-                return quizComplete();
-            } else {
-                return state.currentQuiz.quizFunction();
-            }
-        }, 2000);
+        return createInterval(
+            function() {
+                if (
+                    state.currentQuiz.questionNumber >
+                    state.currentQuiz.totalQuestions
+                ) {
+                    quizComplete();
+                } else {
+                    state.currentQuiz.quizFunction();
+                }
+                return clearIntervals('pause');
+            },
+            'pause',
+            2000,
+        );
     }
 
     function quizComplete() {
@@ -407,10 +417,15 @@ const startQuiz = async quizNumber => {
     }
 
     function quitQuiz() {
-        clearIntervals();
+        clearAllIntervals();
         removeBtnEventListeners();
         view.setToScreen('mainMenu');
         return null;
+    }
+
+    function clearAllIntervals() {
+        clearIntervals('countdown');
+        clearIntervals('pause');
     }
 
     function removeBtnEventListeners() {
@@ -438,26 +453,36 @@ const startQuiz = async quizNumber => {
 };
 
 class IntervalObj {
-    constructor(intervalID, active) {
+    constructor(intervalID, type, active) {
         this.intervalID = intervalID;
+        this.type = type;
         this.active = active;
     }
 }
 
 state.intervals = [];
 
-function createInterval(funcToPass) {
-    const foundInt = state.intervals.some(el => el.active === true);
-    if (!foundInt)
-        state.intervals.push(
-            new IntervalObj(setInterval(funcToPass, 10), true),
-        );
+function createInterval(funcToPass, typeOfInterval, tickTime) {
+    const foundInt = state.intervals.some(
+        el => el.active === true && el.type === typeOfInterval,
+    );
+    foundInt
+        ? null
+        : state.intervals.push(
+              new IntervalObj(
+                  setInterval(funcToPass, tickTime),
+                  typeOfInterval,
+                  true,
+              ),
+          );
 }
 
-function clearIntervals() {
+function clearIntervals(typeOfInterval) {
     for (var i = 0; i < state.intervals.length; i++) {
-        clearInterval(state.intervals[i].intervalID);
-        state.intervals[i].active = false;
+        if (state.intervals[i].type == typeOfInterval) {
+            clearInterval(state.intervals[i].intervalID);
+            state.intervals[i].active = false;
+        }
     }
 }
 
