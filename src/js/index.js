@@ -110,7 +110,7 @@ const startQuiz = async quizNumber => {
         quizButtonInit();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.totalQuestions = 1;
+        state.currentQuiz.totalQuestions = 10;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {
@@ -206,6 +206,7 @@ const startQuiz = async quizNumber => {
                 if (i === 0) {
                     clearIntervals('countdown');
                     state.currentQuiz.score -= 2;
+                    showCorrectAnswer();
                     return endQuestion();
                 }
             },
@@ -334,17 +335,37 @@ const startQuiz = async quizNumber => {
 
     function endQuestion() {
         clearIntervals('countdown');
+        view.updateScore(state.currentQuiz.score);
         view.enableAnswerButtons(false);
         state.currentQuiz.questionNumber++;
         checkIfQuizComplete();
     }
 
     function incorrectAnswer() {
-        const wrongAnswers = state.currentQuiz.birdObjArr.filter(
-            el => el.clicked === true,
-        ).length;
-        //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
-        state.currentQuiz.score -= wrongAnswers;
+        if ([1, 2].includes(state.currentQuiz.quizNumber)) {
+            const wrongAnswers = state.currentQuiz.birdObjArr.filter(
+                el => el.clicked === true,
+            ).length;
+            //-1 for 1st wrong answer, -2 for 2nd, -3 for 3rd
+            state.currentQuiz.score -= wrongAnswers;
+        } else {
+            state.currentQuiz.score -= 2;
+
+            //make correct answer visible
+            showCorrectAnswer();
+
+            endQuestion();
+        }
+    }
+
+    function showCorrectAnswer() {
+        state.currentQuiz.birdObjArr.map(el => {
+            if (el.chosen) el.clicked = true;
+        });
+        view.setAnswerButtonsState(
+            currentButtonStates(),
+            state.currentQuiz.quizNumber,
+        );
     }
 
     function checkIfQuizComplete() {
@@ -380,7 +401,13 @@ const startQuiz = async quizNumber => {
     function calculateHighscore() {
         const questions = state.currentQuiz.totalQuestions;
         const score = state.currentQuiz.score;
-        state.currentQuiz.scorePercentage = (100 * (score + 4)) / 6 / questions;
+        if ([1, 2].includes(state.currentQuiz.quizNumber)) {
+            state.currentQuiz.scorePercentage =
+                (100 * (score + 4 * questions)) / 6 / questions;
+        } else {
+            state.currentQuiz.scorePercentage =
+                (100 * (score + 2 * questions)) / 4 / questions;
+        }
         let roundedPercentageScore =
             Math.round(state.currentQuiz.scorePercentage * 100) / 100;
         return roundedPercentageScore;
