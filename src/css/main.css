@@ -61,13 +61,16 @@ h4 {
   text-align: center;
   display: none; }
   .menu > div {
-    display: inline-block; }
+    margin: 0 auto;
+    display: block; }
+    .menu > div > button {
+      margin: 1.2rem auto; }
   .menu > h3 {
     padding: 0.4rem; }
   .menu > h2 {
     padding: 0rem; }
-  .menu button {
-    margin: 1.2rem; }
+  .menu > #quizSelectButtons {
+    padding: 3rem; }
 
 .quiz {
   position: absolute;
@@ -250,3 +253,35 @@ h4 {
   #quizBanScreenConfirmation #banFinalBtns button {
     margin: 0 auto;
     margin-bottom: 1rem; }
+
+#howToPlayPage {
+  background: black;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #fbf7f5 10%, #fbf7f5 90%, rgba(0, 0, 0, 0) 100%);
+  height: 100%; }
+  #howToPlayPage > div {
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: left; }
+    #howToPlayPage > div > div {
+      width: 40vw;
+      margin: 10rem; }
+      #howToPlayPage > div > div > div {
+        text-align: center; }
+        #howToPlayPage > div > div > div > button {
+          display: inline-block; }
+      #howToPlayPage > div > div > ul {
+        list-style-position: inside;
+        padding: 1rem; }
+        #howToPlayPage > div > div > ul > li {
+          padding: 0.5rem;
+          margin: 0; }
+      #howToPlayPage > div > div > h2 {
+        padding: 1rem;
+        text-align: center; }
+      #howToPlayPage > div > div > h4 {
+        margin-bottom: 0;
+        text-align: center; }
+      #howToPlayPage > div > div > p {
+        padding: 1.5rem; }

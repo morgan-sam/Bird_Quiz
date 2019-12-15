@@ -13,6 +13,9 @@
                 <button id="startBtn" value="quizSelectMenu" class="navBtn">
                     Start
                 </button>
+                <button id="howToPlayBtn" value="howToPlayPage" class="navBtn">
+                    How To Play
+                </button>
                 <button value="aboutPage" class="navBtn">
                     About
                 </button>
@@ -25,12 +28,80 @@
         <div id="quizSelectMenu" class="menu fade-in">
             <h2 id="quizSelectTitle">Select a game:</h2>
             <div id="quizSelectButtons">
+                <h4>Easy:</h4>
                 <button id="fourAnsOneImgBtn">1 Image 4 Answers</button>
+                <h4>Medium:</h4>
                 <button id="oneAnsFourImgBtn">4 Images 1 Answer</button>
+                <h4>Hard:</h4>
                 <button id="mixedCountdownQuizBtn">Mixed Countdown Quiz</button>
+            </div>
+            <div>
                 <button value="mainMenu" class="navBtn">
                     Back to Main Menu
                 </button>
+            </div>
+        </div>
+
+        <div id="howToPlayPage" class="menu">
+            <div>
+                <div>
+                    <h2>
+                        How To Play:
+                    </h2>
+                    <p>
+                        The quiz retrieves images of birds from Wikipedia which
+                        must be matched to the corresponding common bird name.
+                        You win or lose points depending on whether you give
+                        correct or incorrect answers. Each game has 10 randomly
+                        selected questions.
+                    </p>
+                    <h4>
+                        There are three different quiz modes:
+                    </h4>
+                    <ul>
+                        <li>
+                            In the first quiz a single image is shown that must
+                            be matched to one of 4 bird names. You have
+                            unlimited time to answer and can attempt to answer
+                            as many times as you like. The more incorrect
+                            attempts you make the more points you lose.
+                        </li>
+
+                        <li>
+                            In the second quiz a single name is shown that must
+                            be matched to one of 4 bird images. You have
+                            unlimited time to answer and can attempt to answer
+                            as many times as you like. The more incorrect
+                            attempts you make the more points you lose.
+                        </li>
+
+                        <li>
+                            In the third quiz each question will randomly chose
+                            between both styles of the former 2 quizzes, except
+                            this time you will have a 10 second time limit and
+                            only one shot at choosing the right answer per
+                            question.
+                        </li>
+                    </ul>
+                    <p>
+                        At the end of every quiz you score will be converted
+                        into a percentage score. Work your way up through each
+                        quiz and try to beat the highscore for each.
+                    </p>
+                    <p>
+                        If the quiz accidentally includes any incorrect images
+                        such as pictures of maps instead of images of birds,
+                        please use the report image button to remove the
+                        incorrect image from the database. On reporting the
+                        image the quiz will reset the question and your score
+                        will remain unaffected.
+                    </p>
+                    <div id="aboutPageButtons">
+                        <button value="mainMenu" class="navBtn">
+                            Back to Main Menu
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
