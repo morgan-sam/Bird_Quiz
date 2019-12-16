@@ -100,6 +100,7 @@ h4 {
     .quiz #quizNavBtnsScore > #countdownTimer {
       width: 100px;
       height: 100px;
+      background: white;
       border-radius: 50%;
       border: 1px solid;
       margin: 3rem;
@@ -143,12 +144,12 @@ h4 {
   height: 100px;
   display: none; }
 
-#quizLoadingScreen {
+#quizLoadingScreen > div {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); }
-  #quizLoadingScreen #quizLoadingText {
+  #quizLoadingScreen > div #quizLoadingText {
     padding: 3rem; }
 
 #quizCompleteScreen > #quizNavBtns {

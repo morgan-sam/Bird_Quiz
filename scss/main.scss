@@ -139,6 +139,7 @@ h4 {
         > #countdownTimer {
             width: 100px;
             height: 100px;
+            background: white;
             border-radius: 50%;
             border: 1px solid;
             margin: 3rem;
@@ -200,12 +201,14 @@ h4 {
 }
 
 #quizLoadingScreen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    #quizLoadingText {
-        padding: 3rem;
+    > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        #quizLoadingText {
+            padding: 3rem;
+        }
     }
 }
 

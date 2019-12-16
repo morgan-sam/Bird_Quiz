@@ -3,9 +3,13 @@
 import Birds from './model.js';
 import * as view from './view.js';
 import '../css/main.css';
+import '../css/mobile.css';
 
 import transparentLoadingGif from '../img/transparentLoading.gif';
 import birdsFlying from '../img/bird_flying.png';
+import forestBird from '../img/forest_bird.jpg';
+
+window.enableOfflineTesing = false;
 
 const state = {};
 
@@ -110,7 +114,7 @@ const startQuiz = async quizNumber => {
         quizButtonInit();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.totalQuestions = 10;
+        state.currentQuiz.totalQuestions = 1;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {

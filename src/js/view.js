@@ -49,12 +49,9 @@ export const fourImgNewQuestionUI = (
 
 export const setTimerState = boo => {
     const timer = document.getElementById('countdownTimer');
-    const navBtnsScore = document.getElementById('quizNavBtnsScore');
     if (boo) {
-        navBtnsScore.style.display = 'grid';
         timer.style.display = 'block';
     } else {
-        navBtnsScore.style.display = 'inline-block';
         timer.style.display = 'none';
     }
 };

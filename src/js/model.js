@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
 
+import testIMG from '../img/testbird.jpeg';
+
 export default class Birds {
     async getBirdList() {
         try {
@@ -42,23 +44,28 @@ export default class Birds {
     }
 
     async getBirdPhoto(birdName, failureFn, width = 500) {
-        let img;
-        const parsedBirdName = birdName.replace(' ', '_');
-        const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
+        if (!window.enableOfflineTesing) {
+            let img;
+            const parsedBirdName = birdName.replace(' ', '_');
+            const birdPhotoAPI = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=${width}&titles=${parsedBirdName}`;
 
-        try {
-            const res = await axios(`${PROXY_URL}/${birdPhotoAPI}`);
-            img =
-                res.data.query.pages[Object.keys(res.data.query.pages)[0]]
-                    .thumbnail.source;
-            return img;
-        } catch {
-            //Only adds to ban list if there is connection to Wikipedia (i.e. no bird img on page)
-            this.pingWikipedia(
-                () => this.moveBirdToBanList(birdName),
-                failureFn,
-            );
-            throw error;
+            try {
+                const res = await axios(`${PROXY_URL}/${birdPhotoAPI}`);
+                img =
+                    res.data.query.pages[Object.keys(res.data.query.pages)[0]]
+                        .thumbnail.source;
+                return img;
+            } catch {
+                console.log('HELLO');
+                //Only adds to ban list if there is connection to Wikipedia (i.e. no bird img on page)
+                this.pingWikipedia(
+                    () => this.moveBirdToBanList(birdName),
+                    failureFn,
+                );
+                throw error;
+            }
+        } else {
+            return testIMG;
         }
     }
 
