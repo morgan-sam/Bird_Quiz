@@ -342,15 +342,16 @@ h4 {
 }
 
 #howToPlayPage {
+    height: 100vh;
     > div {
         height: 100%;
         align-items: center;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         text-align: left;
         > div {
             width: 40vw;
-            margin: 10rem;
             > div {
                 text-align: center;
                 > button {
