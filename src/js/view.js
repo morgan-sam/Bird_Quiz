@@ -47,14 +47,20 @@ export const fourImgNewQuestionUI = (
     resetButtons();
 };
 
-export const setTimerState = boo => {
-    const timer = document.getElementById('countdownTimer');
-    if (boo) {
-        timer.style.display = 'block';
-    } else {
-        timer.style.display = 'none';
-    }
-};
+// export const setTimerState = boo => {
+//
+//
+//
+//     // const timer = document.getElementById('countdownTimer');
+//     // const navBtnsScore = document.getElementById('quizNavBtnsScore');
+//     // if (boo) {
+//     //     timer.style.display = 'block';
+//     //     navBtnsScore.style.display = 'grid';
+//     // } else {
+//     //     timer.style.display = 'none';
+//     //     navBtnsScore.style.display = 'inline-block';
+//     // }
+// };
 
 export const setCountdownState = (cycle, mod, mainColor, backgroundColor) => {
     const timer = document.getElementById('countdownTimer');
@@ -217,4 +223,9 @@ export const setBanSelectionScreen = boo => {
     if (boo)
         document.getElementById('quizScreen').classList.add('banSelection');
     else document.getElementById('quizScreen').classList.remove('banSelection');
+};
+
+export const setTimerState = boo => {
+    if (boo) document.getElementById('quizScreen').classList.add('timerActive');
+    else document.getElementById('quizScreen').classList.remove('timerActive');
 };

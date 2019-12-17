@@ -112,6 +112,9 @@ h4 {
     transform: translate(-50%, -50%);
     text-align: center;
     display: none;
+    #quizNavBtnsScore {
+        display: inline-block;
+    }
     > div {
         h2 {
             font-size: 1.4rem;
@@ -122,46 +125,6 @@ h4 {
             padding: 1rem;
         }
 
-        #quizNavBtnsScore {
-            display: grid;
-            grid-template-columns: 15rem 20rem;
-            grid-template-rows: repeat(3, 3rem);
-            grid-column-gap: 0px;
-            grid-row-gap: 0px;
-            padding: 1rem;
-            //
-            margin: 0 auto;
-            align-items: center;
-            justify-content: center;
-            justify-items: center;
-            text-align: center;
-
-            > #countdownTimer {
-                width: 100px;
-                height: 100px;
-                background: white;
-                border-radius: 50%;
-                border: 1px solid;
-                margin: 3rem;
-                grid-area: 1 / 1 / 4 / 2;
-            }
-
-            > #scoreText {
-                grid-area: 1 / 2 / 2 / 3;
-                margin: 1rem;
-            }
-
-            > #banImageBtn {
-                grid-area: 2 / 2 / 3 / 3;
-            }
-
-            > #inGameQuitBtn {
-                grid-area: 3 / 2 / 4 / 3;
-            }
-            button {
-                width: 200px;
-            }
-        }
         > #banNavBtns {
             display: none;
         }
@@ -318,6 +281,53 @@ h4 {
                     transform: scale(1.05);
                 }
             }
+        }
+    }
+}
+
+.timerActive {
+    #countdownTimer {
+        display: block;
+    }
+    #quizNavBtnsScore {
+        display: grid;
+        grid-template-columns: 15rem 20rem;
+        grid-template-rows: repeat(3, 3rem);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        padding: 1rem;
+        //
+        margin: 0 auto;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+        text-align: center;
+
+        > #countdownTimer {
+            display: none;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            border: 1px solid;
+            margin: 3rem;
+            grid-area: 1 / 1 / 4 / 2;
+        }
+
+        > #scoreText {
+            grid-area: 1 / 2 / 2 / 3;
+            margin: 1rem;
+        }
+
+        > #banImageBtn {
+            grid-area: 2 / 2 / 3 / 3;
+        }
+
+        > #inGameQuitBtn {
+            grid-area: 3 / 2 / 4 / 3;
+        }
+        button {
+            width: 200px;
         }
     }
 }

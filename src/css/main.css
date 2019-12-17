@@ -79,41 +79,14 @@ h4 {
   transform: translate(-50%, -50%);
   text-align: center;
   display: none; }
+  .quiz #quizNavBtnsScore {
+    display: inline-block; }
   .quiz > div h2 {
     font-size: 1.4rem;
     padding: 1.2rem; }
   .quiz > div > #quizQuestionAndNumber {
     margin: 0rem;
     padding: 1rem; }
-  .quiz > div #quizNavBtnsScore {
-    display: grid;
-    grid-template-columns: 15rem 20rem;
-    grid-template-rows: repeat(3, 3rem);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    padding: 1rem;
-    margin: 0 auto;
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-    text-align: center; }
-    .quiz > div #quizNavBtnsScore > #countdownTimer {
-      width: 100px;
-      height: 100px;
-      background: white;
-      border-radius: 50%;
-      border: 1px solid;
-      margin: 3rem;
-      grid-area: 1 / 1 / 4 / 2; }
-    .quiz > div #quizNavBtnsScore > #scoreText {
-      grid-area: 1 / 2 / 2 / 3;
-      margin: 1rem; }
-    .quiz > div #quizNavBtnsScore > #banImageBtn {
-      grid-area: 2 / 2 / 3 / 3; }
-    .quiz > div #quizNavBtnsScore > #inGameQuitBtn {
-      grid-area: 3 / 2 / 4 / 3; }
-    .quiz > div #quizNavBtnsScore button {
-      width: 200px; }
   .quiz > div > #banNavBtns {
     display: none; }
   .quiz > div > #banQuestion {
@@ -233,6 +206,40 @@ h4 {
       height: 100%;
       width: 100%;
       transform: scale(1.05); }
+
+.timerActive #countdownTimer {
+  display: block; }
+
+.timerActive #quizNavBtnsScore {
+  display: grid;
+  grid-template-columns: 15rem 20rem;
+  grid-template-rows: repeat(3, 3rem);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  padding: 1rem;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  text-align: center; }
+  .timerActive #quizNavBtnsScore > #countdownTimer {
+    display: none;
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    border: 1px solid;
+    margin: 3rem;
+    grid-area: 1 / 1 / 4 / 2; }
+  .timerActive #quizNavBtnsScore > #scoreText {
+    grid-area: 1 / 2 / 2 / 3;
+    margin: 1rem; }
+  .timerActive #quizNavBtnsScore > #banImageBtn {
+    grid-area: 2 / 2 / 3 / 3; }
+  .timerActive #quizNavBtnsScore > #inGameQuitBtn {
+    grid-area: 3 / 2 / 4 / 3; }
+  .timerActive #quizNavBtnsScore button {
+    width: 200px; }
 
 .banSelection > #quizNavBtnsScore {
   display: none; }

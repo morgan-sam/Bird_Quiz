@@ -12,10 +12,7 @@ import forestBird from '../img/forest_bird.jpg';
 window.enableOfflineTesing = true;
 
 const state = {};
-
-function testingFunction() {
-    console.log('TESTING');
-}
+window.state = state;
 
 document.getElementById('resetDatabase').addEventListener('click', () => {
     if (
@@ -485,7 +482,6 @@ const startQuiz = async quizNumber => {
     }
 
     initQuiz(quizNumber);
-    testingFunction();
 };
 
 class IntervalObj {
