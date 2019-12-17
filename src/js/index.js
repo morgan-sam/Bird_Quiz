@@ -13,6 +13,10 @@ window.enableOfflineTesing = true;
 
 const state = {};
 
+function testingFunction() {
+    console.log('TESTING');
+}
+
 document.getElementById('resetDatabase').addEventListener('click', () => {
     if (
         confirm(
@@ -481,7 +485,7 @@ const startQuiz = async quizNumber => {
     }
 
     initQuiz(quizNumber);
-    fourImageQuizQuestion();
+    testingFunction();
 };
 
 class IntervalObj {
