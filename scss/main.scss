@@ -84,7 +84,7 @@ h4 {
     text-align: center;
     display: none;
 
-    > div {
+    > div > div {
         margin: 0 auto;
         display: block;
         > button {
@@ -112,62 +112,63 @@ h4 {
     transform: translate(-50%, -50%);
     text-align: center;
     display: none;
-
-    h2 {
-        font-size: 1.4rem;
-        padding: 1.2rem;
-    }
-    > #quizQuestionAndNumber {
-        margin: 0rem;
-        padding: 1rem;
-    }
-
-    #quizNavBtnsScore {
-        display: grid;
-        grid-template-columns: 15rem 20rem;
-        grid-template-rows: repeat(3, 3rem);
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
-        padding: 1rem;
-        //
-        margin: 0 auto;
-        align-items: center;
-        justify-content: center;
-        justify-items: center;
-        text-align: center;
-
-        > #countdownTimer {
-            width: 100px;
-            height: 100px;
-            background: white;
-            border-radius: 50%;
-            border: 1px solid;
-            margin: 3rem;
-            grid-area: 1 / 1 / 4 / 2;
+    > div {
+        h2 {
+            font-size: 1.4rem;
+            padding: 1.2rem;
+        }
+        > #quizQuestionAndNumber {
+            margin: 0rem;
+            padding: 1rem;
         }
 
-        > #scoreText {
-            grid-area: 1 / 2 / 2 / 3;
-            margin: 1rem;
+        #quizNavBtnsScore {
+            display: grid;
+            grid-template-columns: 15rem 20rem;
+            grid-template-rows: repeat(3, 3rem);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+            padding: 1rem;
+            //
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+            text-align: center;
+
+            > #countdownTimer {
+                width: 100px;
+                height: 100px;
+                background: white;
+                border-radius: 50%;
+                border: 1px solid;
+                margin: 3rem;
+                grid-area: 1 / 1 / 4 / 2;
+            }
+
+            > #scoreText {
+                grid-area: 1 / 2 / 2 / 3;
+                margin: 1rem;
+            }
+
+            > #banImageBtn {
+                grid-area: 2 / 2 / 3 / 3;
+            }
+
+            > #inGameQuitBtn {
+                grid-area: 3 / 2 / 4 / 3;
+            }
+            button {
+                width: 200px;
+            }
+        }
+        > #banNavBtns {
+            display: none;
         }
 
-        > #banImageBtn {
-            grid-area: 2 / 2 / 3 / 3;
+        > #banQuestion {
+            display: none;
         }
-
-        > #inGameQuitBtn {
-            grid-area: 3 / 2 / 4 / 3;
-        }
-        button {
-            width: 200px;
-        }
-    }
-    > #banNavBtns {
-        display: none;
-    }
-
-    > #banQuestion {
-        display: none;
     }
 }
 
@@ -266,54 +267,56 @@ h4 {
 }
 
 .quizTwo {
-    > #quizQuestionAndNumber {
-        padding: 3rem;
-    }
+    > div {
+        > #quizQuestionAndNumber {
+            padding: 3rem;
+        }
 
-    > #quizNavBtnsScore {
-        position: relative;
-    }
-    > #Frame {
-        display: none;
-    }
+        > #quizNavBtnsScore {
+            position: relative;
+        }
+        > #Frame {
+            display: none;
+        }
 
-    > #answerInput {
-        display: grid;
-        margin: 0 auto;
-        grid-row: auto auto;
-        width: 30rem;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        align-items: center;
-        justify-content: center;
-        justify-items: center;
+        > #answerInput {
+            display: grid;
+            margin: 0 auto;
+            grid-row: auto auto;
+            width: 30rem;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
 
-        .answerBtn {
-            display: flex;
-            background-color: transparent;
-            overflow: hidden;
-            border: 4px solid #ccc;
-            height: 16rem;
-            width: 16rem;
-            margin: 0;
-            padding: 0;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: contain;
+            .answerBtn {
+                display: flex;
+                background-color: transparent;
+                overflow: hidden;
+                border: 4px solid #ccc;
+                height: 16rem;
+                width: 16rem;
+                margin: 0;
+                padding: 0;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
 
-            .answerBtnText {
-                display: none;
-            }
+                .answerBtnText {
+                    display: none;
+                }
 
-            .answerBtnBg {
-                background-size: cover;
-                display: block;
-                position: relative;
-                left: 0;
-                top: 0;
-                height: 100%;
-                width: 100%;
-                transform: scale(1.05);
+                .answerBtnBg {
+                    background-size: cover;
+                    display: block;
+                    position: relative;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 100%;
+                    transform: scale(1.05);
+                }
             }
         }
     }

@@ -56,7 +56,6 @@ export default class Birds {
                         .thumbnail.source;
                 return img;
             } catch {
-                console.log('HELLO');
                 //Only adds to ban list if there is connection to Wikipedia (i.e. no bird img on page)
                 this.pingWikipedia(
                     () => this.moveBirdToBanList(birdName),

@@ -9,7 +9,7 @@ import transparentLoadingGif from '../img/transparentLoading.gif';
 import birdsFlying from '../img/bird_flying.png';
 import forestBird from '../img/forest_bird.jpg';
 
-window.enableOfflineTesing = false;
+window.enableOfflineTesing = true;
 
 const state = {};
 
@@ -481,6 +481,7 @@ const startQuiz = async quizNumber => {
     }
 
     initQuiz(quizNumber);
+    fourImageQuizQuestion();
 };
 
 class IntervalObj {
