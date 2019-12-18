@@ -114,7 +114,7 @@ h4 {
 #quizLoadingScreen > div #quizLoadingText {
   padding: 3rem; }
 
-#quizCompleteScreen > #quizNavBtns {
+#quizCompleteScreen > div > #quizNavBtns {
   display: inline-block; }
 
 .active {
