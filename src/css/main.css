@@ -230,18 +230,18 @@ h4 {
   .timerActive #quizNavBtnsScore button {
     width: 200px; }
 
-.banSelection > #quizNavBtnsScore {
+.banSelection > div > #quizNavBtnsScore {
   display: none; }
 
-.banSelection > #quizQuestionAndNumber {
+.banSelection > div > #quizQuestionAndNumber {
   display: none; }
 
-.banSelection > #banNavBtns {
+.banSelection > div > #banNavBtns {
   display: inline-block;
   margin: 0 auto;
   padding: 5rem; }
 
-.banSelection > #banQuestion {
+.banSelection > div > #banQuestion {
   display: inline-block;
   padding: 5rem; }
 

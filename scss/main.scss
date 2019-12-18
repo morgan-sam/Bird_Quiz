@@ -324,21 +324,23 @@ h4 {
 }
 
 .banSelection {
-    > #quizNavBtnsScore {
-        display: none;
-    }
-    > #quizQuestionAndNumber {
-        display: none;
-    }
+    > div {
+        > #quizNavBtnsScore {
+            display: none;
+        }
+        > #quizQuestionAndNumber {
+            display: none;
+        }
 
-    > #banNavBtns {
-        display: inline-block;
-        margin: 0 auto;
-        padding: 5rem;
-    }
-    > #banQuestion {
-        display: inline-block;
-        padding: 5rem;
+        > #banNavBtns {
+            display: inline-block;
+            margin: 0 auto;
+            padding: 5rem;
+        }
+        > #banQuestion {
+            display: inline-block;
+            padding: 5rem;
+        }
     }
 }
 
