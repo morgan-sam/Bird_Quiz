@@ -139,6 +139,12 @@
             > :last-child {
                 padding-bottom: 50rem;
             }
+            margin: 2.5rem;
+
+            > ul {
+                list-style-position: outside;
+                padding-left: 1.6em;
+            }
         }
         #howToPlayPageButtons {
             button {

@@ -83,9 +83,13 @@
     width: 100%;
     overflow: scroll;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%); }
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    margin: 2.5rem; }
     #howToPlayPage #howToPlayText > :last-child {
       padding-bottom: 50rem; }
+    #howToPlayPage #howToPlayText > ul {
+      list-style-position: outside;
+      padding-left: 1.6em; }
   #howToPlayPage #howToPlayPageButtons button {
     position: fixed;
     left: 50%;
