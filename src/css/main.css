@@ -251,19 +251,11 @@ h4 {
     margin: 0 auto;
     margin-bottom: 1rem; }
 
-#howToPlayPage > div {
-  height: 100%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  text-align: left; }
-  #howToPlayPage > div > div {
-    width: 40vw;
-    margin: 10rem; }
-    #howToPlayPage > div > div > div {
-      text-align: center; }
-      #howToPlayPage > div > div > div > button {
-        display: inline-block; }
+#howToPlayPage {
+  height: 100vh; }
+  #howToPlayPage > div {
+    width: 50vw;
+    text-align: left; }
     #howToPlayPage > div > div > ul {
       list-style-position: inside;
       padding: 1rem; }

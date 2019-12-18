@@ -353,21 +353,11 @@ h4 {
 }
 
 #howToPlayPage {
+    height: 100vh;
     > div {
-        height: 100%;
-        align-items: center;
-        display: flex;
-        justify-content: center;
+        width: 50vw;
         text-align: left;
         > div {
-            width: 40vw;
-            margin: 10rem;
-            > div {
-                text-align: center;
-                > button {
-                    display: inline-block;
-                }
-            }
             > ul {
                 list-style-position: inside;
                 padding: 1rem;
@@ -376,7 +366,7 @@ h4 {
                     margin: 0;
                 }
             }
-
+            //
             > h2 {
                 padding: 1rem;
                 text-align: center;
