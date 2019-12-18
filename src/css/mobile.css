@@ -25,9 +25,7 @@
   .quiz > div {
     position: absolute;
     overflow: hidden;
-    width: 60rem;
-    top: 50%;
-    transform: translateY(-50%); }
+    width: 60rem; }
     .quiz > div h2 {
       font-size: 4rem; }
     .quiz > div > #banQuestion {

@@ -3,6 +3,9 @@
         overflow-wrap: break-word;
     }
 
+    .center {
+    }
+
     .menu {
         align-items: center;
         text-align: center;
@@ -40,8 +43,6 @@
             position: absolute;
             overflow: hidden;
             width: 60rem;
-            top: 50%;
-            transform: translateY(-50%);
 
             h2 {
                 font-size: 4rem;
