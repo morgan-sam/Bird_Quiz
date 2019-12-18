@@ -9,7 +9,7 @@ import transparentLoadingGif from '../img/transparentLoading.gif';
 import birdsFlying from '../img/bird_flying.png';
 import forestBird from '../img/forest_bird.jpg';
 
-window.enableOfflineTesing = true;
+window.enableOfflineTesing = false;
 
 const state = {};
 window.state = state;
