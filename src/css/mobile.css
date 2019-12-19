@@ -189,4 +189,6 @@
       height: auto; }
       #quizLoadingScreen > div #quizLoadingText {
         padding: 3rem;
-        margin: 3rem; } }
+        margin: 3rem; }
+  .gradientBackground {
+    background: none; } }
