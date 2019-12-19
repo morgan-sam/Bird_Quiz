@@ -79,6 +79,8 @@ h4 {
   display: none; }
   .quiz #quizNavBtnsScore {
     display: inline-block; }
+    .quiz #quizNavBtnsScore > #countdownTimer {
+      display: none; }
   .quiz > div h2 {
     font-size: 1.4rem;
     padding: 1.2rem; }
@@ -186,9 +188,6 @@ h4 {
       width: 100%;
       transform: scale(1.05); }
 
-.timerActive #countdownTimer {
-  display: block; }
-
 .timerActive #quizNavBtnsScore {
   display: grid;
   grid-template-columns: 15rem 20rem;
@@ -202,7 +201,7 @@ h4 {
   justify-items: center;
   text-align: center; }
   .timerActive #quizNavBtnsScore > #countdownTimer {
-    display: none;
+    display: block;
     width: 100px;
     height: 100px;
     background: white;

@@ -113,6 +113,9 @@ h4 {
     display: none;
     #quizNavBtnsScore {
         display: inline-block;
+        > #countdownTimer {
+            display: none;
+        }
     }
     > div {
         h2 {
@@ -267,9 +270,6 @@ h4 {
 }
 
 .timerActive {
-    #countdownTimer {
-        display: block;
-    }
     #quizNavBtnsScore {
         display: grid;
         grid-template-columns: 15rem 20rem;
@@ -285,7 +285,7 @@ h4 {
         text-align: center;
 
         > #countdownTimer {
-            display: none;
+            display: block;
             width: 100px;
             height: 100px;
             background: white;

@@ -225,6 +225,16 @@
         > div {
             width: 100%;
             > #quizNavBtnsScore {
+                display: inline-block;
+                margin: 5rem;
+            }
+        }
+    }
+
+    .timerActive {
+        > div {
+            width: 100%;
+            > #quizNavBtnsScore {
                 display: grid;
                 grid-template-columns: 10rem;
                 grid-template-rows: repeat(4, 10rem);

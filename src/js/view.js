@@ -62,17 +62,6 @@ export const fourImgNewQuestionUI = (
 //     // }
 // };
 
-export const setCountdownState = (cycle, mod, mainColor, backgroundColor) => {
-    const timer = document.getElementById('countdownTimer');
-    timer.style.display = 'block';
-    timer.style.backgroundImage = `linear-gradient(
-                ${cycle}deg,
-                ${mod ? mainColor : backgroundColor} 50%,
-                transparent 50%
-            ),
-            linear-gradient(${270}deg, ${mainColor} 50%, transparent 50%)`;
-};
-
 export const setQuestionText = text => {
     document.getElementById('birdQuestion').innerHTML = text;
 };
@@ -228,4 +217,14 @@ export const setBanSelectionScreen = boo => {
 export const setTimerState = boo => {
     if (boo) document.getElementById('quizScreen').classList.add('timerActive');
     else document.getElementById('quizScreen').classList.remove('timerActive');
+};
+
+export const setCountdownState = (cycle, mod, mainColor, backgroundColor) => {
+    const timer = document.getElementById('countdownTimer');
+    timer.style.backgroundImage = `linear-gradient(
+                ${cycle}deg,
+                ${mod ? mainColor : backgroundColor} 50%,
+                transparent 50%
+            ),
+            linear-gradient(${270}deg, ${mainColor} 50%, ${backgroundColor} 50%)`;
 };

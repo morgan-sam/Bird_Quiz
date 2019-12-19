@@ -140,19 +140,24 @@
   .quiz > div {
     width: 100%; }
     .quiz > div > #quizNavBtnsScore {
+      display: inline-block;
+      margin: 5rem; }
+  .timerActive > div {
+    width: 100%; }
+    .timerActive > div > #quizNavBtnsScore {
       display: grid;
       grid-template-columns: 10rem;
       grid-template-rows: repeat(4, 10rem);
       grid-column-gap: 0px;
       grid-row-gap: 0px;
       margin: 0 auto; }
-      .quiz > div > #quizNavBtnsScore > #countdownTimer {
+      .timerActive > div > #quizNavBtnsScore > #countdownTimer {
         grid-area: 1 / 1 / 2 / 2; }
-      .quiz > div > #quizNavBtnsScore > #scoreText {
+      .timerActive > div > #quizNavBtnsScore > #scoreText {
         grid-area: 2 / 1 / 3 / 2; }
-      .quiz > div > #quizNavBtnsScore > #banImageBtn {
+      .timerActive > div > #quizNavBtnsScore > #banImageBtn {
         grid-area: 3 / 1 / 4 / 2; }
-      .quiz > div > #quizNavBtnsScore > #inGameQuitBtn {
+      .timerActive > div > #quizNavBtnsScore > #inGameQuitBtn {
         grid-area: 4 / 1 / 5 / 2; }
   #quizBanScreenConfirmation {
     height: 100vh;

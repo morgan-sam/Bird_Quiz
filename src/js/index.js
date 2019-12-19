@@ -115,19 +115,22 @@ const startQuiz = async quizNumber => {
         quizButtonInit();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.totalQuestions = 1;
+        state.currentQuiz.totalQuestions = 10;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {
             case 1:
+                view.setTimerState(false);
                 state.currentQuiz.quizFunction = fourAnswerQuizQuestion;
                 state.currentQuiz.quizNumber = 1;
                 break;
             case 2:
+                view.setTimerState(false);
                 state.currentQuiz.quizFunction = fourImageQuizQuestion;
                 state.currentQuiz.quizNumber = 2;
                 break;
             case 3:
+                view.setTimerState(true);
                 state.currentQuiz.quizFunction = mixedCountdownQuiz;
                 state.currentQuiz.quizNumber = randomIntBetweenTwoValues(3, 4);
                 break;
