@@ -179,9 +179,14 @@ h4 {
         position: relative;
         top: 0rem;
     }
-    > #Frame {
-        display: block;
-        height: 25rem;
+    > div > #Frame {
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        > img {
+            grid-column: 1;
+            grid-row: 1;
+        }
     }
 
     > #answerInput {

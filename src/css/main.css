@@ -120,9 +120,13 @@ h4 {
   position: relative;
   top: 0rem; }
 
-.quizOne > #Frame {
-  display: block;
-  height: 25rem; }
+.quizOne > div > #Frame {
+  display: grid;
+  justify-items: center;
+  align-items: center; }
+  .quizOne > div > #Frame > img {
+    grid-column: 1;
+    grid-row: 1; }
 
 .quizOne > #answerInput .answerBtn {
   display: inline-block;
