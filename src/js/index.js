@@ -115,7 +115,7 @@ const startQuiz = async quizNumber => {
         quizButtonInit();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.totalQuestions = 10;
+        state.currentQuiz.totalQuestions = 1;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {

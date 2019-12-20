@@ -132,10 +132,8 @@
     #aboutPage > div button {
       margin: 3rem; }
   button {
-    width: auto;
     min-width: 40rem;
-    height: 5rem;
-    font-size: 3rem;
+    font-size: 4rem;
     display: block; }
   .quiz > div {
     width: 100%; }

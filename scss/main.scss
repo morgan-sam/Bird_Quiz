@@ -51,23 +51,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-button {
-    padding: 1rem;
-    // width: auto;
-    height: 0.7rem;
-    display: block;
-    text-align: center;
-    border-radius: 5px;
-    border: 2px #ccc solid;
-    line-height: 0.2rem;
-}
-
-button:hover:enabled {
-    background-color: #add8e6;
-    color: white;
-    transition: 0.4s;
-}
-
 h4 {
     margin: 30px;
 }
@@ -84,8 +67,28 @@ h4 {
     width: fit-content;
     margin: 0 auto;
     > button {
+        display: block;
         width: 100%;
         margin: 0.75rem auto 0.75rem auto;
+        height: 0.7rem;
+        padding: 1rem;
+        background-color: #d8d8d8;
+        border-radius: 5px;
+        border: 2px #ccc solid;
+        line-height: 0.2rem;
+        box-shadow: 0px 10px 0px 0px darken(#b0b0b0, 5%);
+        &:hover:enabled {
+            color: white;
+            transition: 0.25s;
+        }
+        &:active {
+            box-shadow: 0px 2px 0px 0px darken(#b0b0b0, 5%);
+            position: relative;
+            transform: translateY(0.5rem);
+        }
+        &:focus {
+            outline: 0;
+        }
     }
 }
 
@@ -107,10 +110,6 @@ h4 {
 
     > h2 {
         padding: 0rem;
-    }
-
-    > #quizSelectButtons {
-        padding: 3rem;
     }
 }
 
@@ -145,13 +144,6 @@ h4 {
     }
 }
 
-#answerInput {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
 #loadingOverlay {
     height: 100px;
     display: none;
@@ -161,14 +153,6 @@ h4 {
     > div {
         #quizLoadingText {
             padding: 3rem;
-        }
-    }
-}
-
-#quizCompleteScreen {
-    > div {
-        > #quizNavBtns {
-            display: inline-block;
         }
     }
 }
@@ -261,6 +245,7 @@ h4 {
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: contain;
+                box-shadow: none;
 
                 .answerBtnText {
                     display: none;
@@ -320,7 +305,7 @@ h4 {
             grid-area: 3 / 2 / 4 / 3;
         }
         button {
-            width: 200px;
+            width: 11rem;
         }
     }
 }
@@ -343,16 +328,6 @@ h4 {
             display: inline-block;
             padding: 5rem;
         }
-    }
-}
-
-#quizBanScreenConfirmation {
-    #banFinalBtns {
-        button {
-            margin: 0 auto;
-            margin-bottom: 1rem;
-        }
-        padding: 4rem;
     }
 }
 
@@ -384,10 +359,6 @@ h4 {
             }
             > p {
                 padding: 1.5rem;
-            }
-            > button {
-                margin: 0 auto;
-                margin-top: 2rem;
             }
         }
     }

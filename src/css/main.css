@@ -32,20 +32,6 @@ body {
   left: 50%;
   transform: translate(-50%, -50%); }
 
-button {
-  padding: 1rem;
-  height: 0.7rem;
-  display: block;
-  text-align: center;
-  border-radius: 5px;
-  border: 2px #ccc solid;
-  line-height: 0.2rem; }
-
-button:hover:enabled {
-  background-color: #add8e6;
-  color: white;
-  transition: 0.4s; }
-
 h4 {
   margin: 30px; }
 
@@ -59,8 +45,25 @@ h4 {
   width: fit-content;
   margin: 0 auto; }
   .buttonContainer > button {
+    display: block;
     width: 100%;
-    margin: 0.75rem auto 0.75rem auto; }
+    margin: 0.75rem auto 0.75rem auto;
+    height: 0.7rem;
+    padding: 1rem;
+    background-color: #d8d8d8;
+    border-radius: 5px;
+    border: 2px #ccc solid;
+    line-height: 0.2rem;
+    box-shadow: 0px 10px 0px 0px #a3a3a3; }
+    .buttonContainer > button:hover:enabled {
+      color: white;
+      transition: 0.25s; }
+    .buttonContainer > button:active {
+      box-shadow: 0px 2px 0px 0px #a3a3a3;
+      position: relative;
+      transform: translateY(0.5rem); }
+    .buttonContainer > button:focus {
+      outline: 0; }
 
 .menu {
   text-align: center;
@@ -74,8 +77,6 @@ h4 {
     padding: 0.4rem; }
   .menu > h2 {
     padding: 0rem; }
-  .menu > #quizSelectButtons {
-    padding: 3rem; }
 
 .quiz {
   width: 60rem;
@@ -97,21 +98,12 @@ h4 {
   .quiz > div > #banQuestion {
     display: none; }
 
-#answerInput {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column; }
-
 #loadingOverlay {
   height: 100px;
   display: none; }
 
 #quizLoadingScreen > div #quizLoadingText {
   padding: 3rem; }
-
-#quizCompleteScreen > div > #quizNavBtns {
-  display: inline-block; }
 
 .active {
   display: block; }
@@ -183,7 +175,8 @@ h4 {
     padding: 0;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain; }
+    background-size: contain;
+    box-shadow: none; }
     .quizTwo > div > #answerInput .answerBtn .answerBtnText {
       display: none; }
     .quizTwo > div > #answerInput .answerBtn .answerBtnBg {
@@ -225,7 +218,7 @@ h4 {
   .timerActive #quizNavBtnsScore > #inGameQuitBtn {
     grid-area: 3 / 2 / 4 / 3; }
   .timerActive #quizNavBtnsScore button {
-    width: 200px; }
+    width: 11rem; }
 
 .banSelection > div > #quizNavBtnsScore {
   display: none; }
@@ -241,12 +234,6 @@ h4 {
 .banSelection > div > #banQuestion {
   display: inline-block;
   padding: 5rem; }
-
-#quizBanScreenConfirmation #banFinalBtns {
-  padding: 4rem; }
-  #quizBanScreenConfirmation #banFinalBtns button {
-    margin: 0 auto;
-    margin-bottom: 1rem; }
 
 #howToPlayPage > div {
   height: 100vh;
@@ -269,6 +256,3 @@ h4 {
     text-align: center; }
   #howToPlayPage > div > div > p {
     padding: 1.5rem; }
-  #howToPlayPage > div > div > button {
-    margin: 0 auto;
-    margin-top: 2rem; }
