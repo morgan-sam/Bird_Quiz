@@ -53,11 +53,10 @@ body {
 
 button {
     padding: 1rem;
-    width: 20rem;
+    // width: auto;
     height: 0.7rem;
     display: block;
     text-align: center;
-    margin: 10px;
     border-radius: 5px;
     border: 2px #ccc solid;
     line-height: 0.2rem;
@@ -79,6 +78,15 @@ h4 {
 
 .incorrectButton {
     background-color: darksalmon;
+}
+
+.buttonContainer {
+    width: fit-content;
+    margin: 0 auto;
+    > button {
+        width: 100%;
+        margin: 0.75rem auto 0.75rem auto;
+    }
 }
 
 .menu {
@@ -138,7 +146,6 @@ h4 {
 }
 
 #answerInput {
-    margin: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

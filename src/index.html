@@ -9,7 +9,7 @@
         <div id="mainMenu" class="menu active">
             <div class="center">
                 <h1 id="birdTitle">Wikipedia API Bird Quiz</h1>
-                <div id="mainMenuButtons">
+                <div id="mainMenuButtons" class="buttonContainer">
                     <button id="startBtn" value="quizSelectMenu" class="navBtn">
                         Start
                     </button>
@@ -33,7 +33,7 @@
         <div id="quizSelectMenu" class="menu fade-in">
             <div class="center">
                 <h2 id="quizSelectTitle">Select a game:</h2>
-                <div id="quizSelectButtons">
+                <div id="quizSelectButtons" class="buttonContainer">
                     <h4>Easy:</h4>
                     <button id="fourAnsOneImgBtn">1 Image 4 Answers</button>
                     <h4>Medium:</h4>
@@ -42,8 +42,6 @@
                     <button id="mixedCountdownQuizBtn">
                         Mixed Countdown Quiz
                     </button>
-                </div>
-                <div>
                     <button value="mainMenu" class="navBtn">
                         Back to Main Menu
                     </button>
@@ -151,7 +149,7 @@
                 <div id="banQuestion">
                     <h2>Select an image to add to ban list:</h2>
                 </div>
-                <div id="answerInput" class="inputWrapper">
+                <div id="answerInput" class="inputWrapper buttonContainer">
                     <button id="answer-1" class="answerBtn">
                         <span id="answer-1-text" class="answerBtnText"></span>
                         <img id="answer-1-bg" class="answerBtnBg" />
@@ -169,7 +167,7 @@
                         <img id="answer-4-bg" class="answerBtnBg" />
                     </button>
                 </div>
-                <div id="quizNavBtnsScore">
+                <div id="quizNavBtnsScore" class="buttonContainer">
                     <div id="countdownTimer"></div>
                     <h4 id="scoreText">Score: <span id="score"></span></h4>
                     <button id="banImageBtn">Report Image</button>
