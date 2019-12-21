@@ -24,13 +24,17 @@ body {
 
 .gradientBackground {
   background: black;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #fbf7f5 10%, #fbf7f5 90%, rgba(0, 0, 0, 0) 100%); }
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, purple 10%, purple 90%, rgba(0, 0, 0, 0) 100%); }
 
 .center {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); }
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
 
 h4 {
   margin: 30px; }
@@ -87,16 +91,18 @@ h4 {
     display: inline-block; }
     .quiz #quizNavBtnsScore > #countdownTimer {
       display: none; }
-  .quiz > div h2 {
-    font-size: 1.4rem;
-    padding: 1.2rem; }
-  .quiz > div > #quizQuestionAndNumber {
-    margin: 0rem;
-    padding: 1rem; }
-  .quiz > div > #banNavBtns {
-    display: none; }
-  .quiz > div > #banQuestion {
-    display: none; }
+  .quiz > div {
+    height: 100vh; }
+    .quiz > div h2 {
+      font-size: 1.4rem;
+      padding: 1.2rem; }
+    .quiz > div > #quizQuestionAndNumber {
+      margin: 0rem;
+      padding: 1rem; }
+    .quiz > div > #banNavBtns {
+      display: none; }
+    .quiz > div > #banQuestion {
+      display: none; }
 
 #loadingOverlay {
   height: 100px;
