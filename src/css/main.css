@@ -63,12 +63,11 @@ h4 {
     .buttonContainer > button:hover:enabled {
       color: white;
       transition: 0.25s; }
-    .buttonContainer > button:active {
+    .buttonContainer > button:focus {
+      outline: 0;
       box-shadow: 0px 2px 0px 0px #a3a3a3;
       position: relative;
       transform: translateY(0.5rem); }
-    .buttonContainer > button:focus {
-      outline: 0; }
 
 .menu {
   text-align: center;

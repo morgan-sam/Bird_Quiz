@@ -14,7 +14,55 @@ window.enableOfflineTesing = false;
 const state = {};
 window.state = state;
 
-document.getElementById('resetDatabase').addEventListener('click', () => {
+function buttonClicked(e, buttonFunction) {
+    const selectedButton = document
+        .getElementById(e.target.id)
+        .closest('button');
+    return createInterval(
+        function() {
+            selectedButton.blur();
+            createInterval(
+                function() {
+                    buttonFunction();
+                    return clearIntervals('returnFunc');
+                },
+                'returnFunc',
+                300,
+            );
+            return clearIntervals('btnClick');
+        },
+        'btnClick',
+        300,
+    );
+}
+
+const buttonFnObj = {
+    resetDatabase: () => resetDatabasePrompt(),
+    fourAnsOneImgBtn: () => startQuiz(1),
+    oneAnsFourImgBtn: () => startQuiz(2),
+    mixedCountdownQuizBtn: () => startQuiz(3),
+};
+
+//Assigns nav btn funcs to buttonFnObj
+[...document.querySelectorAll('.navBtn')].forEach(function(button) {
+    buttonFnObj[button.id] = () => view.setToScreen(button.value);
+});
+
+for (var button in buttonFnObj) {
+    const buttonFunction = buttonFnObj[button];
+    (function() {
+        document.getElementById(button).addEventListener(
+            'focus',
+            e =>
+                buttonClicked(e, function() {
+                    buttonFunction();
+                }),
+            false,
+        );
+    })();
+}
+
+function resetDatabasePrompt() {
     if (
         confirm(
             'Are you sure you want to reset the database? This will delete the entire ban list as well as all highscores.',
@@ -22,20 +70,8 @@ document.getElementById('resetDatabase').addEventListener('click', () => {
     ) {
         controlGetDatabase();
     }
-});
-document
-    .getElementById('fourAnsOneImgBtn')
-    .addEventListener('click', () => startQuiz(1));
-document
-    .getElementById('oneAnsFourImgBtn')
-    .addEventListener('click', () => startQuiz(2));
-document
-    .getElementById('mixedCountdownQuizBtn')
-    .addEventListener('click', () => startQuiz(3));
-
-[...document.querySelectorAll('.navBtn')].forEach(function(button) {
-    button.addEventListener('click', () => view.setToScreen(button.value));
-});
+}
+/////////////////////////
 
 const controlGetDatabase = async () => {
     view.setLoadingScreen('Fetching Database...');
