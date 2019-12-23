@@ -9,7 +9,7 @@ import transparentLoadingGif from '../img/transparentLoading.gif';
 import birdsFlying from '../img/bird_flying.png';
 import forestBird from '../img/forest_bird.jpg';
 
-window.enableOfflineTesing = false;
+window.enableOfflineTesing = true;
 
 const state = {};
 window.state = state;
@@ -60,7 +60,9 @@ function setUpButtonBounce(buttonFunctions, btnClass, buttonSpeed) {
 
 function addButtonsTransitionSpeed(btnClass, buttonSpeed) {
     const classBtns = [].slice.call(
-        document.querySelectorAll(`${btnClass} .buttonContainer button`),
+        document.querySelectorAll(
+            `${btnClass} .buttonContainer:not(.answerButtonsContainer) button`,
+        ),
     );
     classBtns.map(el => (el.style.transition = `${buttonSpeed / 1250}s`));
 }
