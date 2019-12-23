@@ -129,6 +129,14 @@ h4 {
   position: relative;
   top: 0rem; }
 
+.quizOne > div > #answerInput {
+  display: grid;
+  margin: 0 auto;
+  grid-row: auto auto;
+  grid-gap: 0rem 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr; }
+
 .quizOne > div > #Frame {
   display: grid;
   justify-items: center;
@@ -136,28 +144,6 @@ h4 {
   .quizOne > div > #Frame > img {
     grid-column: 1;
     grid-row: 1; }
-
-.quizOne > #answerInput .answerBtn {
-  display: inline-block;
-  overflow: hidden;
-  border: 4px solid #ccc;
-  height: 1rem;
-  width: 20rem;
-  margin: 0.5rem;
-  padding: 1rem;
-  background-color: 'white';
-  z-index: 1; }
-  .quizOne > #answerInput .answerBtn .answerBtnText {
-    display: block; }
-  .quizOne > #answerInput .answerBtn .answerBtnBg {
-    background-color: 'white';
-    background-size: cover;
-    display: block;
-    position: relative;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%; }
 
 .quizTwo > div > #quizQuestionAndNumber {
   padding: 3rem; }
