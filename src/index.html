@@ -4,8 +4,7 @@
         <meta charset="UTF-8" />
         <title>Bird Quiz</title>
     </head>
-
-    <body>
+    <body class="preload-transitions">
         <div id="mainMenu" class="menu active">
             <div class="center">
                 <h1 id="birdTitle">Wikipedia API Bird Quiz</h1>
@@ -232,3 +231,9 @@
         </div>
     </body>
 </html>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        let node = document.querySelector('.preload-transitions');
+        node.classList.remove('preload-transitions');
+    });
+</script>

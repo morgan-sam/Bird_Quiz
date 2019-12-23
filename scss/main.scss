@@ -16,6 +16,16 @@
     }
 }
 
+.preload-transitions * {
+    $null-transition: none !important;
+
+    -webkit-transition: $null-transition;
+    -moz-transition: $null-transition;
+    -ms-transition: $null-transition;
+    -o-transition: $null-transition;
+    transition: $null-transition;
+}
+
 .fade-in {
     // animation: fadeInAnimation ease 2s;
     // animation-iteration-count: 1;
@@ -84,10 +94,7 @@ h4 {
         box-shadow: 0px 10px 0px 0px darken(#b0b0b0, 5%);
         &:hover:enabled {
             color: white;
-            transition: 0.25s;
         }
-        // &:active {
-        // }
         &:focus {
             outline: 0;
             box-shadow: 0px 2px 0px 0px darken(#b0b0b0, 5%);

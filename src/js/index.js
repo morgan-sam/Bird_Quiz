@@ -14,7 +14,7 @@ window.enableOfflineTesing = false;
 const state = {};
 window.state = state;
 
-function buttonClicked(e, buttonFunction) {
+function buttonClicked(e, buttonFunction, buttonSpeed) {
     const selectedButton = document
         .getElementById(e.target.id)
         .closest('button');
@@ -27,40 +27,63 @@ function buttonClicked(e, buttonFunction) {
                     return clearIntervals('returnFunc');
                 },
                 'returnFunc',
-                300,
+                buttonSpeed,
             );
             return clearIntervals('btnClick');
         },
         'btnClick',
-        300,
+        buttonSpeed,
     );
 }
 
-const buttonFnObj = {
-    resetDatabase: () => resetDatabasePrompt(),
-    fourAnsOneImgBtn: () => startQuiz(1),
-    oneAnsFourImgBtn: () => startQuiz(2),
-    mixedCountdownQuizBtn: () => startQuiz(3),
-};
+function menuButtonFunctions() {
+    const buttonFnObj = {
+        resetDatabase: () => resetDatabasePrompt(),
+        fourAnsOneImgBtn: () => startQuiz(1),
+        oneAnsFourImgBtn: () => startQuiz(2),
+        mixedCountdownQuizBtn: () => startQuiz(3),
+    };
 
-//Assigns nav btn funcs to buttonFnObj
-[...document.querySelectorAll('.navBtn')].forEach(function(button) {
-    buttonFnObj[button.id] = () => view.setToScreen(button.value);
-});
+    //Assigns nav btn funcs to buttonFnObj
+    [...document.querySelectorAll('.menu .navBtn')].forEach(function(button) {
+        buttonFnObj[button.id] = () => view.setToScreen(button.value);
+    });
 
-for (var button in buttonFnObj) {
-    const buttonFunction = buttonFnObj[button];
-    (function() {
+    return buttonFnObj;
+}
+
+function setUpButtonBounce(btnClass, buttonSpeed) {
+    const buttonFunctions = menuButtonFunctions();
+    addButtonsTransitionSpeed(btnClass, buttonSpeed);
+    addButtonClickedEventListeners(buttonFunctions, buttonSpeed);
+}
+
+function addButtonsTransitionSpeed(btnClass, buttonSpeed) {
+    const classBtns = [].slice.call(
+        document.querySelectorAll(`${btnClass} .buttonContainer button`),
+    );
+    classBtns.map(el => (el.style.transition = `${buttonSpeed / 1250}s`));
+}
+
+function addButtonClickedEventListeners(buttonFunctions, buttonSpeed) {
+    for (var button in buttonFunctions) {
+        const buttonFunction = buttonFunctions[button];
         document.getElementById(button).addEventListener(
             'focus',
             e =>
-                buttonClicked(e, function() {
-                    buttonFunction();
-                }),
+                buttonClicked(
+                    e,
+                    function() {
+                        buttonFunction();
+                    },
+                    buttonSpeed,
+                ),
             false,
         );
-    })();
+    }
 }
+
+setUpButtonBounce('.menu', 250);
 
 function resetDatabasePrompt() {
     if (
