@@ -14,6 +14,7 @@ window.enableOfflineTesing = false;
 const state = {};
 window.state = state;
 
+//button press animation starts, wait BS length, button animation is reversed, BS length wait, function starts
 function buttonClicked(e, buttonFunction, buttonSpeed) {
     const selectedButton = document
         .getElementById(e.target.id)
@@ -23,7 +24,7 @@ function buttonClicked(e, buttonFunction, buttonSpeed) {
             selectedButton.blur();
             createInterval(
                 function() {
-                    buttonFunction();
+                    buttonFunction(e);
                     return clearIntervals('returnFunc');
                 },
                 'returnFunc',
@@ -52,8 +53,7 @@ function menuButtonFunctions() {
     return buttonFnObj;
 }
 
-function setUpButtonBounce(btnClass, buttonSpeed) {
-    const buttonFunctions = menuButtonFunctions();
+function setUpButtonBounce(buttonFunctions, btnClass, buttonSpeed) {
     addButtonsTransitionSpeed(btnClass, buttonSpeed);
     addButtonClickedEventListeners(buttonFunctions, buttonSpeed);
 }
@@ -73,17 +73,17 @@ function addButtonClickedEventListeners(buttonFunctions, buttonSpeed) {
             e =>
                 buttonClicked(
                     e,
-                    function() {
-                        buttonFunction();
-                    },
+
+                    e => buttonFunction(e),
+
                     buttonSpeed,
                 ),
-            false,
+            true,
         );
     }
 }
 
-setUpButtonBounce('.menu', 250);
+setUpButtonBounce(menuButtonFunctions(), '.menu', 250);
 
 function resetDatabasePrompt() {
     if (
@@ -137,44 +137,40 @@ window.addEventListener('load', () => {
 });
 
 const startQuiz = async quizNumber => {
-    state.currentQuiz = new Object();
+    function quizButtonFunctions() {
+        const buttonFnObj = {
+            banImageBtn: () => manualAddToBanList(),
+            banReturnBtn: () => cancelBan(),
+            cancelBanBtn: () => cancelBan(),
+            confirmBanBtn: () => confirmBan(),
+        };
 
-    function quizButtonInit() {
-        [...document.querySelectorAll('.answerBtn')].forEach(function(
+        [...document.querySelectorAll('.quiz .quitBtn')].forEach(function(
+            button,
+        ) {
+            buttonFnObj[button.id] = function _listener() {
+                quitQuiz();
+                button.removeEventListener('click', _listener, true);
+            };
+        });
+
+        [...document.querySelectorAll('.quiz .answerBtn')].forEach(function(
             button,
             i,
         ) {
-            button.addEventListener('click', buttonSelected, false);
+            buttonFnObj[button.id] = function(evt) {
+                buttonSelected(evt);
+            };
         });
-        [...document.querySelectorAll('.quitBtn')].forEach(function(button) {
-            button.addEventListener(
-                'click',
-                function _listener() {
-                    quitQuiz();
-                    button.removeEventListener('click', _listener, true);
-                },
-                true,
-            );
-        });
-        document
-            .getElementById('banImageBtn')
-            .addEventListener('click', manualAddToBanList, false);
-        document
-            .getElementById('banReturnBtn')
-            .addEventListener('click', cancelBan, false);
-        document
-            .getElementById('confirmBanBtn')
-            .addEventListener('click', confirmBan, false);
-        document
-            .getElementById('cancelBanBtn')
-            .addEventListener('click', cancelBan, false);
+        return buttonFnObj;
     }
+    state.currentQuiz = new Object();
 
     function initQuiz(quizNumber) {
-        quizButtonInit();
+        setUpButtonBounce(quizButtonFunctions(), '.quiz', 175);
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
-        state.currentQuiz.totalQuestions = 1;
+        state.currentQuiz.totalQuestions = 10;
         state.currentQuiz.answerButtonFunction = quizAnswerClicked;
         view.setLoadingScreen('Loading Quiz...');
         switch (quizNumber) {
