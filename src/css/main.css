@@ -19,8 +19,7 @@
   transition: none !important; }
 
 .fade-in {
-  opacity: 3s;
-  transition: all 12s ease-in-out; }
+  animation: fadeInAnimation ease 1s; }
 
 body {
   background: url("/img/bird_flying.png") no-repeat;
@@ -47,12 +46,6 @@ body {
 h4 {
   margin: 30px; }
 
-.correctButton {
-  background-color: lightgreen; }
-
-.incorrectButton {
-  background-color: darksalmon; }
-
 .buttonContainer {
   width: fit-content;
   margin: 0 auto; }
@@ -68,12 +61,17 @@ h4 {
     line-height: 0.2rem;
     box-shadow: 0px 10px 0px 0px #a3a3a3; }
     .buttonContainer > button:hover:enabled {
-      color: white; }
+      color: white;
+      background-color: #bbb; }
     .buttonContainer > button:focus {
       outline: 0;
       box-shadow: 0px 2px 0px 0px #a3a3a3;
       position: relative;
       transform: translateY(0.5rem); }
+  .buttonContainer > .correctButton {
+    background-color: lightgreen; }
+  .buttonContainer > .incorrectButton {
+    background-color: darksalmon; }
 
 .menu {
   text-align: center;
@@ -93,6 +91,9 @@ h4 {
   height: 100%;
   text-align: center;
   display: none; }
+  .quiz > div > #Frame > #birdImage {
+    border-radius: 1rem;
+    box-shadow: 0 1.2rem 1.7rem rgba(0, 0, 0, 0.3), 0 1rem 1rem rgba(0, 0, 0, 0.25); }
   .quiz #quizNavBtnsScore {
     display: inline-block; }
     .quiz #quizNavBtnsScore > #countdownTimer {
@@ -142,7 +143,8 @@ h4 {
   width: 20rem;
   margin: 0.5rem;
   padding: 1rem;
-  background-color: 'white'; }
+  background-color: 'white';
+  z-index: 1; }
   .quizOne > #answerInput .answerBtn .answerBtnText {
     display: block; }
   .quizOne > #answerInput .answerBtn .answerBtnBg {
@@ -187,6 +189,11 @@ h4 {
     background-repeat: no-repeat;
     background-size: contain;
     box-shadow: none; }
+    .quizTwo > div > #answerInput .answerBtn:focus {
+      outline: 0;
+      box-shadow: none;
+      position: relative;
+      transform: none; }
     .quizTwo > div > #answerInput .answerBtn .answerBtnText {
       display: none; }
     .quizTwo > div > #answerInput .answerBtn .answerBtnBg {

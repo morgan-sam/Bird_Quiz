@@ -21,7 +21,7 @@ function buttonClicked(e, buttonFunction, buttonSpeed) {
         .closest('button');
     return createInterval(
         function() {
-            selectedButton.blur();
+            selectedButton.blur(); //removes button focus
             createInterval(
                 function() {
                     buttonFunction(e);
@@ -154,17 +154,14 @@ const startQuiz = async quizNumber => {
             };
         });
 
-        [...document.querySelectorAll('.quiz .answerBtn')].forEach(function(
-            button,
-            i,
-        ) {
-            buttonFnObj[button.id] = function(evt) {
-                buttonSelected(evt);
-            };
-        });
         return buttonFnObj;
     }
     state.currentQuiz = new Object();
+
+    //Add answer button event listeners, not made using bounce button function as answer needs to be immediate
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.addEventListener('click', buttonSelected, false);
+    });
 
     function initQuiz(quizNumber) {
         setUpButtonBounce(quizButtonFunctions(), '.quiz', 175);

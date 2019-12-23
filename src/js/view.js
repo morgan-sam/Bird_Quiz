@@ -102,7 +102,7 @@ export const setAnswerButtonsState = (buttonStates, quizNumber) => {
                 button.disabled = true;
                 if ([2, 4].includes(quizNumber)) {
                     button.style.border = '5px solid red';
-                    button.style.opacity = 0.5;
+                    // button.style.opacity = 0.5;
                 }
                 break;
             case 'correct':
