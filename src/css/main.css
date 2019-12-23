@@ -270,3 +270,7 @@ h4 {
     text-align: center; }
   #howToPlayPage > div > div > p {
     padding: 1.5rem; }
+
+#quizSelectMenu > div > div:first-child, #quizSelectMenu > div > div:last-child {
+  margin-top: 3rem;
+  margin-bottom: 3rem; }

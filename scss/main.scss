@@ -384,3 +384,13 @@ h4 {
         }
     }
 }
+
+#quizSelectMenu {
+    > div > div {
+        &:first-child,
+        &:last-child {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+    }
+}
