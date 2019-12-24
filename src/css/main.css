@@ -138,6 +138,8 @@ h4 {
   grid-template-rows: 1fr 1fr; }
 
 .quizOne > div > #Frame {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
   display: grid;
   justify-items: center;
   align-items: center; }
@@ -146,7 +148,7 @@ h4 {
     grid-row: 1; }
 
 .quizTwo > div > #quizQuestionAndNumber {
-  padding: 3rem; }
+  padding-bottom: 2rem; }
 
 .quizTwo > div > #quizNavBtnsScore {
   position: relative; }
@@ -157,6 +159,7 @@ h4 {
 .quizTwo > div > #answerInput {
   display: grid;
   margin: 0 auto;
+  margin-bottom: 1rem;
   grid-row: auto auto;
   width: 30rem;
   grid-template-columns: 1fr 1fr;

@@ -198,6 +198,8 @@ h4 {
             grid-template-rows: 1fr 1fr;
         }
         > #Frame {
+            margin-top: 2rem;
+            margin-bottom: 3rem;
             display: grid;
             justify-items: center;
             align-items: center;
@@ -212,7 +214,7 @@ h4 {
 .quizTwo {
     > div {
         > #quizQuestionAndNumber {
-            padding: 3rem;
+            padding-bottom: 2rem;
         }
 
         > #quizNavBtnsScore {
@@ -225,6 +227,7 @@ h4 {
         > #answerInput {
             display: grid;
             margin: 0 auto;
+            margin-bottom: 1rem;
             grid-row: auto auto;
             width: 30rem;
             grid-template-columns: 1fr 1fr;
