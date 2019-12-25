@@ -27,6 +27,14 @@
     position: absolute;
     overflow: hidden;
     width: 60rem; }
+    .quiz > div > #answerInput {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+    .quiz > div > #quizNavBtnsScore {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
     .quiz > div h2 {
       font-size: 4rem; }
     .quiz > div > #banQuestion {
@@ -47,8 +55,6 @@
     display: inline-block;
     margin: 0 auto;
     padding: 5rem; }
-  .quizOne > div > #answerInput {
-    display: inline-block; }
   .quizTwo {
     overflow: scroll; }
     .quizTwo > div > #Frame {
@@ -143,7 +149,6 @@
   .quiz > div {
     width: 100%; }
     .quiz > div > #quizNavBtnsScore {
-      display: inline-block;
       margin: 5rem; }
   .timerActive > div {
     width: 100%; }
