@@ -32,7 +32,9 @@
     .quiz > div > #banQuestion {
       display: none; }
     .quiz > div button {
-      margin: 2rem; }
+      margin: 2rem;
+      font-size: 3rem;
+      height: 5rem; }
   .quiz #banNavBtns {
     display: none; }
   .quiz.banSelection > div > #quizNavBtnsScore {
@@ -45,6 +47,8 @@
     display: inline-block;
     margin: 0 auto;
     padding: 5rem; }
+  .quizOne > div > #answerInput {
+    display: inline-block; }
   .quizTwo {
     overflow: scroll; }
     .quizTwo > div > #Frame {
