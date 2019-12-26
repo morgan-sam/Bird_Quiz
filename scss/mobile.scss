@@ -225,6 +225,11 @@
             width: 100%;
             > #quizNavBtnsScore {
                 margin: 5rem;
+                > #scoreText {
+                    color: white;
+                    text-shadow: 5px 5px 1rem rgba(0, 0, 0, 0.85);
+                    font-size: 4rem;
+                }
             }
         }
     }
@@ -246,6 +251,7 @@
 
                 > #scoreText {
                     grid-area: 2 / 1 / 3 / 2;
+                    font-size: 3rem;
                 }
 
                 > #banImageBtn {

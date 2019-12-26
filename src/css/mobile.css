@@ -133,6 +133,10 @@
     width: 100%; }
     .quiz > div > #quizNavBtnsScore {
       margin: 5rem; }
+      .quiz > div > #quizNavBtnsScore > #scoreText {
+        color: white;
+        text-shadow: 5px 5px 1rem rgba(0, 0, 0, 0.85);
+        font-size: 4rem; }
   .timerActive > div {
     width: 100%; }
     .timerActive > div > #quizNavBtnsScore {
@@ -145,7 +149,8 @@
       .timerActive > div > #quizNavBtnsScore > #countdownTimer {
         grid-area: 1 / 1 / 2 / 2; }
       .timerActive > div > #quizNavBtnsScore > #scoreText {
-        grid-area: 2 / 1 / 3 / 2; }
+        grid-area: 2 / 1 / 3 / 2;
+        font-size: 3rem; }
       .timerActive > div > #quizNavBtnsScore > #banImageBtn {
         grid-area: 3 / 1 / 4 / 2; }
       .timerActive > div > #quizNavBtnsScore > #inGameQuitBtn {
