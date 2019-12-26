@@ -47,21 +47,6 @@ export const fourImgNewQuestionUI = (
     resetButtons();
 };
 
-// export const setTimerState = boo => {
-//
-//
-//
-//     // const timer = document.getElementById('countdownTimer');
-//     // const navBtnsScore = document.getElementById('quizNavBtnsScore');
-//     // if (boo) {
-//     //     timer.style.display = 'block';
-//     //     navBtnsScore.style.display = 'grid';
-//     // } else {
-//     //     timer.style.display = 'none';
-//     //     navBtnsScore.style.display = 'inline-block';
-//     // }
-// };
-
 export const setQuestionText = text => {
     document.getElementById('birdQuestion').innerHTML = text;
 };
