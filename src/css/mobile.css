@@ -12,9 +12,7 @@
       height: 5rem; }
   .active {
     display: flex; }
-  body,
-  #quizScreen,
-  #howToPlayPage {
+  body {
     background: url("/img/forest_bird.jpg") no-repeat;
     background-size: auto 100vh;
     height: 100%;
@@ -79,34 +77,36 @@
         background-position: center; }
         .quizTwo > div > #answerInput .answerBtn .answerBtnText {
           display: none; }
-  #howToPlayPage > div {
-    height: 100%;
-    width: 100%; }
   #howToPlayPage #howToPlayText {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75vh;
+    top: 5rem;
     position: absolute;
-    margin: 0;
-    padding: 0;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100%;
     overflow: scroll;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-    margin: 2.5rem; }
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%); }
+    #howToPlayPage #howToPlayText > * {
+      margin-top: 2rem;
+      margin-bottom: 2rem; }
+    #howToPlayPage #howToPlayText h2 {
+      margin-top: 8rem;
+      margin-bottom: 4rem; }
+    #howToPlayPage #howToPlayText > ul > li {
+      margin-top: 4rem;
+      margin-bottom: 4rem; }
     #howToPlayPage #howToPlayText > :last-child {
       padding-bottom: 50rem; }
     #howToPlayPage #howToPlayText > ul {
       list-style-position: outside;
       padding-left: 1.6em; }
-  #howToPlayPage #howToPlayPageButtons button {
-    position: fixed;
-    left: 50%;
-    bottom: 0;
-    margin-right: auto;
-    margin-left: auto;
-    text-align: center;
-    transform: translateX(-50%); }
+  #howToPlayPage #howToPlayPageButtons {
+    position: absolute;
+    bottom: 5rem;
+    height: auto;
+    padding-bottom: 4rem; }
   h1 {
     font-size: 5rem; }
   h2 {
@@ -121,23 +121,6 @@
     font-size: 3rem;
     margin: 0;
     padding: 0; }
-  #howToPlayPage {
-    overflow: scroll;
-    width: 100vw; }
-    #howToPlayPage > div > div {
-      height: 100%;
-      width: 100%;
-      margin: 5rem; }
-      #howToPlayPage > div > div > * {
-        margin: 2rem;
-        padding: 3rem; }
-      #howToPlayPage > div > div > ul > li {
-        margin-top: 4rem;
-        margin-bottom: 4rem; }
-      #howToPlayPage > div > div h2 {
-        margin: 8rem; }
-      #howToPlayPage > div > div button {
-        margin: 4rem; }
   #aboutPage > div {
     width: 100vw; }
     #aboutPage > div button {
