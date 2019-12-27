@@ -273,6 +273,13 @@ h4 {
                     transform: scale(1.05);
                 }
             }
+            .correctBorder {
+                border: 0.35rem solid green;
+            }
+
+            .incorrectBorder {
+                border: 0.35rem solid red;
+            }
         }
     }
 }

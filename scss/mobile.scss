@@ -116,6 +116,13 @@
                         display: none;
                     }
                 }
+                .correctBorder {
+                    border: 1rem solid green;
+                }
+
+                .incorrectBorder {
+                    border: 1rem solid red;
+                }
             }
         }
     }

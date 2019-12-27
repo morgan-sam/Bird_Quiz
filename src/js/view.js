@@ -86,15 +86,14 @@ export const setAnswerButtonsState = (buttonStates, quizNumber) => {
                 button.className += ' incorrectButton';
                 button.disabled = true;
                 if ([2, 4].includes(quizNumber)) {
-                    button.style.border = '5px solid red';
-                    // button.style.opacity = 0.5;
+                    button.className += ' incorrectBorder';
                 }
                 break;
             case 'correct':
                 button.className += ' correctButton';
                 button.disabled = true;
                 if ([2, 4].includes(quizNumber))
-                    button.style.border = '5px solid green';
+                    button.className += ' correctBorder';
                 break;
             case 'unselected':
                 break;
@@ -126,6 +125,13 @@ export const resetButtonColor = () => {
     });
 };
 
+export const removeAnswerButtonBorders = () => {
+    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
+        button.classList.remove('correctBorder');
+        button.classList.remove('incorrectBorder');
+    });
+};
+
 export const removeButtonImages = () => {
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
         button.style.backgroundImage = 'none';
@@ -147,12 +153,6 @@ export const enableAnswerButtons = booState => {
 export const unblurAnswerButtons = () => {
     [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
         button.style.opacity = 1;
-    });
-};
-
-export const removeAnswerButtonBorders = () => {
-    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.style.border = 'none';
     });
 };
 
