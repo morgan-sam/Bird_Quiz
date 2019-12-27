@@ -133,7 +133,7 @@ h4 {
     }
 
     .answerButtonsContainer > button {
-        transition: border 0.6s ease, background-color 0.4s ease,
+        transition: border 0s ease, background-color 0.4s ease,
             transform 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -275,10 +275,12 @@ h4 {
             }
             .correctBorder {
                 border: 0.35rem solid green;
+                transition: 1s;
             }
 
             .incorrectBorder {
                 border: 0.35rem solid red;
+                transition: 1s;
             }
         }
     }

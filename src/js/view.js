@@ -102,9 +102,9 @@ export const setAnswerButtonsState = (buttonStates, quizNumber) => {
 };
 
 export const resetButtons = () => {
+    removeAnswerButtonBorders();
     resetButtonColor();
     unblurAnswerButtons();
-    removeAnswerButtonBorders();
     resetButtonColor();
     enableAnswerButtons(true);
 };
