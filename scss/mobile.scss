@@ -19,6 +19,21 @@
         }
     }
 
+    .quiz .buttonContainer {
+        > button {
+            color: #000;
+            background-color: #d8d8d8;
+        }
+
+        > .correctButton {
+            background-color: lightgreen;
+        }
+
+        > .incorrectButton {
+            background-color: darksalmon;
+        }
+    }
+
     .active {
         display: flex;
     }

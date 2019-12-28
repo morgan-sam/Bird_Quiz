@@ -55,12 +55,13 @@ h4 {
     margin: 0.75rem auto 0.75rem auto;
     height: 0.7rem;
     padding: 1rem;
+    color: #000;
     background-color: #d8d8d8;
     border-radius: 5px;
     border: 2px #ccc solid;
     line-height: 0.2rem;
     box-shadow: 0px 10px 0px 0px #a3a3a3; }
-    .buttonContainer > button:hover:enabled {
+    .buttonContainer > button:hover {
       color: white;
       background-color: #bbb; }
     .buttonContainer > button:focus {

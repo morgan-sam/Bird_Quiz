@@ -10,6 +10,13 @@
       display: inline-block;
       font-size: 3rem;
       height: 5rem; }
+  .quiz .buttonContainer > button {
+    color: #000;
+    background-color: #d8d8d8; }
+  .quiz .buttonContainer > .correctButton {
+    background-color: lightgreen; }
+  .quiz .buttonContainer > .incorrectButton {
+    background-color: darksalmon; }
   .active {
     display: flex; }
   body {
