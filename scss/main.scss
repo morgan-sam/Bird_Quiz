@@ -91,11 +91,15 @@ h4 {
         }
     }
 
-    > .correctButton {
+    > .correctButton,
+    .correctButton:hover,
+    .correctButton:focus {
         background-color: lightgreen;
     }
 
-    > .incorrectButton {
+    > .incorrectButton,
+    .incorrectButton:hover,
+    .incorrectButton:focus {
         background-color: darksalmon;
     }
 }
