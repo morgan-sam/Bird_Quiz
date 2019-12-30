@@ -9,7 +9,7 @@ import transparentLoadingGif from '../img/transparentLoading.gif';
 import birdsFlying from '../img/bird_flying.png';
 import forestBird from '../img/forest_bird.jpg';
 
-window.enableOfflineTesing = true;
+window.enableOfflineTesing = false;
 
 const state = {};
 window.state = state;
@@ -145,28 +145,52 @@ const startQuiz = async quizNumber => {
             banReturnBtn: () => cancelBan(),
             cancelBanBtn: () => cancelBan(),
             confirmBanBtn: () => confirmBan(),
+            // endOfGameQuizBtn: () => quitQuiz(),
+            // inGameQuitBtn: () => quitQuiz(),
         };
 
-        [...document.querySelectorAll('.quiz .quitBtn')].forEach(function(
-            button,
-        ) {
-            buttonFnObj[button.id] = function _listener() {
-                quitQuiz();
-                button.removeEventListener('click', _listener, true);
-            };
-        });
+        //Remove event listener does not work as it would should on quitBtn as the function passed to the button click function
+        //(to be called from an interval) is different from the remove event listener call, which must be passed the exact same
+        //function. The best solution to this I can see is to create a remove event listener function as soon as the event listener
+        //is created and attach the function to the button object. This would involve creating a small event listener framework.
 
+        // [...document.querySelectorAll('.quiz .quitBtn')].forEach(function(
+        //     button,
+        // ) {
+        //     buttonFnObj[button.id] = function _listener() {
+        //         quitQuiz();
+        //         button.removeEventListener('click', _listener, true);
+        //     };
+        // });
         return buttonFnObj;
     }
-    state.currentQuiz = new Object();
 
-    //Add answer button event listeners, not made using bounce button function as answer needs to be immediate
-    [...document.querySelectorAll('.answerBtn')].forEach(function(button, i) {
-        button.addEventListener('click', buttonSelected, false);
-    });
+    function setUpAnswerButtons() {
+        //Add answer button event listeners, not made using bounce button function as answer needs to be immediate
+        [...document.querySelectorAll('.answerBtn')].forEach(function(button) {
+            button.addEventListener('click', buttonSelected, false);
+        });
+    }
+
+    function setUpQuitButtons() {
+        [...document.querySelectorAll('.quitBtn')].forEach(function(button) {
+            button.addEventListener(
+                'click',
+                function _listener() {
+                    quitQuiz();
+                    button.removeEventListener('click', _listener, true);
+                },
+                true,
+            );
+        });
+    }
+
+    state.currentQuiz = new Object();
 
     function initQuiz(quizNumber) {
         setUpButtonBounce(quizButtonFunctions(), '.quiz', 175);
+        setUpAnswerButtons();
+        setUpQuitButtons();
         state.currentQuiz.score = 0;
         state.currentQuiz.questionNumber = 1;
         state.currentQuiz.totalQuestions = 10;
@@ -186,7 +210,7 @@ const startQuiz = async quizNumber => {
             case 3:
                 view.setTimerState(true);
                 state.currentQuiz.quizFunction = mixedCountdownQuiz;
-                state.currentQuiz.quizNumber = randomIntBetweenTwoValues(3, 4);
+                // state.currentQuiz.quizNumber = randomIntBetweenTwoValues(3, 4);
                 break;
             default:
                 break;
@@ -259,7 +283,7 @@ const startQuiz = async quizNumber => {
         const mainColor = 'darksalmon';
         const backgroundColor = 'white';
         let i = counter;
-        createInterval(
+        return createInterval(
             function() {
                 i--;
                 const mod = Math.floor(i / (counter / 2) + 1) % 2; //0 first half 1 2nd half
@@ -412,10 +436,7 @@ const startQuiz = async quizNumber => {
             state.currentQuiz.score -= wrongAnswers;
         } else {
             state.currentQuiz.score -= 2;
-
-            //make correct answer visible
             showCorrectAnswer();
-
             endQuestion();
         }
     }
@@ -518,10 +539,7 @@ const startQuiz = async quizNumber => {
     }
 
     function removeBtnEventListeners() {
-        [...document.querySelectorAll('.answerBtn')].forEach(function(
-            button,
-            i,
-        ) {
+        [...document.querySelectorAll('.answerBtn')].forEach(function(button) {
             button.removeEventListener('click', buttonSelected, false);
         });
         document
